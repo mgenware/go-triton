@@ -5,10 +5,12 @@ import (
 	"io/ioutil"
 	"log"
 	"os"
+
+	"github.com/mgenware/go-web-boilerplate/app/config"
 )
 
 // Config is the application configuration loaded
-var Config *ConfigType
+var Config *config.Config
 
 func init() {
 	loadConfigOrPanic()
@@ -36,7 +38,7 @@ func loadConfigOrPanic() {
 	if err != nil {
 		panic(err)
 	}
-	config, err := ReadConfig(configBytes)
+	config, err := config.ReadConfig(configBytes)
 	if err != nil {
 		panic(err)
 	}

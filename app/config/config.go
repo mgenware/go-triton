@@ -1,12 +1,12 @@
-package app
+package config
 
 import (
 	"encoding/json"
 	"errors"
 )
 
-// ConfigType is the root configuration type for your application.
-type ConfigType struct {
+// Config is the root configuration type for your application.
+type Config struct {
 	// IsProduction determines if this app is currently running in production mode.
 	IsProduction bool `json:"isProduction"`
 
@@ -14,6 +14,7 @@ type ConfigType struct {
 	HTTP *httpConfig `json:"http"`
 }
 
+// ----- Internal types -----
 type httpConfig struct {
 	// Port is the listening port of web server.
 	Port int `json:"port"`
@@ -28,8 +29,8 @@ type httpStaticConfig struct {
 }
 
 // ReadConfig loads an ConfigType from an array of bytes.
-func ReadConfig(bytes []byte) (*ConfigType, error) {
-	var config ConfigType
+func ReadConfig(bytes []byte) (*Config, error) {
+	var config Config
 
 	err := json.Unmarshal(bytes, &config)
 	if err != nil {
@@ -43,7 +44,7 @@ func ReadConfig(bytes []byte) (*ConfigType, error) {
 	return &config, nil
 }
 
-func (config *ConfigType) validate() error {
+func (config *Config) validate() error {
 	httpConfig := config.HTTP
 	if httpConfig == nil {
 		return errors.New("Missing http config")

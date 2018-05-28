@@ -1,4 +1,4 @@
-package routes
+package handlers
 
 import (
 	"log"
@@ -7,8 +7,8 @@ import (
 	"strings"
 
 	"github.com/mgenware/go-web-boilerplate/app"
-	"github.com/mgenware/go-web-boilerplate/routes/indexRoute"
-	"github.com/mgenware/go-web-boilerplate/routes/systemRoute"
+	"github.com/mgenware/go-web-boilerplate/handlers/indexHandler"
+	"github.com/mgenware/go-web-boilerplate/handlers/systemHandlers"
 
 	"github.com/go-chi/chi"
 )
@@ -24,15 +24,15 @@ func Start() {
 		// *** Production only ***
 
 		// Mount PanicMiddleware only in production, let panic crash in development
-		r.Use(systemRoute.PanicMiddleware)
+		r.Use(systemHandlers.PanicMiddleware)
 	} else {
 		// *** Development only ***
 
 		// Mount static file server during development. (You may use to nginx to serve these files in production)
 		httpStaticConfig := httpConfig.Static
 		if httpStaticConfig != nil {
-			log.Printf("Serving Assets(%v) at \"%v\"", httpStaticConfig.Route, httpStaticConfig.DirPath)
-			fileServer(r, httpStaticConfig.Route, http.Dir(httpStaticConfig.DirPath))
+			log.Printf("Serving Assets(%v) at \"%v\"", httpStaticConfig.Pattern, httpStaticConfig.DirPath)
+			fileServer(r, httpStaticConfig.Pattern, http.Dir(httpStaticConfig.DirPath))
 		}
 	}
 	// Mount other middlewares, for example:
@@ -40,10 +40,10 @@ func Start() {
 
 	// ----------------- HTTP Routes -----------------
 	// Not found handler
-	r.NotFound(systemRoute.NotFoundHandler)
+	r.NotFound(systemHandlers.NotFoundHandler)
 
 	// index handler
-	r.Get("/", indexRoute.IndexGET)
+	r.Get("/", indexHandler.IndexGET)
 
 	log.Printf("Starting server at %v", httpConfig.Port)
 	log.Fatal(http.ListenAndServe(":"+strconv.Itoa(httpConfig.Port), r))

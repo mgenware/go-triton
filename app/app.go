@@ -8,7 +8,7 @@ import (
 )
 
 // Config is the application configuration loaded
-var Config *AppConfig
+var Config *ConfigType
 
 func init() {
 	loadConfigOrPanic()
@@ -36,7 +36,7 @@ func loadConfigOrPanic() {
 	if err != nil {
 		panic(err)
 	}
-	config, err := LoadAppConfig(configBytes)
+	config, err := ReadConfig(configBytes)
 	if err != nil {
 		panic(err)
 	}

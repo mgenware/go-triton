@@ -1,9 +1,9 @@
 package main
 
 import (
-	"github.com/mgenware/go-web-boilerplate/routes"
+	"github.com/mgenware/go-web-boilerplate/handlers"
 )
 
 func main() {
-	routes.Start()
+	handlers.Start()
 }

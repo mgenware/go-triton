@@ -3,7 +3,7 @@
   "http": {
     "port": 12001,
     "static": {
-      "route": "/static",
+      "pattern": "/static",
       "dirPath": "/tmp/static"
     }
   }

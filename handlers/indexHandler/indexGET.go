@@ -1,4 +1,4 @@
-package indexRoute
+package indexHandler
 
 import (
 	"fmt"

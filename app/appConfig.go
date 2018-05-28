@@ -5,8 +5,8 @@ import (
 	"errors"
 )
 
-// AppConfig is the root configuration type for your application.
-type AppConfig struct {
+// ConfigType is the root configuration type for your application.
+type ConfigType struct {
 	// IsProduction determines if this app is currently running in production mode.
 	IsProduction bool `json:"isProduction"`
 
@@ -22,14 +22,14 @@ type httpConfig struct {
 }
 type httpStaticConfig struct {
 	// Pattern is the pattern string used for registering request handler.
-	Pattern string `json: route`
+	Pattern string `json:"pattern"`
 	// DirPath is the physical directory path you want to be served.
-	DirPath string `json: dirPath`
+	DirPath string `json:"dirPath"`
 }
 
-// LoadAppConfig loads an AppConfig from an array of bytes.
-func LoadAppConfig(bytes []byte) (*AppConfig, error) {
-	var config AppConfig
+// ReadConfig loads an ConfigType from an array of bytes.
+func ReadConfig(bytes []byte) (*ConfigType, error) {
+	var config ConfigType
 
 	err := json.Unmarshal(bytes, &config)
 	if err != nil {
@@ -43,7 +43,7 @@ func LoadAppConfig(bytes []byte) (*AppConfig, error) {
 	return &config, nil
 }
 
-func (config *AppConfig) validate() error {
+func (config *ConfigType) validate() error {
 	httpConfig := config.HTTP
 	if httpConfig == nil {
 		return errors.New("Missing http config")
@@ -55,8 +55,8 @@ func (config *AppConfig) validate() error {
 
 	httpStaticConfig := httpConfig.Static
 	if httpStaticConfig != nil {
-		if httpStaticConfig.Route == "" {
-			return errors.New("http.static has been defined, but http.static.route remains empty")
+		if httpStaticConfig.Pattern == "" {
+			return errors.New("http.static has been defined, but http.static.pattern remains empty")
 		}
 		if httpStaticConfig.DirPath == "" {
 			return errors.New("http.static has been defined, but http.static.dirPath remains empty")

@@ -7,19 +7,27 @@ import (
 
 // AppConfig is the root configuration type for your application.
 type AppConfig struct {
-	IsProduction bool        `json: isProduction`
-	HTTP         *httpConfig `json: http`
+	// IsProduction determines if this app is currently running in production mode.
+	IsProduction bool `json:"isProduction"`
+
+	// HTTP holds HTTP-related configuration data.
+	HTTP *httpConfig `json:"http"`
 }
 
 type httpConfig struct {
-	Port   int               `json: port`
-	Static *httpStaticConfig `json: static`
+	// Port is the listening port of web server.
+	Port int `json:"port"`
+	// Static defines how server serves static files (optional).
+	Static *httpStaticConfig `json:"static"`
 }
 type httpStaticConfig struct {
-	Route   string `json: route`
+	// Pattern is the pattern string used for registering request handler.
+	Pattern string `json: route`
+	// DirPath is the physical directory path you want to be served.
 	DirPath string `json: dirPath`
 }
 
+// LoadAppConfig loads an AppConfig from an array of bytes.
 func LoadAppConfig(bytes []byte) (*AppConfig, error) {
 	var config AppConfig
 

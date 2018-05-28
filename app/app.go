@@ -3,6 +3,7 @@ package app
 import (
 	"flag"
 	"io/ioutil"
+	"log"
 	"os"
 )
 
@@ -38,6 +39,11 @@ func loadConfigOrPanic() {
 	config, err := LoadAppConfig(configBytes)
 	if err != nil {
 		panic(err)
+	}
+
+	log.Printf("Loaded config at \"%v\"", configPath)
+	if config.IsProduction {
+		log.Printf("[Application runs in production!]")
 	}
 	Config = config
 }

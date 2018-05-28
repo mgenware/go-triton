@@ -1,0 +1,6 @@
+{
+  "isProduction": true,
+  "http": {
+    "port": 12000
+  }
+}

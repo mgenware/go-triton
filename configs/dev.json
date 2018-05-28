@@ -1,0 +1,10 @@
+{
+  "isProduction": false,
+  "http": {
+    "port": 12001,
+    "static": {
+      "route": "/static",
+      "dirPath": "/tmp/static"
+    }
+  }
+}

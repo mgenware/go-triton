@@ -24,8 +24,8 @@ type httpConfig struct {
 type httpStaticConfig struct {
 	// Pattern is the pattern string used for registering request handler.
 	Pattern string `json:"pattern"`
-	// DirPath is the physical directory path you want to be served.
-	DirPath string `json:"dirPath"`
+	// Dir is the physical directory path you want to be served.
+	Dir string `json:"dir"`
 }
 
 // ReadConfig loads an ConfigType from an array of bytes.
@@ -59,8 +59,8 @@ func (config *Config) validate() error {
 		if httpStaticConfig.Pattern == "" {
 			return errors.New("http.static has been defined, but http.static.pattern remains empty")
 		}
-		if httpStaticConfig.DirPath == "" {
-			return errors.New("http.static has been defined, but http.static.dirPath remains empty")
+		if httpStaticConfig.Dir == "" {
+			return errors.New("http.static has been defined, but http.static.dir remains empty")
 		}
 	}
 

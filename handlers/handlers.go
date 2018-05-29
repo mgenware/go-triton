@@ -31,8 +31,8 @@ func Start() {
 		// Mount static file server during development. (You may use to nginx to serve these files in production)
 		httpStaticConfig := httpConfig.Static
 		if httpStaticConfig != nil {
-			log.Printf("Serving Assets(%v) at \"%v\"", httpStaticConfig.Pattern, httpStaticConfig.DirPath)
-			fileServer(r, httpStaticConfig.Pattern, http.Dir(httpStaticConfig.DirPath))
+			log.Printf("Serving Assets(%v) at \"%v\"", httpStaticConfig.Pattern, httpStaticConfig.Dir)
+			fileServer(r, httpStaticConfig.Pattern, http.Dir(httpStaticConfig.Dir))
 		}
 	}
 	// Mount other middlewares, for example:

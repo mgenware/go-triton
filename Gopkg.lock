@@ -7,9 +7,15 @@
   revision = "e83ac2304db3c50cf03d96a2fcd39009d458bc35"
   version = "v3.3.2"
 
+[[projects]]
+  name = "github.com/mgenware/go-packagex"
+  packages = ["templatex"]
+  revision = "42841e03b817d92db22e15afa80bb1f476959742"
+  version = "1.1.0"
+
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "01430848a41401de26dc03ed542fa18f8e17f59178351b414b30fed1c440aa1b"
+  inputs-digest = "abc09d959ad23d2c10c0d25d14e89b9707b53e482ddd1a0bb8ed809eb61efe0e"
   solver-name = "gps-cdcl"
   solver-version = 1

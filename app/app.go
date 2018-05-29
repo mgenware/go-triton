@@ -9,8 +9,11 @@ import (
 	"github.com/mgenware/go-web-boilerplate/app/config"
 )
 
-// Config is the application configuration loaded
+// Config is the application configuration loaded.
 var Config *config.Config
+
+// Template is the template manager.
+var Template *appTemplate.Template
 
 func init() {
 	loadConfigOrPanic()

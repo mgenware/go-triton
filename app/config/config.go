@@ -12,6 +12,8 @@ type Config struct {
 
 	// HTTP holds HTTP-related configuration data.
 	HTTP *httpConfig `json:"http"`
+	// ViewDir is the directory of templates.
+	TemplatesDir string `json:"templatesDir"`
 }
 
 // ----- Internal types -----

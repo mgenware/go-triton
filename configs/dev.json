@@ -6,5 +6,6 @@
       "pattern": "/static",
       "dir": "/tmp/static"
     }
-  }
+  },
+  "templatesDir": "templates"
 }

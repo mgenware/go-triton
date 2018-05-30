@@ -1,10 +1,13 @@
 package indexHandler
 
 import (
-	"fmt"
 	"net/http"
+
+	"github.com/mgenware/go-web-boilerplate/app"
 )
 
 func IndexGET(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprint(w, "<h1>go-web-boilerplate</h1><p>It's working</p>")
+	ctx := r.Context()
+	md := app.Template.NewMasterData(ctx, "Home Page", "<p>Hello World</p>")
+	app.Template.MustRun(md, w)
 }

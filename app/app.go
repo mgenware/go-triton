@@ -7,19 +7,22 @@ import (
 	"os"
 
 	"github.com/mgenware/go-web-boilerplate/app/config"
+	"github.com/mgenware/go-web-boilerplate/app/templateManager"
 )
 
 // Config is the application configuration loaded.
 var Config *config.Config
 
 // Template is the template manager.
-var Template *appTemplate.Template
+var Template *templateManager.TemplateManager
 
 func init() {
-	loadConfigOrPanic()
+	setupConfigOrPanic()
+	setupTemplateOrPanic(Config)
 }
 
-func loadConfigOrPanic() {
+// ------- Private functions -------
+func setupConfigOrPanic() {
 	// Parse command-line arguments
 	var configPath string
 	flag.StringVar(&configPath, "config", "", "path of application config file")
@@ -51,4 +54,9 @@ func loadConfigOrPanic() {
 		log.Printf("[Application runs in production!]")
 	}
 	Config = config
+}
+
+func setupTemplateOrPanic(config *config.Config) {
+	template := templateManager.MustCreateTemplateManager(config.TemplatesDir, !config.IsProduction)
+	Template = template
 }

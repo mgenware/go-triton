@@ -3,6 +3,7 @@ package config
 import (
 	"encoding/json"
 	"errors"
+	"path/filepath"
 )
 
 // Config is the root configuration type for your application.
@@ -39,14 +40,14 @@ func ReadConfig(bytes []byte) (*Config, error) {
 		return nil, err
 	}
 
-	err = config.validate()
+	err = config.validateAndCoerce()
 	if err != nil {
 		return nil, err
 	}
 	return &config, nil
 }
 
-func (config *Config) validate() error {
+func (config *Config) validateAndCoerce() error {
 	httpConfig := config.HTTP
 	if httpConfig == nil {
 		return errors.New("Missing http config")
@@ -66,5 +67,18 @@ func (config *Config) validate() error {
 		}
 	}
 
+	mustCoercePath(&config.TemplatesDir)
+	mustCoercePath(&config.HTTP.Static.Dir)
 	return nil
+}
+
+func mustCoercePath(p *string) {
+	if filepath.IsAbs(*p) {
+		return
+	}
+	res, err := filepath.Abs(*p)
+	if err != nil {
+		panic(err)
+	}
+	*p = res
 }

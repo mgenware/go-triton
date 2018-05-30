@@ -6,9 +6,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{{.Title}}</title>
     {{html .Header}}
+
+    <style>
+      .m-header {
+        background: navy;
+        text-align: center;
+      }
+    </style>
   </head>
 
   <body>
+    <main class="m-header">
+      <p>go-web-boilerplate</p>
+    </main>
     {{html .ContentHTML}}
     {{html .Scripts}}
   </body>

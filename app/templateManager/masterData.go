@@ -1,4 +1,4 @@
-package appTemplate
+package templateManager
 
 type MasterData struct {
 	Title       string

@@ -24,11 +24,12 @@ func recoverFromPanic(w http.ResponseWriter, r *http.Request) {
 }
 
 func panicHandler(w http.ResponseWriter, r *http.Request) {
+	w.WriteHeader(http.StatusInternalServerError)
+
 	ctx := r.Context()
 	msgValue := ctx.Value("recoverReturn")
 	stackInfo := ctx.Value("recoverStack")
 	msg := fmt.Sprintf("Fatal error：%v\nDetails: %v", msgValue, stackInfo)
 
-	w.WriteHeader(http.StatusInternalServerError)
 	fmt.Print(w, msg)
 }

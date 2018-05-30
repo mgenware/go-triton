@@ -17,6 +17,6 @@ func IndexGET(w http.ResponseWriter, r *http.Request) {
 	data := &IndexData{PageName: indexTitle, FeedsHTML: "<p>Hello World</p>"}
 	dataHTML := indexView.MustExecuteToString(data)
 
-	md := app.Template.NewMasterData(ctx, indexTitle, dataHTML)
+	md := app.Template.NewMasterData(ctx, app.Template.MakeTitle(indexTitle), dataHTML)
 	app.Template.MustRun(md, w)
 }

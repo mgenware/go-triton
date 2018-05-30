@@ -50,3 +50,8 @@ func (m *TemplateManager) MustRun(data *MasterData, w http.ResponseWriter) {
 		panic(err)
 	}
 }
+
+// MakeTitle add a consistent suffix to your title string.
+func (m *TemplateManager) MakeTitle(t string) string {
+	return t + " - MyWebsite"
+}

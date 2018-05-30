@@ -4,13 +4,21 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>{{.Title}}</title>
-    {{html .Header}}
+    <title>{{html .Title}}</title>
+    {{.Header}}
 
     <style>
+      body, main {
+        margin: 0;
+        padding: 0;
+      }
       .m-header {
         background: navy;
         text-align: center;
+        color: white;
+        padding-top: 50px;
+        padding-bottom: 20px;
+        font-size: 25px;
       }
     </style>
   </head>
@@ -19,7 +27,7 @@
     <main class="m-header">
       <p>go-web-boilerplate</p>
     </main>
-    {{html .ContentHTML}}
-    {{html .Scripts}}
+    {{.ContentHTML}}
+    {{.Scripts}}
   </body>
 </html>

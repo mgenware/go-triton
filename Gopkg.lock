@@ -13,12 +13,12 @@
     "httpx",
     "templatex"
   ]
-  revision = "ebcd54a13356b4ff202174efd2e906f33f42a9b9"
-  version = "1.3.0"
+  revision = "0bd67af9d9d10be29017ca25686f8d6af9713a69"
+  version = "1.3.2"
 
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "ae7cf24dd9d4ede46f02158aca54e35eb7a5eb7341a74afbe72c8308641fc0c3"
+  inputs-digest = "b626ee04f95efb045f589ccccac919746d29effe43ff2b3996964b015b25a031"
   solver-name = "gps-cdcl"
   solver-version = 1

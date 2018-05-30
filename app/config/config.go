@@ -68,11 +68,16 @@ func (config *Config) validateAndCoerce() error {
 	}
 
 	mustCoercePath(&config.TemplatesDir)
-	mustCoercePath(&config.HTTP.Static.Dir)
+	if httpStaticConfig != nil {
+		mustCoercePath(&httpStaticConfig.Dir)
+	}
 	return nil
 }
 
 func mustCoercePath(p *string) {
+	if p == nil {
+		return
+	}
 	if filepath.IsAbs(*p) {
 		return
 	}

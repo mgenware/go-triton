@@ -44,6 +44,7 @@ func Start() {
 
 	// index handler
 	r.Get("/", indexHandler.IndexGET)
+	r.Get("/rand", indexHandler.RandGET)
 
 	log.Printf("Starting server at %v", httpConfig.Port)
 	log.Fatal(http.ListenAndServe(":"+strconv.Itoa(httpConfig.Port), r))

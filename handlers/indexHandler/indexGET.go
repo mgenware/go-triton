@@ -13,10 +13,11 @@ var indexTitle = "Home Page"
 
 func IndexGET(w http.ResponseWriter, r *http.Request) {
 	ctx := r.Context()
+	result := app.Template.NewHTMLResult(ctx, w)
 
-	data := &IndexData{PageName: indexTitle, FeedsHTML: "<p>Hello World</p>"}
-	dataHTML := indexView.MustExecuteToString(data)
+	indexData := &IndexData{PageName: indexTitle, FeedsHTML: "<p>Hello World</p>"}
+	indexDataHTML := indexView.MustExecuteToString(indexData)
 
-	md := app.Template.NewMasterData(ctx, app.Template.MakeTitle(indexTitle), dataHTML)
-	app.Template.MustRun(md, w)
+	d := app.Template.NewHTMLData(app.Template.MakeTitle(indexTitle), indexDataHTML)
+	result.MustComplete(d)
 }

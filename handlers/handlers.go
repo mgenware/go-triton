@@ -7,12 +7,13 @@ import (
 	"strings"
 
 	"github.com/mgenware/go-web-boilerplate/app"
-	"github.com/mgenware/go-web-boilerplate/handlers/indexHandler"
-	"github.com/mgenware/go-web-boilerplate/handlers/systemHandlers"
+	"github.com/mgenware/go-web-boilerplate/handlers/index"
+	"github.com/mgenware/go-web-boilerplate/handlers/system"
 
 	"github.com/go-chi/chi"
 )
 
+// Start starts the web router.
 func Start() {
 	r := chi.NewRouter()
 	config := app.Config
@@ -24,7 +25,7 @@ func Start() {
 		// *** Production only ***
 
 		// Mount PanicMiddleware only in production, let panic crash in development
-		r.Use(systemHandlers.PanicMiddleware)
+		r.Use(system.PanicMiddleware)
 	} else {
 		// *** Development only ***
 
@@ -40,11 +41,11 @@ func Start() {
 
 	// ----------------- HTTP Routes -----------------
 	// Not found handler
-	r.NotFound(systemHandlers.NotFoundHandler)
+	r.NotFound(system.NotFoundHandler)
 
 	// index handler
-	r.Get("/", indexHandler.IndexGET)
-	r.Get("/rand", indexHandler.RandGET)
+	r.Get("/", index.IndexGET)
+	r.Get("/rand", index.RandGET)
 
 	log.Printf("Starting server at %v", httpConfig.Port)
 	log.Fatal(http.ListenAndServe(":"+strconv.Itoa(httpConfig.Port), r))

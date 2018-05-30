@@ -1,4 +1,4 @@
-package indexHandler
+package index
 
 type IndexData struct {
 	PageName  string

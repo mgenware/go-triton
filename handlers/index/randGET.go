@@ -1,4 +1,4 @@
-package indexHandler
+package index
 
 import (
 	"math/rand"

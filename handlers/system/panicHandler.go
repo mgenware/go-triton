@@ -1,4 +1,4 @@
-package systemHandlers
+package system
 
 import (
 	"context"

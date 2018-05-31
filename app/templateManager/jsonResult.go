@@ -17,26 +17,26 @@ func NewJSONResult(mgr *TemplateManager, wr http.ResponseWriter) *JSONResult {
 	return &JSONResult{mgr: mgr, writer: wr}
 }
 
-func (j *JSONResult) MustWriteError(msg string) {
+func (j *JSONResult) MustError(msg string) {
 	d := &JSONData{Message: msg, Code: 1}
 	j.mustWriteData(d)
 }
 
-func (j *JSONResult) MustWriteErrorObject(err error) {
-	j.MustWriteError(err.Error())
+func (j *JSONResult) MustErrorWithObject(err error) {
+	j.MustError(err.Error())
 }
 
-func (j *JSONResult) MustWriteErrorWithCode(code uint, msg string) {
+func (j *JSONResult) MustErrorWithCode(code uint, msg string) {
 	d := &JSONData{Code: code, Message: msg}
 	j.mustWriteData(d)
 }
 
-func (j *JSONResult) MustWriteObjectResult(object interface{}) {
-	d := &JSONData{Result: object}
+func (j *JSONResult) MustCompleteWithData(data interface{}) {
+	d := &JSONData{Data: data}
 	j.mustWriteData(d)
 }
 
-func (j *JSONResult) MustWriteResult() {
+func (j *JSONResult) MustComplete() {
 	d := &JSONData{}
 	j.mustWriteData(d)
 }

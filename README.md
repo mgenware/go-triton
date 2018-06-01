@@ -13,9 +13,9 @@ A boilerplate template for Go web applications.
 * Serves static files in development mode.
 
 ## Dependencies
-* [chi](https://github.com/go-chi/chi): HTTP routing.
-* templatex from [go-packagex](https://github.com/mgenware/go-packagex): template wrapper around Go text/template.
-* httpx from [go-packagex](https://github.com/mgenware/go-packagex): for common MIME type constants.
+* [chi](https://github.com/go-chi/chi) 3.3.2: HTTP routing.
+* templatex from [go-packagex](https://github.com/mgenware/go-packagex) 1.3.2: template wrapper around Go text/template.
+* httpx from [go-packagex](https://github.com/mgenware/go-packagex) 1.3.2: for common MIME type constants.
 
 ## Usage
 Start in development mode:

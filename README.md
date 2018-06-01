@@ -1,4 +1,7 @@
-# go-web-boilerplate
+# go-triton
+
+<img src="./triton.jpg" width="300" height="300"/>
+
 A boilerplate template for Go web applications.
 
 * Configuration file support.

@@ -1,10 +1,11 @@
-package templateManager
+package template
 
+// ErrorData contains information about an error.
 type ErrorData struct {
 	Message string
 }
 
-// NewErrorData creates an instance of ErrorData.
+// NewErrorData creates an new ErrorData object.
 func NewErrorData(msg string) *ErrorData {
 	return &ErrorData{Message: msg}
 }

@@ -1,4 +1,4 @@
-package templateManager
+package template
 
 import (
 	"encoding/json"

@@ -7,14 +7,14 @@ import (
 	"os"
 
 	"github.com/mgenware/go-web-boilerplate/app/config"
-	"github.com/mgenware/go-web-boilerplate/app/templateManager"
+	"github.com/mgenware/go-web-boilerplate/app/template"
 )
 
 // Config is the application configuration loaded.
 var Config *config.Config
 
 // Template is the template manager.
-var Template *templateManager.TemplateManager
+var Template *template.TemplateManager
 
 func init() {
 	setupConfigOrPanic()
@@ -57,6 +57,6 @@ func setupConfigOrPanic() {
 }
 
 func setupTemplateOrPanic(config *config.Config) {
-	template := templateManager.MustCreateTemplateManager(config.TemplatesDir, !config.IsProduction)
-	Template = template
+	t := template.MustCreateTemplateManager(config.TemplatesDir, !config.IsProduction)
+	Template = t
 }

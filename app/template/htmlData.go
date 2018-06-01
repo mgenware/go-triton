@@ -1,4 +1,4 @@
-package templateManager
+package template
 
 type HTMLData struct {
 	Title       string

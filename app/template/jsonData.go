@@ -1,4 +1,4 @@
-package templateManager
+package template
 
 type JSONData struct {
 	Code    uint        `json:"code"`

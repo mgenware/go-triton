@@ -17,12 +17,12 @@ var Config *config.Config
 var Template *template.TemplateManager
 
 func init() {
-	setupConfigOrPanic()
-	setupTemplateOrPanic(Config)
+	mustSetupConfig()
+	mustSetupTemplate(Config)
 }
 
 // ------- Private functions -------
-func setupConfigOrPanic() {
+func mustSetupConfig() {
 	// Parse command-line arguments
 	var configPath string
 	flag.StringVar(&configPath, "config", "", "path of application config file")
@@ -56,7 +56,7 @@ func setupConfigOrPanic() {
 	Config = config
 }
 
-func setupTemplateOrPanic(config *config.Config) {
+func mustSetupTemplate(config *config.Config) {
 	t := template.MustCreateTemplateManager(config.TemplatesDir, !config.IsProduction)
 	Template = t
 }

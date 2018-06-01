@@ -14,7 +14,8 @@ A boilerplate template for Go web applications.
 
 ## Dependencies
 * [chi](https://github.com/go-chi/chi): HTTP routing.
-* [go-packagex](https://github.com/mgenware/go-packagex): Template wrapper around Go text/template.
+* templatex from [go-packagex](https://github.com/mgenware/go-packagex): template wrapper around Go text/template.
+* httpx from [go-packagex](https://github.com/mgenware/go-packagex): for common MIME type constants.
 
 ## Usage
 Start in development mode:

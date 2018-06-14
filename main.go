@@ -1,7 +1,7 @@
 package main
 
 import (
-	"github.com/mgenware/go-web-boilerplate/handlers"
+	"github.com/mgenware/go-triton/handlers"
 )
 
 func main() {

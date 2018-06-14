@@ -6,8 +6,8 @@ import (
 	"log"
 	"os"
 
-	"github.com/mgenware/go-web-boilerplate/app/config"
-	"github.com/mgenware/go-web-boilerplate/app/template"
+	"github.com/mgenware/go-triton/app/config"
+	"github.com/mgenware/go-triton/app/template"
 )
 
 // Config is the application configuration loaded.

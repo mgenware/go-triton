@@ -6,9 +6,9 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/mgenware/go-web-boilerplate/app"
-	"github.com/mgenware/go-web-boilerplate/handlers/index"
-	"github.com/mgenware/go-web-boilerplate/handlers/system"
+	"github.com/mgenware/go-triton/app"
+	"github.com/mgenware/go-triton/handlers/index"
+	"github.com/mgenware/go-triton/handlers/system"
 
 	"github.com/go-chi/chi"
 )

@@ -8,25 +8,37 @@
     {{.Header}}
 
     <style>
-      body, main {
+      body {
         margin: 0;
         padding: 0;
+        font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica Neue,Arial,sans-serif;
+        font-size: 1rem;
+        font-weight: 400;
+        line-height: 1.5;
+        color: #212529;
       }
-      .m-header {
-        background: navy;
+      nav.m-header {
+        background: black;
         text-align: center;
         color: white;
         padding-top: 50px;
         padding-bottom: 20px;
         font-size: 25px;
       }
+
+      .m-brand-img {
+        vertical-align: middle;
+      }
     </style>
   </head>
 
   <body>
-    <main class="m-header">
-      <p>go-triton</p>
-    </main>
+    <nav class="m-header">
+      <p>
+        <span>go-triton</span>
+        <img class="m-brand-img" src="/static/triton.jpg" width="100" height="100"/>
+      </p>
+    </nav>
     {{.ContentHTML}}
     {{.Scripts}}
   </body>

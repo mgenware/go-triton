@@ -1,6 +1,7 @@
 package index
 
-type IndexData struct {
+// PageData holds the data needed for generating a index page.
+type PageData struct {
 	PageName  string
 	FeedsHTML string
 }

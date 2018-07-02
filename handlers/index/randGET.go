@@ -7,6 +7,7 @@ import (
 	"github.com/mgenware/go-triton/app"
 )
 
+// RandGET is the GET handler for "/rand"
 func RandGET(w http.ResponseWriter, r *http.Request) {
 	ctx := r.Context()
 
@@ -18,6 +19,6 @@ func RandGET(w http.ResponseWriter, r *http.Request) {
 		d := app.TemplateManager.NewMainPageData(app.TemplateManager.MakeTitle("Random Result"), "<p>🙈</p>")
 		resp.MustComplete(d)
 	} else {
-		resp.MustError("Unlucky!!!")
+		resp.MustError("🐒 This is a fake error for testing purposes only")
 	}
 }

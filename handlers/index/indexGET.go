@@ -11,13 +11,14 @@ import (
 var indexView = templatex.MustParseViewFromDirectory(app.Config.TemplatesDir, "index.html")
 var indexTitle = "Home Page"
 
+// IndexGET is the GET handler for "/".
 func IndexGET(w http.ResponseWriter, r *http.Request) {
 	ctx := r.Context()
 	resp := app.TemplateManager.NewHTMLResponse(ctx, w)
 
-	indexData := &IndexData{PageName: indexTitle, FeedsHTML: "<p>Hello World</p>"}
-	indexDataHTML := indexView.MustExecuteToString(indexData)
+	pageData := &PageData{PageName: indexTitle, FeedsHTML: "<p>Hello World</p>"}
+	pageHTML := indexView.MustExecuteToString(pageData)
 
-	d := app.TemplateManager.NewMainPageData(app.TemplateManager.MakeTitle(indexTitle), indexDataHTML)
+	d := app.TemplateManager.NewMainPageData(app.TemplateManager.MakeTitle(indexTitle), pageHTML)
 	resp.MustComplete(d)
 }

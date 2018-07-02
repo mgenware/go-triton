@@ -9,19 +9,19 @@ import (
 
 // JSONResponse helps you create a HTTP response in JSON with MainAPIData.
 type JSONResponse struct {
-	mgr         *TemplateManager
+	mgr         *Manager
 	writer      http.ResponseWriter
 	isCompleted bool
 }
 
 // NewJSONResponse creates a new JSONResponse.
-func NewJSONResponse(mgr *TemplateManager, wr http.ResponseWriter) *JSONResponse {
+func NewJSONResponse(mgr *Manager, wr http.ResponseWriter) *JSONResponse {
 	return &JSONResponse{mgr: mgr, writer: wr}
 }
 
 // MustError finish the response with an error message, and panics if unexpected error happens.
 func (j *JSONResponse) MustError(msg string) {
-	d := &MainAPIData{Message: msg, Code: 1}
+	d := &APIResult{Message: msg, Code: 1}
 	j.mustWriteData(d)
 }
 
@@ -32,23 +32,23 @@ func (j *JSONResponse) MustErrorWithObject(err error) {
 
 // MustErrorWithCode finish the response with an error code and a message, and panics if unexpected error happens.
 func (j *JSONResponse) MustErrorWithCode(code uint, msg string) {
-	d := &MainAPIData{Code: code, Message: msg}
+	d := &APIResult{Code: code, Message: msg}
 	j.mustWriteData(d)
 }
 
 // MustCompleteWithData finish the response with the given data, and panics if unexpected error happens.
 func (j *JSONResponse) MustCompleteWithData(data interface{}) {
-	d := &MainAPIData{Data: data}
+	d := &APIResult{Data: data}
 	j.mustWriteData(d)
 }
 
 // MustComplete finish the response with empty data, and panics if unexpected error happens.
 func (j *JSONResponse) MustComplete() {
-	d := &MainAPIData{}
+	d := &APIResult{}
 	j.mustWriteData(d)
 }
 
-func (j *JSONResponse) mustWriteData(d *MainAPIData) {
+func (j *JSONResponse) mustWriteData(d *APIResult) {
 	if j.isCompleted {
 		panic("Result has completed")
 	}

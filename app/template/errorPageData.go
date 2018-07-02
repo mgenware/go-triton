@@ -5,7 +5,7 @@ type ErrorPageData struct {
 	Message string
 }
 
-// NewErrorPageDataData creates an new ErrorPageData object.
+// NewErrorPageData creates a new ErrorPageData.
 func NewErrorPageData(msg string) *ErrorPageData {
 	return &ErrorPageData{Message: msg}
 }

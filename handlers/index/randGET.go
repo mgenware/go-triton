@@ -10,12 +10,12 @@ import (
 func RandGET(w http.ResponseWriter, r *http.Request) {
 	ctx := r.Context()
 
-	resp := app.Template.NewHTMLResponse(ctx, w)
+	resp := app.TemplateManager.NewHTMLResponse(ctx, w)
 
 	// Generate a random bool (0|1)
 	i := rand.Intn(2)
 	if i == 0 {
-		d := app.Template.NewMainPageData(app.Template.MakeTitle("Random Result"), "<p>🙈</p>")
+		d := app.TemplateManager.NewMainPageData(app.TemplateManager.MakeTitle("Random Result"), "<p>🙈</p>")
 		resp.MustComplete(d)
 	} else {
 		resp.MustError("Unlucky!!!")

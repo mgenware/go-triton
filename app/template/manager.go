@@ -9,7 +9,8 @@ import (
 	"github.com/mgenware/go-packagex/templatex"
 )
 
-type TemplateManager struct {
+// Manager provides common operations on generating HTML output.
+type Manager struct {
 	devMode bool
 	dir     string
 
@@ -17,12 +18,12 @@ type TemplateManager struct {
 	errorView *templatex.View
 }
 
-// MustCreateTemplateManager creates an instance of TemplateManager with specified arguments. Note that this function panics when main template loading fails.
-func MustCreateTemplateManager(dir string, devMode bool) *TemplateManager {
+// MustCreateManager creates an instance of TemplateManager with specified arguments. Note that this function panics when main template loading fails.
+func MustCreateManager(dir string, devMode bool) *Manager {
 	// Set the global devMode (which affects template loading)
 	templatex.SetGlobalDevMode(devMode)
 
-	t := &TemplateManager{dir: dir}
+	t := &Manager{dir: dir}
 
 	// Load the main template
 	t.mainView = templatex.MustParseView(filepath.Join(dir, "main.html"))
@@ -31,7 +32,8 @@ func MustCreateTemplateManager(dir string, devMode bool) *TemplateManager {
 	return t
 }
 
-func (m *TemplateManager) MustComplete(ctx context.Context, d *MainPageData, w http.ResponseWriter) {
+// MustComplete executes the main view template with the specified data and panics if error occurs.
+func (m *Manager) MustComplete(ctx context.Context, d *MainPageData, w http.ResponseWriter) {
 	httpx.SetResponseContentType(w, httpx.MIMETypeHTMLUTF8)
 
 	// TODO: Setup assets, e.g.:
@@ -45,25 +47,29 @@ func (m *TemplateManager) MustComplete(ctx context.Context, d *MainPageData, w h
 	}
 }
 
-func (m *TemplateManager) MustError(ctx context.Context, d *ErrorPageData, w http.ResponseWriter) {
+// MustError executes the main view template with the specified data and panics if error occurs.
+func (m *Manager) MustError(ctx context.Context, d *ErrorPageData, w http.ResponseWriter) {
 	errorHTML := m.errorView.MustExecuteToString(d)
 	htmlData := NewMainPageData("Error", errorHTML)
 	m.MustComplete(ctx, htmlData, w)
 }
 
 // MakeTitle add a consistent suffix to your title string.
-func (m *TemplateManager) MakeTitle(t string) string {
+func (m *Manager) MakeTitle(t string) string {
 	return t + " - MyWebsite"
 }
 
-func (m *TemplateManager) NewHTMLResponse(ctx context.Context, w http.ResponseWriter) *HTMLResponse {
+// NewHTMLResponse wraps a call to NewHTMLResponse.
+func (m *Manager) NewHTMLResponse(ctx context.Context, w http.ResponseWriter) *HTMLResponse {
 	return NewHTMLResponse(ctx, m, w)
 }
 
-func (m *TemplateManager) NewJSONResponse(w http.ResponseWriter) *JSONResponse {
+// NewJSONResponse wraps a call to NewJSONResponse.
+func (m *Manager) NewJSONResponse(w http.ResponseWriter) *JSONResponse {
 	return NewJSONResponse(m, w)
 }
 
-func (m *TemplateManager) NewMainPageData(title, contentHTML string) *MainPageData {
-	return &MainPageData{Title: title, ContentHTML: contentHTML}
+// NewMainPageData wraps a call to MainPageData.
+func (m *Manager) NewMainPageData(title, contentHTML string) *MainPageData {
+	return NewMainPageData(title, contentHTML)
 }

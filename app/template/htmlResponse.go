@@ -7,14 +7,14 @@ import (
 
 // HTMLResponse helps you create a HTTP response in HTML with MainPageData.
 type HTMLResponse struct {
-	mgr         *TemplateManager
+	mgr         *Manager
 	writer      http.ResponseWriter
 	ctx         context.Context
 	isCompleted bool
 }
 
 // NewHTMLResponse creates a new HTMLResponse.
-func NewHTMLResponse(ctx context.Context, mgr *TemplateManager, wr http.ResponseWriter) *HTMLResponse {
+func NewHTMLResponse(ctx context.Context, mgr *Manager, wr http.ResponseWriter) *HTMLResponse {
 	return &HTMLResponse{mgr: mgr, writer: wr, ctx: ctx}
 }
 

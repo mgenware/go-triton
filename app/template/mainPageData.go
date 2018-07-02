@@ -1,6 +1,6 @@
 package template
 
-// MainPageData holds the data needed in the main page template.
+// MainPageData holds the data needed in main page template.
 type MainPageData struct {
 	// Title
 	Title       string

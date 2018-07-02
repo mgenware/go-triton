@@ -13,8 +13,8 @@ import (
 // Config is the application configuration loaded.
 var Config *config.Config
 
-// Template is the template manager.
-var Template *template.TemplateManager
+// TemplateManager is a app-wide instance of template.Manager.
+var TemplateManager *template.Manager
 
 func init() {
 	mustSetupConfig()
@@ -57,6 +57,5 @@ func mustSetupConfig() {
 }
 
 func mustSetupTemplate(config *config.Config) {
-	t := template.MustCreateTemplateManager(config.TemplatesDir, !config.IsProduction)
-	Template = t
+	TemplateManager = template.MustCreateManager(config.TemplatesDir, !config.IsProduction)
 }

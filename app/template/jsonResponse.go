@@ -19,30 +19,30 @@ func NewJSONResponse(mgr *Manager, wr http.ResponseWriter) *JSONResponse {
 	return &JSONResponse{mgr: mgr, writer: wr}
 }
 
-// MustError finish the response with an error message, and panics if unexpected error happens.
+// MustError finishes the response with an error message, and panics if unexpected error happens.
 func (j *JSONResponse) MustError(msg string) {
 	d := &APIResult{Message: msg, Code: 1}
 	j.mustWriteData(d)
 }
 
-// MustErrorWithObject finish the response with an error object, and panics if unexpected error happens.
+// MustErrorWithObject finishes the response with an error object, and panics if unexpected error happens.
 func (j *JSONResponse) MustErrorWithObject(err error) {
 	j.MustError(err.Error())
 }
 
-// MustErrorWithCode finish the response with an error code and a message, and panics if unexpected error happens.
+// MustErrorWithCode finishes the response with an error code and a message, and panics if unexpected error happens.
 func (j *JSONResponse) MustErrorWithCode(code uint, msg string) {
 	d := &APIResult{Code: code, Message: msg}
 	j.mustWriteData(d)
 }
 
-// MustCompleteWithData finish the response with the given data, and panics if unexpected error happens.
+// MustCompleteWithData finishes the response with the given data, and panics if unexpected error happens.
 func (j *JSONResponse) MustCompleteWithData(data interface{}) {
 	d := &APIResult{Data: data}
 	j.mustWriteData(d)
 }
 
-// MustComplete finish the response with empty data, and panics if unexpected error happens.
+// MustComplete finishes the response with empty data, and panics if unexpected error happens.
 func (j *JSONResponse) MustComplete() {
 	d := &APIResult{}
 	j.mustWriteData(d)

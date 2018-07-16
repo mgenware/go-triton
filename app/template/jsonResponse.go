@@ -7,7 +7,7 @@ import (
 	"github.com/mgenware/go-packagex/httpx"
 )
 
-// JSONResponse helps you create a HTTP response in JSON with MainAPIData.
+// JSONResponse helps you create a HTTP response in JSON.
 type JSONResponse struct {
 	mgr         *Manager
 	writer      http.ResponseWriter

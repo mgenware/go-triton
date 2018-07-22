@@ -26,7 +26,7 @@ func MustCreateManager(dir string, devMode bool) *Manager {
 	t := &Manager{dir: dir}
 
 	// Load the main template
-	t.mainView = templatex.MustParseView(filepath.Join(dir, "main.html"))
+	t.mainView = templatex.MustParseView(filepath.Join(dir, "master.html"))
 	// Load the error template
 	t.errorView = templatex.MustParseView(filepath.Join(dir, "error.html"))
 	return t

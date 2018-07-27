@@ -18,7 +18,7 @@ func NewHTMLResponse(ctx context.Context, mgr *Manager, wr http.ResponseWriter) 
 	return &HTMLResponse{mgr: mgr, writer: wr, ctx: ctx}
 }
 
-// MustComplete finish the response with the given MainPageData, and panics if unexpected error happens.
+// MustComplete finishes the response with the given MainPageData, and panics if unexpected error happens.
 func (h *HTMLResponse) MustComplete(d *MainPageData) {
 	if h.isCompleted {
 		panic("Result has completed")
@@ -27,7 +27,7 @@ func (h *HTMLResponse) MustComplete(d *MainPageData) {
 	h.mgr.MustComplete(h.ctx, d, h.writer)
 }
 
-// MustError finish the response with an error message, and panics if unexpected error happens.
+// MustError finishes the response with an error message, and panics if unexpected error happens.
 func (h *HTMLResponse) MustError(msg string) {
 	if h.isCompleted {
 		panic("Result has completed")

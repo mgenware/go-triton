@@ -1,8 +1,11 @@
 package defs
 
+type ContextKey string
+
 const (
-	// LanguageKey indicates the key name for localized language ID in web context.
-	LanguageKey = "language"
-	LanguageCN  = "cn"
-	LanguageEN  = "en"
+	LanguageContextKey ContextKey = "lang"
+	LanguageCookieKey             = "lang"
+	LanguageQueryKey              = "lang"
+	LanguageCN                    = "cn"
+	LanguageEN                    = "en"
 )

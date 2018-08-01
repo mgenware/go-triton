@@ -41,12 +41,14 @@ func Start() {
 	// r.Use(sessionMiddleware)
 
 	// ----------------- HTTP Routes -----------------
+	lm := app.TemplateManager.LocalizationManager
+
 	// Not found handler
-	r.NotFound(system.NotFoundHandler)
+	r.With(lm.EnableContextLanguage).NotFound(system.NotFoundHandler)
 
 	// index handler
-	r.Get("/", homePage.HomeGET)
-	r.Get("/rand", errorPage.FakeErrorGET)
+	r.With(lm.EnableContextLanguage).Get("/", homePage.HomeGET)
+	r.With(lm.EnableContextLanguage).Get("/rand", errorPage.FakeErrorGET)
 
 	log.Printf("Starting server at %v", httpConfig.Port)
 	err := http.ListenAndServe(":"+strconv.Itoa(httpConfig.Port), r)

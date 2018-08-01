@@ -16,12 +16,12 @@ type LocalizedView struct {
 }
 
 func (v *LocalizedView) MustExecuteToString(ctx context.Context, data ILocalizedTemplateData) string {
-	lang := defs.LanguageFromContext(ctx)
+	lang := defs.ContextLanguage(ctx)
 	return v.view.MustExecuteToString(v.coerceTemplateData(data, lang))
 }
 
 func (v *LocalizedView) MustExecute(ctx context.Context, wr io.Writer, data ILocalizedTemplateData) {
-	lang := defs.LanguageFromContext(ctx)
+	lang := defs.ContextLanguage(ctx)
 	v.view.MustExecute(wr, v.coerceTemplateData(data, lang))
 }
 

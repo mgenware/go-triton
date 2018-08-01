@@ -5,17 +5,28 @@ import (
 	"fmt"
 	"io/ioutil"
 	"log"
+	"net/http"
 	"path/filepath"
+	"time"
+
+	"golang.org/x/text/language"
 
 	"github.com/mgenware/go-packagex/filepathx"
 	"github.com/mgenware/go-triton/app/defs"
 )
 
+var languageMatcher = language.NewMatcher([]language.Tag{
+	language.English,
+	language.Chinese,
+})
+
 type Manager struct {
-	defaultDic *Dictionary
-	dics       map[string]*Dictionary
+	defaultDic      *Dictionary
+	dics            map[string]*Dictionary
+	languageMatcher language.Matcher
 }
 
+// NewManagerFromDirectory creates a Manager from a directory of translation files.
 func NewManagerFromDirectory(dir string, defaultLang string) (*Manager, error) {
 	fileNames, err := ioutil.ReadDir(dir)
 	if err != nil {
@@ -47,6 +58,7 @@ func NewManagerFromDirectory(dir string, defaultLang string) (*Manager, error) {
 	return &Manager{dics: dics, defaultDic: defaultDic}, nil
 }
 
+// DictionaryForLanguage returns an Dictionary object associated with the specified language.
 func (mgr *Manager) DictionaryForLanguage(lang string) *Dictionary {
 	dic := mgr.dics[lang]
 	if dic == nil {
@@ -55,6 +67,7 @@ func (mgr *Manager) DictionaryForLanguage(lang string) *Dictionary {
 	return dic
 }
 
+// ValueForKeyWithLanguage returns a localized string associated with the specified language and key.
 func (mgr *Manager) ValueForKeyWithLanguage(lang, key string) string {
 	dic := mgr.DictionaryForLanguage(lang)
 	if dic == nil {
@@ -63,6 +76,37 @@ func (mgr *Manager) ValueForKeyWithLanguage(lang, key string) string {
 	return dic.Map[key]
 }
 
+// ValueForKey returns a localized string associated with the specified context and key.
 func (mgr *Manager) ValueForKey(ctx context.Context, key string) string {
-	return mgr.ValueForKeyWithLanguage(defs.LanguageFromContext(ctx), key)
+	return mgr.ValueForKeyWithLanguage(defs.ContextLanguage(ctx), key)
+}
+
+// MatchLanguage returns the determined language based on various conditions.
+func (mgr *Manager) MatchLanguage(ctx context.Context, w http.ResponseWriter, r *http.Request) string {
+	// Check if user has explicitly set the language name
+	queryLang := r.FormValue(defs.LanguageQueryKey)
+	if queryLang != "" {
+		// Write user specified language setting to cookies
+		expires := time.Now().Add(30 * 24 * time.Hour)
+		c := &http.Cookie{Name: defs.LanguageCookieKey, Value: queryLang, Expires: expires}
+		http.SetCookie(w, c)
+
+		return queryLang
+	}
+
+	// If no user specified language exists, use the language matcher instead
+	cookieLang, _ := r.Cookie(defs.LanguageQueryKey)
+	accept := r.Header.Get("Accept-Language")
+	tag, _ := language.MatchStrings(languageMatcher, cookieLang.String(), accept)
+	return tag.String()
+}
+
+// EnableContextLanguage defines a middleware to set the context language associated with the request.
+func (mgr *Manager) EnableContextLanguage(next http.Handler) http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		ctx := r.Context()
+		lang := mgr.MatchLanguage(ctx, w, r)
+		ctx = context.WithValue(ctx, defs.LanguageContextKey, lang)
+		next.ServeHTTP(w, r.WithContext(ctx))
+	})
 }

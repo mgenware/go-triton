@@ -7,7 +7,8 @@ import (
 	"strings"
 
 	"github.com/mgenware/go-triton/app"
-	"github.com/mgenware/go-triton/handlers/index"
+	"github.com/mgenware/go-triton/handlers/errorPage"
+	"github.com/mgenware/go-triton/handlers/homePage"
 	"github.com/mgenware/go-triton/handlers/system"
 
 	"github.com/go-chi/chi"
@@ -44,11 +45,14 @@ func Start() {
 	r.NotFound(system.NotFoundHandler)
 
 	// index handler
-	r.Get("/", index.IndexGET)
-	r.Get("/rand", index.RandGET)
+	r.Get("/", homePage.HomeGET)
+	r.Get("/rand", errorPage.FakeErrorGET)
 
 	log.Printf("Starting server at %v", httpConfig.Port)
-	log.Fatal(http.ListenAndServe(":"+strconv.Itoa(httpConfig.Port), r))
+	err := http.ListenAndServe(":"+strconv.Itoa(httpConfig.Port), r)
+	if err != nil {
+		panic(err)
+	}
 }
 
 // fileServer conveniently sets up a http.FileServer handler to serve

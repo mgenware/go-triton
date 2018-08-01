@@ -18,10 +18,9 @@ var TemplateManager *template.Manager
 
 func init() {
 	mustSetupConfig()
-	mustSetupTemplate(Config)
+	mustSetupTemplates(Config)
 }
 
-// ------- Private functions -------
 func mustSetupConfig() {
 	// Parse command-line arguments
 	var configPath string
@@ -56,6 +55,9 @@ func mustSetupConfig() {
 	Config = config
 }
 
-func mustSetupTemplate(config *config.Config) {
-	TemplateManager = template.MustCreateManager(config.TemplatesDir, !config.IsProduction)
+func mustSetupTemplates(c *config.Config) {
+	templatesConfig := c.Templates
+	localizationConfig := c.Localization
+
+	TemplateManager = template.MustCreateManager(templatesConfig.RootDir, !c.IsProduction, localizationConfig.RootDir, localizationConfig.DefaultLang)
 }

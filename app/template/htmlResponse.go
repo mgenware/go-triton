@@ -5,7 +5,7 @@ import (
 	"net/http"
 )
 
-// HTMLResponse helps you create a HTTP response in HTML with MainPageData.
+// HTMLResponse helps you create a HTTP response in HTML with MasterPageData.
 type HTMLResponse struct {
 	mgr         *Manager
 	writer      http.ResponseWriter
@@ -18,8 +18,8 @@ func NewHTMLResponse(ctx context.Context, mgr *Manager, wr http.ResponseWriter) 
 	return &HTMLResponse{mgr: mgr, writer: wr, ctx: ctx}
 }
 
-// MustComplete finishes the response with the given MainPageData, and panics if unexpected error happens.
-func (h *HTMLResponse) MustComplete(d *MainPageData) {
+// MustComplete finishes the response with the given MasterPageData, and panics if unexpected error happens.
+func (h *HTMLResponse) MustComplete(d *MasterPageData) {
 	if h.isCompleted {
 		panic("Result has completed")
 	}

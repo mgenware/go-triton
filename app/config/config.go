@@ -4,6 +4,8 @@ import (
 	"encoding/json"
 	"errors"
 	"path/filepath"
+
+	"github.com/mgenware/go-triton/app/config/internals"
 )
 
 // Config is the root configuration type for your application.
@@ -12,23 +14,10 @@ type Config struct {
 	IsProduction bool `json:"isProduction"`
 
 	// HTTP holds HTTP-related configuration data.
-	HTTP *httpConfig `json:"http"`
-	// ViewDir is the directory of templates.
-	TemplatesDir string `json:"templatesDir"`
-}
+	HTTP *internals.HTTPConfig `json:"http"`
 
-// ----- Internal types -----
-type httpConfig struct {
-	// Port is the listening port of web server.
-	Port int `json:"port"`
-	// Static defines how server serves static files (optional).
-	Static *httpStaticConfig `json:"static"`
-}
-type httpStaticConfig struct {
-	// Pattern is the pattern string used for registering request handler.
-	Pattern string `json:"pattern"`
-	// Dir is the physical directory path you want to be served.
-	Dir string `json:"dir"`
+	Templates    internals.TemplatesConfig    `json:"templates"`
+	Localization internals.LocalizationConfig `json:localization`
 }
 
 // ReadConfig loads an ConfigType from an array of bytes.
@@ -48,6 +37,7 @@ func ReadConfig(bytes []byte) (*Config, error) {
 }
 
 func (config *Config) validateAndCoerce() error {
+	// HTTP
 	httpConfig := config.HTTP
 	if httpConfig == nil {
 		return errors.New("Missing http config")
@@ -67,10 +57,21 @@ func (config *Config) validateAndCoerce() error {
 		}
 	}
 
-	mustCoercePath(&config.TemplatesDir)
 	if httpStaticConfig != nil {
 		mustCoercePath(&httpStaticConfig.Dir)
 	}
+
+	// Templates
+	templatesConfig := config.Templates
+	mustCoercePath(&templatesConfig.RootDir)
+
+	// Localization
+	localizationConfig := config.Localization
+	mustCoercePath(&localizationConfig.RootDir)
+	if localizationConfig.DefaultLang == "" {
+		return errors.New("localization.defaultLang is required")
+	}
+
 	return nil
 }
 

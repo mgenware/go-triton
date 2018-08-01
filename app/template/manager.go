@@ -7,50 +7,60 @@ import (
 
 	"github.com/mgenware/go-packagex/httpx"
 	"github.com/mgenware/go-packagex/templatex"
+	"github.com/mgenware/go-triton/app/template/localization"
 )
 
-// Manager provides common operations on generating HTML output.
+// Manager provides common functions to generate HTML strings.
 type Manager struct {
 	devMode bool
 	dir     string
 
-	mainView  *templatex.View
-	errorView *templatex.View
+	masterView          *LocalizedView
+	errorView           *LocalizedView
+	LocalizationManager *localization.Manager
 }
 
 // MustCreateManager creates an instance of TemplateManager with specified arguments. Note that this function panics when main template loading fails.
-func MustCreateManager(dir string, devMode bool) *Manager {
+func MustCreateManager(
+	dir string,
+	devMode bool,
+	i18nDir string,
+	defaultLang string,
+) *Manager {
 	// Set the global devMode (which affects template loading)
 	templatex.SetGlobalDevMode(devMode)
 
-	t := &Manager{dir: dir}
+	// Create the localization manager used by localized template views
+	localizationManager, err := localization.NewManagerFromDirectory(i18nDir, defaultLang)
+	if err != nil {
+		panic(err)
+	}
 
-	// Load the main template
-	t.mainView = templatex.MustParseView(filepath.Join(dir, "master.html"))
+	t := &Manager{dir: dir, LocalizationManager: localizationManager}
+
+	// Load the master template
+	t.masterView = t.MustParseLocalizedView("master.html")
 	// Load the error template
-	t.errorView = templatex.MustParseView(filepath.Join(dir, "error.html"))
+	t.errorView = t.MustParseLocalizedView("error.html")
+
 	return t
 }
 
 // MustComplete executes the main view template with the specified data and panics if error occurs.
-func (m *Manager) MustComplete(ctx context.Context, d *MainPageData, w http.ResponseWriter) {
+func (m *Manager) MustComplete(ctx context.Context, d *MasterPageData, w http.ResponseWriter) {
 	httpx.SetResponseContentType(w, httpx.MIMETypeHTMLUTF8)
 
-	// TODO: Setup assets, e.g.:
+	// Setup additional assets, e.g.:
 	// data.Header += "<link href=\"/static/main.min.css\" rel=\"stylesheet\"/>"
 	// data.Scripts += "<script src=\"/static/main.min.js\"></script>"
 
-	err := m.mainView.Execute(w, d)
-	if err != nil {
-		// This panic will be recovered by panicHandler
-		panic(err)
-	}
+	m.masterView.MustExecute(ctx, w, d)
 }
 
 // MustError executes the main view template with the specified data and panics if error occurs.
 func (m *Manager) MustError(ctx context.Context, d *ErrorPageData, w http.ResponseWriter) {
-	errorHTML := m.errorView.MustExecuteToString(d)
-	htmlData := NewMainPageData("Error", errorHTML)
+	errorHTML := m.errorView.MustExecuteToString(ctx, d)
+	htmlData := NewMasterPageData("Error", errorHTML)
 	m.MustComplete(ctx, htmlData, w)
 }
 
@@ -69,7 +79,13 @@ func (m *Manager) NewJSONResponse(w http.ResponseWriter) *JSONResponse {
 	return NewJSONResponse(m, w)
 }
 
-// NewMainPageData wraps a call to MainPageData.
-func (m *Manager) NewMainPageData(title, contentHTML string) *MainPageData {
-	return NewMainPageData(title, contentHTML)
+// NewMasterPageData wraps a call to MasterPageData.
+func (m *Manager) NewMasterPageData(title, contentHTML string) *MasterPageData {
+	return NewMasterPageData(title, contentHTML)
+}
+
+// MustParseLocalizedView creates a new LocalizedView from a file.
+func (m *Manager) MustParseLocalizedView(relativePath string) *LocalizedView {
+	view := templatex.MustParseView(filepath.Join(m.dir, relativePath))
+	return &LocalizedView{view: view, localizationManager: m.LocalizationManager}
 }

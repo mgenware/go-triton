@@ -3,5 +3,5 @@
   "http": {
     "port": 12000
   },
-  "templatesDir": "templates"
+  "templatesDir": "./assets/templates"
 }

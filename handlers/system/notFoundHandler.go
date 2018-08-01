@@ -3,11 +3,16 @@ package system
 import (
 	"fmt"
 	"net/http"
+
+	"github.com/mgenware/go-triton/app"
 )
 
 func NotFoundHandler(w http.ResponseWriter, r *http.Request) {
-	msg := "The resource you requested \"" + r.URL.String() + "\" does not exist."
+	tm := app.TemplateManager
+	ctx := r.Context()
+	msg := fmt.Sprintf(tm.LocalizationManager.ValueForKey(ctx, "pPageNotFound"), r.URL.String())
 
-	w.WriteHeader(http.StatusNotFound)
-	fmt.Fprint(w, msg)
+	resp := tm.NewHTMLResponse(ctx, w)
+	resp.MustError(msg)
+
 }

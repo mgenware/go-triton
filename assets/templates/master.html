@@ -62,6 +62,14 @@
       </p>
     </nav>
     <main class="container">
+      <p>
+        <a href="/">Home(Auto-detect language)</a> |
+        <a href="/?lang=en">Home(English)</a> |
+        <a href="/?lang=cn">Home(Chinese)</a> |
+        <a href="/fakeError">Custom Error Page</a> |
+        <a href="/__not_found__">404 Page</a>
+      </p>
+      <hr/>
       {{.ContentHTML}}
     </main>
     {{.Scripts}}

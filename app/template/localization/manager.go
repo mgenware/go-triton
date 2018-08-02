@@ -26,8 +26,9 @@ var matcher = language.NewMatcher([]language.Tag{
 })
 
 type Manager struct {
-	defaultDic *Dictionary
-	dics       map[string]*Dictionary
+	defaultDic  *Dictionary
+	defaultLang string
+	dics        map[string]*Dictionary
 }
 
 // NewManagerFromDirectory creates a Manager from a directory of translation files.
@@ -59,7 +60,7 @@ func NewManagerFromDirectory(dir string, defaultLang string) (*Manager, error) {
 		return nil, fmt.Errorf("Default language \"%v\" not found", defaultLang)
 	}
 
-	return &Manager{dics: dics, defaultDic: defaultDic}, nil
+	return &Manager{dics: dics, defaultDic: defaultDic, defaultLang: defaultLang}, nil
 }
 
 // DictionaryForLanguage returns an Dictionary object associated with the specified language.
@@ -112,8 +113,8 @@ func (mgr *Manager) MatchLanguage(ctx context.Context, w http.ResponseWriter, r 
 		return defs.LanguageCSString
 	}
 
-	// Fallback to English
-	return defs.LanguageENString
+	// Fallback to default lang
+	return mgr.defaultLang
 }
 
 // EnableContextLanguage defines a middleware to set the context language associated with the request.

@@ -15,15 +15,19 @@ import (
 	"github.com/mgenware/go-triton/app/defs"
 )
 
-var languageMatcher = language.NewMatcher([]language.Tag{
-	language.English,
-	language.Chinese,
+var (
+	LanguageCSTag = language.SimplifiedChinese
+	LanguageENTag = language.English
+)
+
+var matcher = language.NewMatcher([]language.Tag{
+	LanguageENTag, // The first language is used as fallback.
+	LanguageCSTag,
 })
 
 type Manager struct {
-	defaultDic      *Dictionary
-	dics            map[string]*Dictionary
-	languageMatcher language.Matcher
+	defaultDic *Dictionary
+	dics       map[string]*Dictionary
 }
 
 // NewManagerFromDirectory creates a Manager from a directory of translation files.
@@ -83,10 +87,10 @@ func (mgr *Manager) ValueForKey(ctx context.Context, key string) string {
 
 // MatchLanguage returns the determined language based on various conditions.
 func (mgr *Manager) MatchLanguage(ctx context.Context, w http.ResponseWriter, r *http.Request) string {
-	// Check if user has explicitly set the language name
+	// Check if user has explicitly set a language
 	queryLang := r.FormValue(defs.LanguageQueryKey)
 	if queryLang != "" {
-		// Write user specified language setting to cookies
+		// Write the user specified language to cookies
 		expires := time.Now().Add(30 * 24 * time.Hour)
 		c := &http.Cookie{Name: defs.LanguageCookieKey, Value: queryLang, Expires: expires}
 		http.SetCookie(w, c)
@@ -94,11 +98,22 @@ func (mgr *Manager) MatchLanguage(ctx context.Context, w http.ResponseWriter, r 
 		return queryLang
 	}
 
-	// If no user specified language exists, use the language matcher instead
-	cookieLang, _ := r.Cookie(defs.LanguageQueryKey)
+	// If no user-specified language exists, try to use the cookie value
+	cookieLang, _ := r.Cookie(defs.LanguageCookieKey)
+	if cookieLang != nil {
+		return cookieLang.Value
+	}
+
+	// If none of the above values exist, use the language matcher
 	accept := r.Header.Get("Accept-Language")
-	tag, _ := language.MatchStrings(languageMatcher, cookieLang.String(), accept)
-	return tag.String()
+	_, index := language.MatchStrings(matcher, accept)
+
+	if index == 1 {
+		return defs.LanguageCSString
+	}
+
+	// Fallback to English
+	return defs.LanguageENString
 }
 
 // EnableContextLanguage defines a middleware to set the context language associated with the request.

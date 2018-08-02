@@ -6,6 +6,6 @@ const (
 	LanguageContextKey ContextKey = "lang"
 	LanguageCookieKey             = "lang"
 	LanguageQueryKey              = "lang"
-	LanguageCN                    = "cn"
-	LanguageEN                    = "en"
+	LanguageCSString              = "cs"
+	LanguageENString              = "en"
 )

@@ -11,6 +11,7 @@ A boilerplate template for Go web applications.
   * Panic recovery handler as 500 Internal Server Error.
 * Template support (reloads templates when `IsProduction` flag is `false`).
 * Serves static files in development mode.
+* i18n support.
 
 ## Dependencies
 * [chi](https://github.com/go-chi/chi) 3.3.2: HTTP routing.

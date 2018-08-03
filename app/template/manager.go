@@ -90,8 +90,15 @@ func (m *Manager) NewMasterPageData(title, contentHTML string) *MasterPageData {
 	return NewMasterPageData(title, contentHTML)
 }
 
-// MustParseLocalizedView creates a new LocalizedView from a file.
+// MustParseLocalizedView creates a new LocalizedView with the given relative path.
 func (m *Manager) MustParseLocalizedView(relativePath string) *LocalizedView {
-	view := templatex.MustParseView(filepath.Join(m.dir, relativePath))
+	file := filepath.Join(m.dir, relativePath)
+	view := templatex.MustParseView(file)
 	return &LocalizedView{view: view, localizationManager: m.LocalizationManager}
+}
+
+// MustParseView creates a new View with the given relative path.
+func (m *Manager) MustParseView(relativePath string) *templatex.View {
+	file := filepath.Join(m.dir, relativePath)
+	return templatex.MustParseView(file)
 }

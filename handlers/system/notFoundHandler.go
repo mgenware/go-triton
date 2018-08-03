@@ -14,5 +14,4 @@ func NotFoundHandler(w http.ResponseWriter, r *http.Request) {
 
 	resp := tm.NewHTMLResponse(ctx, w)
 	resp.MustError(msg)
-
 }

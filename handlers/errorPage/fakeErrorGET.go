@@ -12,5 +12,5 @@ func FakeErrorGET(w http.ResponseWriter, r *http.Request) {
 	_, _, resp := app.HTMLResponse(w, r)
 	err := errors.New("🐒 This is a demo error page")
 
-	resp.MustErrorWithObject(err)
+	resp.MustFail(err)
 }

@@ -27,8 +27,8 @@ func (h *HTMLResponse) MustComplete(d *MasterPageData) {
 	h.mgr.MustComplete(h.ctx, d, h.writer)
 }
 
-// MustError finishes the response with an error message, and panics if unexpected error happens.
-func (h *HTMLResponse) MustError(msg string) {
+// MustFailWithMessage finishes the response with an error message, and panics if unexpected error happens.
+func (h *HTMLResponse) MustFailWithMessage(msg string) {
 	if h.isCompleted {
 		panic("Result has completed")
 	}
@@ -37,7 +37,7 @@ func (h *HTMLResponse) MustError(msg string) {
 	h.mgr.MustError(h.ctx, d, h.writer)
 }
 
-// MustErrorWithObject calls MustError with the given error object.
-func (h *HTMLResponse) MustErrorWithObject(err error) {
-	h.MustError(err.Error())
+// MustFail calls MustFailWithMessage with the given error object.
+func (h *HTMLResponse) MustFail(err error) {
+	h.MustFailWithMessage(err.Error())
 }

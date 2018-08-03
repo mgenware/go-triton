@@ -19,19 +19,19 @@ func NewJSONResponse(mgr *Manager, wr http.ResponseWriter) *JSONResponse {
 	return &JSONResponse{mgr: mgr, writer: wr}
 }
 
-// MustError finishes the response with an error message, and panics if unexpected error happens.
-func (j *JSONResponse) MustError(msg string) {
+// MustFailWithMessage finishes the response with an error message, and panics if unexpected error happens.
+func (j *JSONResponse) MustFailWithMessage(msg string) {
 	d := &APIResult{Message: msg, Code: 1}
 	j.mustWriteData(d)
 }
 
-// MustErrorWithObject finishes the response with an error object, and panics if unexpected error happens.
-func (j *JSONResponse) MustErrorWithObject(err error) {
-	j.MustError(err.Error())
+// MustFail finishes the response with an error object, and panics if unexpected error happens.
+func (j *JSONResponse) MustFail(err error) {
+	j.MustFailWithMessage(err.Error())
 }
 
-// MustErrorWithCode finishes the response with an error code and a message, and panics if unexpected error happens.
-func (j *JSONResponse) MustErrorWithCode(code uint, msg string) {
+// MustFailWithCode finishes the response with an error code and a message, and panics if unexpected error happens.
+func (j *JSONResponse) MustFailWithCode(code uint, msg string) {
 	d := &APIResult{Code: code, Message: msg}
 	j.mustWriteData(d)
 }

@@ -1,9 +1,11 @@
 package app
 
 import (
+	"context"
 	"flag"
 	"io/ioutil"
 	"log"
+	"net/http"
 	"os"
 
 	"github.com/mgenware/go-triton/app/config"
@@ -15,6 +17,24 @@ var Config *config.Config
 
 // TemplateManager is a app-wide instance of template.Manager.
 var TemplateManager *template.Manager
+
+// HTMLResponse returns common objects used to compose an HTML response.
+func HTMLResponse(w http.ResponseWriter, r *http.Request) (context.Context, *template.Manager, *template.HTMLResponse) {
+	ctx := r.Context()
+	tm := TemplateManager
+	resp := tm.NewHTMLResponse(ctx, w)
+
+	return ctx, tm, resp
+}
+
+// JSONResponse returns common objects used to compose an HTML response.
+func JSONResponse(w http.ResponseWriter, r *http.Request) (context.Context, *template.Manager, *template.JSONResponse) {
+	ctx := r.Context()
+	tm := TemplateManager
+	resp := tm.NewJSONResponse(w)
+
+	return ctx, tm, resp
+}
 
 func init() {
 	mustSetupConfig()

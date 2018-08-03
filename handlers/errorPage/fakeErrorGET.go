@@ -8,8 +8,7 @@ import (
 
 // FakeErrorGET is the GET handler for "/fakeError"
 func FakeErrorGET(w http.ResponseWriter, r *http.Request) {
-	ctx := r.Context()
-	resp := app.TemplateManager.NewHTMLResponse(ctx, w)
+	_, _, resp := app.HTMLResponse(w, r)
 
 	resp.MustError("🐒 This is a demo error page!")
 }

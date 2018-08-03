@@ -10,9 +10,7 @@ import (
 var indexView = app.TemplateManager.MustParseLocalizedView("home.html")
 
 func HomeGET(w http.ResponseWriter, r *http.Request) {
-	ctx := r.Context()
-	tm := app.TemplateManager
-	resp := tm.NewHTMLResponse(ctx, w)
+	ctx, tm, resp := app.HTMLResponse(w, r)
 
 	pageData := &HomePageData{Time: time.Now().String()}
 	pageHTML := indexView.MustExecuteToString(ctx, pageData)

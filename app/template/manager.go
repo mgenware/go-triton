@@ -64,9 +64,15 @@ func (m *Manager) MustError(ctx context.Context, d *ErrorPageData, w http.Respon
 	m.MustComplete(ctx, htmlData, w)
 }
 
-// MakeTitle add a consistent suffix to your title string.
-func (m *Manager) MakeTitle(t string) string {
-	return t + " - MyWebsite"
+// NewTitle adds a consistent suffix to the specified title.
+func (m *Manager) NewTitle(t string) string {
+	return t + " - Go-Triton"
+}
+
+// NewLocalizedTitle calls NewTitle with a localized title associated with the specified key.
+func (m *Manager) NewLocalizedTitle(ctx context.Context, key string) string {
+	ls := m.LocalizationManager.ValueForKey(ctx, key)
+	return m.NewTitle(ls)
 }
 
 // NewHTMLResponse wraps a call to NewHTMLResponse.

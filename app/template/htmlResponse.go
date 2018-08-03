@@ -36,3 +36,8 @@ func (h *HTMLResponse) MustError(msg string) {
 	d := NewErrorPageData(msg)
 	h.mgr.MustError(h.ctx, d, h.writer)
 }
+
+// MustErrorWithObject calls MustError with the given error object.
+func (h *HTMLResponse) MustErrorWithObject(err error) {
+	h.MustError(err.Error())
+}

@@ -27,16 +27,15 @@ func Start() {
 
 		// Mount PanicMiddleware only in production, let panic crash in development
 		r.Use(system.PanicMiddleware)
-	} else {
-		// *** Development only ***
-
-		// Mount static file server during development. (You may use to nginx to serve these files in production)
-		httpStaticConfig := httpConfig.Static
-		if httpStaticConfig != nil {
-			log.Printf("Serving Assets(%v) at \"%v\"", httpStaticConfig.Pattern, httpStaticConfig.Dir)
-			fileServer(r, httpStaticConfig.Pattern, http.Dir(httpStaticConfig.Dir))
-		}
 	}
+
+	// Mount static file server
+	httpStaticConfig := httpConfig.Static
+	if httpStaticConfig != nil {
+		log.Printf("Serving Assets(%v) at \"%v\"", httpStaticConfig.Pattern, httpStaticConfig.Dir)
+		fileServer(r, httpStaticConfig.Pattern, http.Dir(httpStaticConfig.Dir))
+	}
+
 	// Mount other middlewares, for example:
 	// r.Use(sessionMiddleware)
 

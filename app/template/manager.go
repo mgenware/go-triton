@@ -102,3 +102,8 @@ func (m *Manager) MustParseView(relativePath string) *templatex.View {
 	file := filepath.Join(m.dir, relativePath)
 	return templatex.MustParseView(file)
 }
+
+// LocalizedString is a convenience function of LocalizationManager.ValueForKey.
+func (m *Manager) LocalizedString(ctx context.Context, key string) string {
+	return m.LocalizationManager.ValueForKey(ctx, key)
+}

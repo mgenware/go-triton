@@ -2,6 +2,7 @@ package template
 
 import (
 	"context"
+	"fmt"
 	"net/http"
 	"path/filepath"
 
@@ -106,4 +107,9 @@ func (m *Manager) MustParseView(relativePath string) *templatex.View {
 // LocalizedString is a convenience function of LocalizationManager.ValueForKey.
 func (m *Manager) LocalizedString(ctx context.Context, key string) string {
 	return m.LocalizationManager.ValueForKey(ctx, key)
+}
+
+// FormatLocalizedString is a convenience function to format a localized string.
+func (m *Manager) FormatLocalizedString(ctx context.Context, key string, a ...interface{}) string {
+	return fmt.Sprintf(m.LocalizedString(ctx, key), a)
 }

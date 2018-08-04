@@ -5,6 +5,7 @@ import (
 	"net/http"
 
 	"github.com/mgenware/go-packagex/httpx"
+	"github.com/mgenware/go-triton/app/defs"
 )
 
 // JSONResponse helps you create a HTTP response in JSON.
@@ -21,7 +22,7 @@ func NewJSONResponse(mgr *Manager, wr http.ResponseWriter) *JSONResponse {
 
 // MustFailWithMessage finishes the response with an error message, and panics if unexpected error happens.
 func (j *JSONResponse) MustFailWithMessage(msg string) {
-	d := &APIResult{Message: msg, Code: 1}
+	d := &APIResult{Message: msg, Code: defs.APIGenericError}
 	j.mustWriteData(d)
 }
 

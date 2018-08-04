@@ -9,3 +9,7 @@ const (
 	LanguageCSString              = "cs"
 	LanguageENString              = "en"
 )
+
+const (
+	APIGenericError uint = 1
+)

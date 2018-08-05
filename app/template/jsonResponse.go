@@ -20,21 +20,25 @@ func NewJSONResponse(mgr *Manager, wr http.ResponseWriter) *JSONResponse {
 	return &JSONResponse{mgr: mgr, writer: wr}
 }
 
-// MustFailWithMessage finishes the response with an error message, and panics if unexpected error happens.
-func (j *JSONResponse) MustFailWithMessage(msg string) {
-	d := &APIResult{Message: msg, Code: defs.APIGenericError}
+// MustFailWithCodeAndMessage finishes the response with the specified code and message, and panics if unexpected error happens.
+func (j *JSONResponse) MustFailWithCodeAndMessage(code uint, msg string) {
+	d := &APIResult{Message: msg, Code: code}
 	j.mustWriteData(d)
+}
+
+// MustFailWithMessage finishes the response with the specified error message, and panics if unexpected error happens.
+func (j *JSONResponse) MustFailWithMessage(msg string) {
+	j.MustFailWithCodeAndMessage(defs.APIGenericError, msg)
+}
+
+// MustFailWithCode finishes the response with the specified error code, and panics if unexpected error happens.
+func (j *JSONResponse) MustFailWithCode(code uint) {
+	j.MustFailWithCodeAndMessage(code, "")
 }
 
 // MustFail finishes the response with an error object, and panics if unexpected error happens.
 func (j *JSONResponse) MustFail(err error) {
 	j.MustFailWithMessage(err.Error())
-}
-
-// MustFailWithCode finishes the response with an error code and a message, and panics if unexpected error happens.
-func (j *JSONResponse) MustFailWithCode(code uint, msg string) {
-	d := &APIResult{Code: code, Message: msg}
-	j.mustWriteData(d)
 }
 
 // MustCompleteWithData finishes the response with the given data, and panics if unexpected error happens.

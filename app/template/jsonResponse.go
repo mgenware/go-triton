@@ -41,15 +41,9 @@ func (j *JSONResponse) MustFail(err error) {
 	j.MustFailWithMessage(err.Error())
 }
 
-// MustCompleteWithData finishes the response with the given data, and panics if unexpected error happens.
-func (j *JSONResponse) MustCompleteWithData(data interface{}) {
+// MustComplete finishes the response with the given data, and panics if unexpected error happens.
+func (j *JSONResponse) MustComplete(data interface{}) {
 	d := &APIResult{Data: data}
-	j.mustWriteData(d)
-}
-
-// MustComplete finishes the response with empty data, and panics if unexpected error happens.
-func (j *JSONResponse) MustComplete() {
-	d := &APIResult{}
 	j.mustWriteData(d)
 }
 

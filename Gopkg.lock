@@ -8,17 +8,29 @@
   version = "v3.3.2"
 
 [[projects]]
+  branch = "master"
   name = "github.com/mgenware/go-packagex"
   packages = [
+    "filepathx",
     "httpx",
     "templatex"
   ]
-  revision = "0bd67af9d9d10be29017ca25686f8d6af9713a69"
-  version = "1.3.2"
+  revision = "395c7b5037e381bca48fb3ac2b6d03163041495a"
+
+[[projects]]
+  name = "golang.org/x/text"
+  packages = [
+    "internal/gen",
+    "internal/tag",
+    "language",
+    "unicode/cldr"
+  ]
+  revision = "f21a4dfb5e38f5895301dc265a8def02365cc3d0"
+  version = "v0.3.0"
 
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "b626ee04f95efb045f589ccccac919746d29effe43ff2b3996964b015b25a031"
+  inputs-digest = "53ba586e67d5b03c4960bdfdd6e4e223ddc67c9df2c766c12693ca657575987e"
   solver-name = "gps-cdcl"
   solver-version = 1

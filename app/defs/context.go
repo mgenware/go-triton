@@ -4,8 +4,8 @@ import (
 	"context"
 )
 
-// ContextLanguage returns the localization language ID associated with the specified context.
-func ContextLanguage(ctx context.Context) string {
+// LanguageContext returns the localization language ID associated with the specified context.
+func LanguageContext(ctx context.Context) string {
 	return stringFromContext(ctx, LanguageContextKey)
 }
 

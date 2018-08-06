@@ -83,7 +83,7 @@ func (mgr *Manager) ValueForKeyWithLanguage(lang, key string) string {
 
 // ValueForKey returns a localized string associated with the specified context and key.
 func (mgr *Manager) ValueForKey(ctx context.Context, key string) string {
-	return mgr.ValueForKeyWithLanguage(defs.ContextLanguage(ctx), key)
+	return mgr.ValueForKeyWithLanguage(defs.LanguageContext(ctx), key)
 }
 
 // MatchLanguage returns the determined language based on various conditions.

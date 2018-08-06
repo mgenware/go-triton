@@ -7,10 +7,7 @@ import (
 )
 
 func NotFoundHandler(w http.ResponseWriter, r *http.Request) {
-	tm := app.TemplateManager
-	ctx := r.Context()
-	msg := tm.FormatLocalizedString(ctx, "pPageNotFound", r.URL.String())
-
-	resp := tm.NewHTMLResponse(ctx, w)
+	resp := app.HTMLResponse(w, r)
+	msg := resp.FormatLocalizedString("pPageNotFound", r.URL.String())
 	resp.MustFailWithMessage(msg)
 }

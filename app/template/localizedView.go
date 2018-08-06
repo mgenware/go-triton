@@ -1,27 +1,24 @@
 package template
 
 import (
-	"context"
 	"io"
 
-	"github.com/mgenware/go-triton/app/defs"
 	"github.com/mgenware/go-triton/app/template/localization"
 
 	"github.com/mgenware/go-packagex/templatex"
 )
 
+// LocalizedView wraps a templatex.View, providing localization support.
 type LocalizedView struct {
 	localizationManager *localization.Manager
 	view                *templatex.View
 }
 
-func (v *LocalizedView) MustExecuteToString(ctx context.Context, data ILocalizedTemplateData) string {
-	lang := defs.LanguageContext(ctx)
+func (v *LocalizedView) MustExecuteToString(lang string, data ILocalizedTemplateData) string {
 	return v.view.MustExecuteToString(v.coerceTemplateData(data, lang))
 }
 
-func (v *LocalizedView) MustExecute(ctx context.Context, wr io.Writer, data ILocalizedTemplateData) {
-	lang := defs.LanguageContext(ctx)
+func (v *LocalizedView) MustExecute(lang string, wr io.Writer, data ILocalizedTemplateData) {
 	v.view.MustExecute(wr, v.coerceTemplateData(data, lang))
 }
 

@@ -81,13 +81,13 @@ func (mgr *Manager) ValueForKeyWithLanguage(lang, key string) string {
 	return dic.Map[key]
 }
 
-// ValueForKey returns a localized string associated with the specified context and key.
-func (mgr *Manager) ValueForKey(ctx context.Context, key string) string {
-	return mgr.ValueForKeyWithLanguage(defs.LanguageContext(ctx), key)
+// ValueForKey returns a localized string associated with the specified language and key.
+func (mgr *Manager) ValueForKey(lang, key string) string {
+	return mgr.ValueForKeyWithLanguage(lang, key)
 }
 
 // MatchLanguage returns the determined language based on various conditions.
-func (mgr *Manager) MatchLanguage(ctx context.Context, w http.ResponseWriter, r *http.Request) string {
+func (mgr *Manager) MatchLanguage(w http.ResponseWriter, r *http.Request) string {
 	// Check if user has explicitly set a language
 	queryLang := r.FormValue(defs.LanguageQueryKey)
 	if queryLang != "" {
@@ -121,7 +121,7 @@ func (mgr *Manager) MatchLanguage(ctx context.Context, w http.ResponseWriter, r 
 func (mgr *Manager) EnableContextLanguage(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		ctx := r.Context()
-		lang := mgr.MatchLanguage(ctx, w, r)
+		lang := mgr.MatchLanguage(w, r)
 		ctx = context.WithValue(ctx, defs.LanguageContextKey, lang)
 		next.ServeHTTP(w, r.WithContext(ctx))
 	})

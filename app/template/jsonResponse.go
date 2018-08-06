@@ -1,6 +1,7 @@
 package template
 
 import (
+	"context"
 	"encoding/json"
 	"net/http"
 
@@ -10,14 +11,18 @@ import (
 
 // JSONResponse helps you create a HTTP response in JSON.
 type JSONResponse struct {
-	mgr         *Manager
+	BaseResponse
+
 	writer      http.ResponseWriter
 	isCompleted bool
 }
 
 // NewJSONResponse creates a new JSONResponse.
-func NewJSONResponse(mgr *Manager, wr http.ResponseWriter) *JSONResponse {
-	return &JSONResponse{mgr: mgr, writer: wr}
+func NewJSONResponse(ctx context.Context, mgr *Manager, wr http.ResponseWriter) *JSONResponse {
+	return &JSONResponse{
+		BaseResponse: newBaseResponse(ctx, mgr),
+		writer:       wr,
+	}
 }
 
 // MustFailWithCodeAndMessage finishes the response with the specified code and message, and panics if unexpected error happens.

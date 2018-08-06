@@ -1,7 +1,6 @@
 package template
 
 import (
-	"context"
 	"fmt"
 	"net/http"
 	"path/filepath"
@@ -48,21 +47,21 @@ func MustCreateManager(
 }
 
 // MustComplete executes the main view template with the specified data and panics if error occurs.
-func (m *Manager) MustComplete(ctx context.Context, d *MasterPageData, w http.ResponseWriter) {
+func (m *Manager) MustComplete(lang string, d *MasterPageData, w http.ResponseWriter) {
 	httpx.SetResponseContentType(w, httpx.MIMETypeHTMLUTF8)
 
 	// Setup additional assets, e.g.:
 	// data.Header += "<link href=\"/static/main.min.css\" rel=\"stylesheet\"/>"
 	// data.Scripts += "<script src=\"/static/main.min.js\"></script>"
 
-	m.masterView.MustExecute(ctx, w, d)
+	m.masterView.MustExecute(lang, w, d)
 }
 
 // MustError executes the main view template with the specified data and panics if error occurs.
-func (m *Manager) MustError(ctx context.Context, d *ErrorPageData, w http.ResponseWriter) {
-	errorHTML := m.errorView.MustExecuteToString(ctx, d)
+func (m *Manager) MustError(lang string, d *ErrorPageData, w http.ResponseWriter) {
+	errorHTML := m.errorView.MustExecuteToString(lang, d)
 	htmlData := NewMasterPageData("Error", errorHTML)
-	m.MustComplete(ctx, htmlData, w)
+	m.MustComplete(lang, htmlData, w)
 }
 
 // NewTitle adds a consistent suffix to the specified title.
@@ -71,24 +70,9 @@ func (m *Manager) NewTitle(t string) string {
 }
 
 // NewLocalizedTitle calls NewTitle with a localized title associated with the specified key.
-func (m *Manager) NewLocalizedTitle(ctx context.Context, key string) string {
-	ls := m.LocalizationManager.ValueForKey(ctx, key)
+func (m *Manager) NewLocalizedTitle(lang, key string) string {
+	ls := m.LocalizationManager.ValueForKey(lang, key)
 	return m.NewTitle(ls)
-}
-
-// NewHTMLResponse wraps a call to NewHTMLResponse.
-func (m *Manager) NewHTMLResponse(ctx context.Context, w http.ResponseWriter) *HTMLResponse {
-	return NewHTMLResponse(ctx, m, w)
-}
-
-// NewJSONResponse wraps a call to NewJSONResponse.
-func (m *Manager) NewJSONResponse(w http.ResponseWriter) *JSONResponse {
-	return NewJSONResponse(m, w)
-}
-
-// NewMasterPageData wraps a call to MasterPageData.
-func (m *Manager) NewMasterPageData(title, contentHTML string) *MasterPageData {
-	return NewMasterPageData(title, contentHTML)
 }
 
 // MustParseLocalizedView creates a new LocalizedView with the given relative path.
@@ -105,11 +89,11 @@ func (m *Manager) MustParseView(relativePath string) *templatex.View {
 }
 
 // LocalizedString is a convenience function of LocalizationManager.ValueForKey.
-func (m *Manager) LocalizedString(ctx context.Context, key string) string {
-	return m.LocalizationManager.ValueForKey(ctx, key)
+func (m *Manager) LocalizedString(lang, key string) string {
+	return m.LocalizationManager.ValueForKey(lang, key)
 }
 
 // FormatLocalizedString is a convenience function to format a localized string.
-func (m *Manager) FormatLocalizedString(ctx context.Context, key string, a ...interface{}) string {
-	return fmt.Sprintf(m.LocalizedString(ctx, key), a)
+func (m *Manager) FormatLocalizedString(lang, key string, a ...interface{}) string {
+	return fmt.Sprintf(m.LocalizedString(lang, key), a)
 }

@@ -1,7 +1,6 @@
 package app
 
 import (
-	"context"
 	"flag"
 	"io/ioutil"
 	"log"
@@ -19,21 +18,26 @@ var Config *config.Config
 var TemplateManager *template.Manager
 
 // HTMLResponse returns common objects used to compose an HTML response.
-func HTMLResponse(w http.ResponseWriter, r *http.Request) (context.Context, *template.Manager, *template.HTMLResponse) {
+func HTMLResponse(w http.ResponseWriter, r *http.Request) *template.HTMLResponse {
 	ctx := r.Context()
 	tm := TemplateManager
-	resp := tm.NewHTMLResponse(ctx, w)
+	resp := template.NewHTMLResponse(ctx, tm, w)
 
-	return ctx, tm, resp
+	return resp
 }
 
 // JSONResponse returns common objects used to compose an HTML response.
-func JSONResponse(w http.ResponseWriter, r *http.Request) (context.Context, *template.Manager, *template.JSONResponse) {
+func JSONResponse(w http.ResponseWriter, r *http.Request) *template.JSONResponse {
 	ctx := r.Context()
 	tm := TemplateManager
-	resp := tm.NewJSONResponse(w)
+	resp := template.NewJSONResponse(ctx, tm, w)
 
-	return ctx, tm, resp
+	return resp
+}
+
+// MasterPageData wraps a call to MasterPageData.
+func MasterPageData(title, contentHTML string) *template.MasterPageData {
+	return template.NewMasterPageData(title, contentHTML)
 }
 
 func init() {

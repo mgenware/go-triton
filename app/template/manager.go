@@ -7,6 +7,7 @@ import (
 
 	"github.com/mgenware/go-packagex/httpx"
 	"github.com/mgenware/go-packagex/templatex"
+	"github.com/mgenware/go-triton/app/defs"
 	"github.com/mgenware/go-triton/app/template/localization"
 )
 
@@ -66,7 +67,7 @@ func (m *Manager) MustError(lang string, d *ErrorPageData, w http.ResponseWriter
 
 // NewTitle adds a consistent suffix to the specified title.
 func (m *Manager) NewTitle(t string) string {
-	return t + " - Go-Triton"
+	return t + " - " + defs.SiteTitle
 }
 
 // NewLocalizedTitle calls NewTitle with a localized title associated with the specified key.

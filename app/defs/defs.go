@@ -8,6 +8,8 @@ const (
 	LanguageQueryKey              = "lang"
 	LanguageCSString              = "cs"
 	LanguageENString              = "en"
+
+	SiteTitle = "Go-Triton"
 )
 
 const (

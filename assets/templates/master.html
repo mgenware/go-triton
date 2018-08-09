@@ -5,60 +5,15 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{{html .Title}}</title>
+    <link rel="stylesheet" href="/static/style/main.css"/>
     {{.Header}}
-
-    <style>
-      body {
-        margin: 0;
-        padding: 0;
-        font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica Neue,Arial,sans-serif;
-        font-size: 1rem;
-        font-weight: 400;
-        line-height: 1.5;
-        color: #212529;
-      }
-      nav.m-header {
-        background: black;
-        text-align: center;
-        color: white;
-        padding-top: 50px;
-        padding-bottom: 20px;
-        font-size: 25px;
-      }
-
-      .m-brand-img {
-        vertical-align: middle;
-      }
-
-      .container {
-        padding-right: 15px;
-        padding-left: 15px;
-        margin-right: auto;
-        margin-left: auto;
-      }
-      @media (min-width: 768px) {
-        .container {
-          width: 750px;
-        }
-      }
-      @media (min-width: 992px) {
-        .container {
-          width: 970px;
-        }
-      }
-      @media (min-width: 1200px) {
-        .container {
-          width: 1170px;
-        }
-      }
-    </style>
   </head>
 
   <body>
     <nav class="m-header">
       <p>
         <span>Go-Triton - {{.LS.language}}</span>
-        <img class="m-brand-img" src="/static/triton.jpg" width="100" height="100"/>
+        <img class="m-brand-img" src="/static/img/triton.jpg" width="100" height="100"/>
       </p>
     </nav>
     <main class="container">

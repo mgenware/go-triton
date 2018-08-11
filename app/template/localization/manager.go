@@ -91,11 +91,7 @@ func (mgr *Manager) MatchLanguage(w http.ResponseWriter, r *http.Request) string
 	// Check if user has explicitly set a language
 	queryLang := r.FormValue(defs.LanguageQueryKey)
 	if queryLang != "" {
-		// Write the user specified language to cookies
-		expires := time.Now().Add(30 * 24 * time.Hour)
-		c := &http.Cookie{Name: defs.LanguageCookieKey, Value: queryLang, Expires: expires}
-		http.SetCookie(w, c)
-
+		mgr.writeLangCookie(w, queryLang)
 		return queryLang
 	}
 
@@ -109,12 +105,17 @@ func (mgr *Manager) MatchLanguage(w http.ResponseWriter, r *http.Request) string
 	accept := r.Header.Get("Accept-Language")
 	_, index := language.MatchStrings(matcher, accept)
 
+	var resolved string
 	if index == 1 {
-		return defs.LanguageCSString
+		resolved = defs.LanguageCSString
 	}
 
 	// Fallback to default lang
-	return mgr.defaultLang
+	resolved = mgr.defaultLang
+
+	// Write resolved lang to cookies
+	mgr.writeLangCookie(w, resolved)
+	return resolved
 }
 
 // EnableContextLanguage defines a middleware to set the context language associated with the request.
@@ -125,4 +126,11 @@ func (mgr *Manager) EnableContextLanguage(next http.Handler) http.Handler {
 		ctx = context.WithValue(ctx, defs.LanguageContextKey, lang)
 		next.ServeHTTP(w, r.WithContext(ctx))
 	})
+}
+
+func (mgr *Manager) writeLangCookie(w http.ResponseWriter, lang string) {
+	// Write the user specified language to cookies
+	expires := time.Now().Add(30 * 24 * time.Hour)
+	c := &http.Cookie{Name: defs.LanguageCookieKey, Value: lang, Expires: expires}
+	http.SetCookie(w, c)
 }

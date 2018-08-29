@@ -37,7 +37,11 @@ func MustCreateManager(
 		panic(err)
 	}
 
-	t := &Manager{dir: dir, LocalizationManager: localizationManager}
+	t := &Manager{
+		dir:                 dir,
+		LocalizationManager: localizationManager,
+		devMode:             devMode,
+	}
 
 	// Load the master template
 	t.masterView = t.MustParseLocalizedView("master.html")

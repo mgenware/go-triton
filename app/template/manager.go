@@ -14,7 +14,7 @@ import (
 // Manager provides common functions to generate HTML strings.
 type Manager struct {
 	devMode bool
-	dir     string
+	rootDir string
 
 	masterView          *LocalizedView
 	errorView           *LocalizedView
@@ -23,7 +23,7 @@ type Manager struct {
 
 // MustCreateManager creates an instance of TemplateManager with specified arguments. Note that this function panics when main template loading fails.
 func MustCreateManager(
-	dir string,
+	rootDir string,
 	devMode bool,
 	i18nDir string,
 	defaultLang string,
@@ -38,7 +38,7 @@ func MustCreateManager(
 	}
 
 	t := &Manager{
-		dir:                 dir,
+		rootDir:             rootDir,
 		LocalizationManager: localizationManager,
 		devMode:             devMode,
 	}
@@ -82,14 +82,14 @@ func (m *Manager) NewLocalizedTitle(lang, key string) string {
 
 // MustParseLocalizedView creates a new LocalizedView with the given relative path.
 func (m *Manager) MustParseLocalizedView(relativePath string) *LocalizedView {
-	file := filepath.Join(m.dir, relativePath)
+	file := filepath.Join(m.rootDir, relativePath)
 	view := templatex.MustParseView(file)
 	return &LocalizedView{view: view, localizationManager: m.LocalizationManager}
 }
 
 // MustParseView creates a new View with the given relative path.
 func (m *Manager) MustParseView(relativePath string) *templatex.View {
-	file := filepath.Join(m.dir, relativePath)
+	file := filepath.Join(m.rootDir, relativePath)
 	return templatex.MustParseView(file)
 }
 

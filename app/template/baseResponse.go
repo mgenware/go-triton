@@ -38,7 +38,7 @@ func (b *BaseResponse) LocalizedString(key string) string {
 
 // FormatLocalizedString calls TemplateManager.FormatLocalizedString.
 func (b *BaseResponse) FormatLocalizedString(key string, a ...interface{}) string {
-	return b.mgr.FormatLocalizedString(b.lang, key, a)
+	return b.mgr.FormatLocalizedString(b.lang, key, a...)
 }
 
 // NewTitle calls TemplateManager.NewTitle.

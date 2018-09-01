@@ -112,5 +112,5 @@ func (m *Manager) LocalizedString(lang, key string) string {
 
 // FormatLocalizedString is a convenience function to format a localized string.
 func (m *Manager) FormatLocalizedString(lang, key string, a ...interface{}) string {
-	return fmt.Sprintf(m.LocalizedString(lang, key), a)
+	return fmt.Sprintf(m.LocalizedString(lang, key), a...)
 }

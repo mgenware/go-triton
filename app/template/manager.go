@@ -64,6 +64,14 @@ func (m *Manager) MustComplete(lang string, d *MasterPageData, w http.ResponseWr
 
 // MustError executes the main view template with the specified data and panics if error occurs.
 func (m *Manager) MustError(lang string, d *ErrorPageData, w http.ResponseWriter) {
+	if m.devMode && !d.Expected {
+		fmt.Println("🙉 This message only shows in dev mode.")
+		if d.Error != nil {
+			panic(d.Error)
+		} else {
+			panic(d.Message)
+		}
+	}
 	errorHTML := m.errorView.MustExecuteToString(lang, d)
 	htmlData := NewMasterPageData("Error", errorHTML)
 	m.MustComplete(lang, htmlData, w)

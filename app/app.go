@@ -73,8 +73,8 @@ func mustSetupConfig() {
 	}
 
 	log.Printf("✅ Loaded config at \"%v\"", configPath)
-	if config.IsProduction {
-		log.Printf("😎 [Application runs in production!]")
+	if !config.IsProduction {
+		log.Printf("⚠️ Application running in dev mode")
 	}
 	Config = config
 }

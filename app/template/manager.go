@@ -2,6 +2,7 @@ package template
 
 import (
 	"fmt"
+	"log"
 	"net/http"
 	"path/filepath"
 
@@ -30,6 +31,9 @@ func MustCreateManager(
 ) *Manager {
 	// Set the global devMode (which affects template loading)
 	templatex.SetGlobalDevMode(devMode)
+	if devMode {
+		log.Print("⚠️ Global view devMode is on")
+	}
 
 	// Create the localization manager used by localized template views
 	localizationManager, err := localization.NewManagerFromDirectory(i18nDir, defaultLang)

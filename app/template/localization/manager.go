@@ -48,7 +48,7 @@ func NewManagerFromDirectory(dir string, defaultLang string) (*Manager, error) {
 
 			name := filepathx.TrimExt(info.Name())
 			dics[name] = d
-			log.Printf("Read localization file \"%v\"", name)
+			log.Printf("✅ Loaded localization file \"%v\"", name)
 		}
 	}
 	if len(dics) == 0 {

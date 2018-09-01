@@ -72,9 +72,9 @@ func mustSetupConfig() {
 		panic(err)
 	}
 
-	log.Printf("Loaded config at \"%v\"", configPath)
+	log.Printf("✅ Loaded config at \"%v\"", configPath)
 	if config.IsProduction {
-		log.Printf("[Application runs in production!]")
+		log.Printf("😎 [Application runs in production!]")
 	}
 	Config = config
 }

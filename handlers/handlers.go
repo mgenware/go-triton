@@ -32,7 +32,7 @@ func Start() {
 	// Mount static file server
 	httpStaticConfig := httpConfig.Static
 	if httpStaticConfig != nil {
-		log.Printf("Serving Assets(%v) at \"%v\"", httpStaticConfig.Pattern, httpStaticConfig.Dir)
+		log.Printf("✅ Serving Assets(%v) at \"%v\"", httpStaticConfig.Pattern, httpStaticConfig.Dir)
 		fileServer(r, httpStaticConfig.Pattern, http.Dir(httpStaticConfig.Dir))
 	}
 
@@ -49,7 +49,7 @@ func Start() {
 	r.With(lm.EnableContextLanguage).Get("/", homePage.HomeGET)
 	r.With(lm.EnableContextLanguage).Get("/fakeError", errorPage.FakeErrorGET)
 
-	log.Printf("Starting server at %v", httpConfig.Port)
+	log.Printf("🚙 Starting server at %v", httpConfig.Port)
 	err := http.ListenAndServe(":"+strconv.Itoa(httpConfig.Port), r)
 	if err != nil {
 		panic(err)

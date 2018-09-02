@@ -2,35 +2,47 @@
 
 
 [[projects]]
+  digest = "1:b9914f85d95a0968bafd1be1908ba29e2eafafd88d6fd13696be42bf5368c380"
   name = "github.com/go-chi/chi"
   packages = ["."]
-  revision = "e83ac2304db3c50cf03d96a2fcd39009d458bc35"
-  version = "v3.3.2"
+  pruneopts = "UT"
+  revision = "b5294d10673813fac8558e7f47242bc9e61b4c25"
+  version = "v3.3.3"
 
 [[projects]]
-  branch = "master"
+  digest = "1:53dcb65f149fb2d459d40a99a88ee9274355de930d8bfeffe365fc25d1b73809"
   name = "github.com/mgenware/go-packagex"
   packages = [
     "filepathx",
     "httpx",
-    "templatex"
+    "templatex",
   ]
-  revision = "395c7b5037e381bca48fb3ac2b6d03163041495a"
+  pruneopts = "UT"
+  revision = "20b92fd6d6a56d0c89a4d141206c6216e5e3aa29"
+  version = "1.5.0"
 
 [[projects]]
+  digest = "1:17ad89bd57485e11f306d41b703f53089fb0803682707b21fe9b3b29467d37a0"
   name = "golang.org/x/text"
   packages = [
     "internal/gen",
     "internal/tag",
     "language",
-    "unicode/cldr"
+    "unicode/cldr",
   ]
+  pruneopts = "UT"
   revision = "f21a4dfb5e38f5895301dc265a8def02365cc3d0"
   version = "v0.3.0"
 
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "53ba586e67d5b03c4960bdfdd6e4e223ddc67c9df2c766c12693ca657575987e"
+  input-imports = [
+    "github.com/go-chi/chi",
+    "github.com/mgenware/go-packagex/filepathx",
+    "github.com/mgenware/go-packagex/httpx",
+    "github.com/mgenware/go-packagex/templatex",
+    "golang.org/x/text/language",
+  ]
   solver-name = "gps-cdcl"
   solver-version = 1

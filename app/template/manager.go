@@ -29,10 +29,8 @@ func MustCreateManager(
 	i18nDir string,
 	defaultLang string,
 ) *Manager {
-	// Set the global devMode (which affects template loading)
-	templatex.SetGlobalDevMode(devMode)
 	if devMode {
-		log.Print("⚠️ Global view devMode is on")
+		log.Print("⚠️ View dev mode is on")
 	}
 
 	// Create the localization manager used by localized template views
@@ -95,14 +93,14 @@ func (m *Manager) NewLocalizedTitle(lang, key string) string {
 // MustParseLocalizedView creates a new LocalizedView with the given relative path.
 func (m *Manager) MustParseLocalizedView(relativePath string) *LocalizedView {
 	file := filepath.Join(m.rootDir, relativePath)
-	view := templatex.MustParseView(file)
+	view := templatex.MustParseView(file, m.devMode)
 	return &LocalizedView{view: view, localizationManager: m.LocalizationManager}
 }
 
 // MustParseView creates a new View with the given relative path.
 func (m *Manager) MustParseView(relativePath string) *templatex.View {
 	file := filepath.Join(m.rootDir, relativePath)
-	return templatex.MustParseView(file)
+	return templatex.MustParseView(file, m.devMode)
 }
 
 // LocalizedString is a convenience function of LocalizationManager.ValueForKey.

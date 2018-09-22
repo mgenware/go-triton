@@ -18,8 +18,8 @@
     "templatex",
   ]
   pruneopts = "UT"
-  revision = "20b92fd6d6a56d0c89a4d141206c6216e5e3aa29"
-  version = "1.5.0"
+  revision = "b569aa6946faec2dca3930e47e2d7bb7d003e050"
+  version = "1.7.0"
 
 [[projects]]
   digest = "1:17ad89bd57485e11f306d41b703f53089fb0803682707b21fe9b3b29467d37a0"

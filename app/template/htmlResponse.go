@@ -27,14 +27,7 @@ func (h *HTMLResponse) MustComplete(d *MasterPageData) {
 	h.mgr.MustComplete(h.lang, d, h.writer)
 }
 
-// MustFailWithMessage finishes the response with an error message, and panics if unexpected error happens.
-func (h *HTMLResponse) MustFailWithMessage(msg string) {
-	h.checkCompletion()
-	d := &ErrorPageData{Message: msg}
-	h.mgr.MustError(h.lang, d, h.writer)
-}
-
-// MustFail calls MustFailWithMessage with the given error object.
+// MustFail finishes the response with the given error object.
 func (h *HTMLResponse) MustFail(err error) {
 	h.checkCompletion()
 	d := &ErrorPageData{Error: err}

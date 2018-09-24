@@ -2,6 +2,7 @@ package template
 
 import (
 	"context"
+	"errors"
 	"net/http"
 )
 
@@ -32,6 +33,11 @@ func (h *HTMLResponse) MustFail(err error) {
 	h.checkCompletion()
 	d := &ErrorPageData{Error: err}
 	h.mgr.MustError(h.lang, d, h.writer)
+}
+
+// MustFailWithMessage finishes the response with the given message, and panics if unexpected error happens.
+func (h *HTMLResponse) MustFailWithMessage(msg string) {
+	h.MustFail(errors.New(msg))
 }
 
 func (h *HTMLResponse) checkCompletion() {

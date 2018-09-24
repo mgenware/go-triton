@@ -30,7 +30,7 @@ func HTMLResponse(w http.ResponseWriter, r *http.Request) *template.HTMLResponse
 func JSONResponse(w http.ResponseWriter, r *http.Request) *template.JSONResponse {
 	ctx := r.Context()
 	tm := TemplateManager
-	resp := template.NewJSONResponse(ctx, tm, w)
+	resp := template.NewJSONResponse(ctx, tm, w, !Config.IsProduction)
 
 	return resp
 }

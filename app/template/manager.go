@@ -53,6 +53,12 @@ func MustCreateManager(
 	return t
 }
 
+// MustCompleteWithContent finished the response with the given HTML content.
+func (m *Manager) MustCompleteWithContent(content []byte, w http.ResponseWriter) {
+	httpx.SetResponseContentType(w, httpx.MIMETypeHTMLUTF8)
+	w.Write(content)
+}
+
 // MustComplete executes the main view template with the specified data and panics if error occurs.
 func (m *Manager) MustComplete(lang string, d *MasterPageData, w http.ResponseWriter) {
 	httpx.SetResponseContentType(w, httpx.MIMETypeHTMLUTF8)

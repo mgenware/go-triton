@@ -22,6 +22,11 @@ func NewHTMLResponse(ctx context.Context, mgr *Manager, wr http.ResponseWriter) 
 	}
 }
 
+// MustCompleteWithContent finished the response with the given HTML content.
+func (h *HTMLResponse) MustCompleteWithContent(content string, w http.ResponseWriter) {
+	h.mgr.MustCompleteWithContent([]byte(content), w)
+}
+
 // MustComplete finishes the response with the given MasterPageData, and panics if unexpected error happens.
 func (h *HTMLResponse) MustComplete(d *MasterPageData) {
 	h.checkCompletion()

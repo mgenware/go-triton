@@ -39,7 +39,10 @@ func (j *JSONResponse) MustFailWithCodeAndError(code uint, err error) {
 			panic(code)
 		}
 	}
-	d := &APIResult{Message: err.Error(), Code: code}
+	d := &APIResult{Code: code}
+	if err != nil {
+		d.Message = err.Error()
+	}
 	j.mustWriteData(d)
 }
 

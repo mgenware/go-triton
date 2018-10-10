@@ -39,10 +39,7 @@ func (j *JSONResponse) MustFailWithCodeAndError(code uint, err error) {
 			panic(code)
 		}
 	}
-	d := &APIResult{Code: code}
-	if err != nil {
-		d.Message = err.Error()
-	}
+	d := &APIResult{Code: code, Error: err, Message: err.Error()}
 	j.mustWriteData(d)
 }
 
@@ -58,7 +55,7 @@ func (j *JSONResponse) MustFailWithMessage(msg string) {
 
 // MustFailWithCode finishes the response with the specified error code, and panics if unexpected error happens.
 func (j *JSONResponse) MustFailWithCode(code uint) {
-	j.MustFailWithCodeAndError(code, nil)
+	j.MustFailWithCodeAndError(code, fmt.Errorf("Error code: %v", code))
 }
 
 // MustComplete finishes the response with the given data, and panics if unexpected error happens.

@@ -5,9 +5,12 @@ type APIResult struct {
 	// Code indicates the status code of this result. 0 means success.
 	Code uint `json:"code,omitempty"`
 
-	// Message represents an additional string message alongside the result. For example, in a error result, it could be the error message, and when `Code` is 0 (indicating a success result), it could be a friendly message.
+	// Message is the result of Error.Error().
 	Message string `json:"message,omitempty"`
 
 	// Data represents the requested value in a successful result.
 	Data interface{} `json:"data,omitempty"`
+
+	// Error holds the internal go error object of this result.
+	Error error `json:"-"`
 }

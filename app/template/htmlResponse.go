@@ -36,7 +36,7 @@ func (h *HTMLResponse) MustComplete(d *MasterPageData) {
 // MustFail finishes the response with the given error object.
 func (h *HTMLResponse) MustFail(err error) {
 	h.checkCompletion()
-	d := &ErrorPageData{Error: err}
+	d := &ErrorPageData{Error: err, Message: err.Error()}
 	h.mgr.MustError(h.lang, d, h.writer)
 }
 

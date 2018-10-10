@@ -1,7 +1,6 @@
 package system
 
 import (
-	"context"
 	"fmt"
 	"net/http"
 	"runtime/debug"
@@ -15,21 +14,15 @@ func PanicMiddleware(next http.Handler) http.Handler {
 }
 
 func recoverFromPanic(w http.ResponseWriter, r *http.Request) {
-	ctx := r.Context()
 	if res := recover(); res != nil {
-		ctx = context.WithValue(ctx, "recoverReturn", res)
-		ctx = context.WithValue(ctx, "recoverStack", string(debug.Stack()))
-		panicHandler(w, r)
+		panicHandler(w, r, res, debug.Stack())
 	}
 }
 
-func panicHandler(w http.ResponseWriter, r *http.Request) {
+func panicHandler(w http.ResponseWriter, r *http.Request, result interface{}, stack []byte) {
 	w.WriteHeader(http.StatusInternalServerError)
 
-	ctx := r.Context()
-	msgValue := ctx.Value("recoverReturn")
-	stackInfo := ctx.Value("recoverStack")
-	msg := fmt.Sprintf("Fatal error：%v\nDetails: %v", msgValue, stackInfo)
+	msg := fmt.Sprintf("Fatal error：%v\nDetails: %v", result, string(stack))
 
 	fmt.Print(w, msg)
 }

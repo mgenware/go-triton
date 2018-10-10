@@ -4,6 +4,8 @@ import (
 	"fmt"
 	"net/http"
 	"runtime/debug"
+
+	"github.com/mgenware/go-triton/app"
 )
 
 func PanicMiddleware(next http.Handler) http.Handler {
@@ -20,9 +22,14 @@ func recoverFromPanic(w http.ResponseWriter, r *http.Request) {
 }
 
 func panicHandler(w http.ResponseWriter, r *http.Request, result interface{}, stack []byte) {
-	w.WriteHeader(http.StatusInternalServerError)
-
 	msg := fmt.Sprintf("Fatal error：%v\nDetails: %v", result, string(stack))
+	if r.Method == "POST" {
+		resp := app.JSONResponse(w, r)
+		resp.MustFailWithMessage(msg)
+		return
+	}
 
-	fmt.Print(w, msg)
+	w.WriteHeader(http.StatusInternalServerError)
+	resp := app.HTMLResponse(w, r)
+	resp.MustFailWithMessage(msg)
 }

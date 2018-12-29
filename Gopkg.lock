@@ -10,7 +10,7 @@
   version = "v3.3.3"
 
 [[projects]]
-  digest = "1:53dcb65f149fb2d459d40a99a88ee9274355de930d8bfeffe365fc25d1b73809"
+  digest = "1:f1b907fb76a75aec23fe80552e80dbf7b716b830271929fb544e7a0bebcf3c90"
   name = "github.com/mgenware/go-packagex"
   packages = [
     "filepathx",
@@ -18,8 +18,8 @@
     "templatex",
   ]
   pruneopts = "UT"
-  revision = "b569aa6946faec2dca3930e47e2d7bb7d003e050"
-  version = "1.7.0"
+  revision = "3193769f2df7cea57232ead1c6ae88f1760f8dd5"
+  version = "2.0.0"
 
 [[projects]]
   digest = "1:17ad89bd57485e11f306d41b703f53089fb0803682707b21fe9b3b29467d37a0"

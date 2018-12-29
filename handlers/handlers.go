@@ -49,7 +49,7 @@ func Start() {
 	r.With(lm.EnableContextLanguage).Get("/", homePage.HomeGET)
 	r.With(lm.EnableContextLanguage).Get("/fakeError", errorPage.FakeErrorGET)
 
-	log.Printf("🚙 Starting server at %v", httpConfig.Port)
+	log.Printf("🚙 Server running at %v", httpConfig.Port)
 	err := http.ListenAndServe(":"+strconv.Itoa(httpConfig.Port), r)
 	if err != nil {
 		panic(err)

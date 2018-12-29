@@ -21,6 +21,11 @@ A boilerplate template for Go web applications.
 * `golang.org/x/text/language`: HTTP `Accept-Language` header parsing and matching.
 
 ## Usage
+Install dependencies:
+```sh
+dep ensure
+```
+
 Start in development mode:
 ```sh
 go run main.go dev

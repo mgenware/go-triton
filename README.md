@@ -14,11 +14,9 @@ A boilerplate template for Go web applications.
 * i18n support.
 
 ## Dependencies
-* `github.com/go-chi/chi` 3.3.2: HTTP routing. 
-* `github.com/mgenware/go-packagex/templatex`: Template wrapper around Go text/template.
-* `github.com/mgenware/go-packagex/httpx`: Common MIME type constants.
-* `github.com/mgenware/go-packagex/filepathx`: Trims file name extension.
-* `golang.org/x/text/language`: HTTP `Accept-Language` header parsing and matching.
+* `github.com/go-chi/chi` 3.3.3: HTTP routing. 
+* `github.com/mgenware/go-packagex` 2.0.0: for common helpers like template wrapper, MIME type definitions, etc.
+* `golang.org/x/text/language` 0.3.0 : HTTP `Accept-Language` header parsing and matching.
 
 ## Usage
 Install dependencies:

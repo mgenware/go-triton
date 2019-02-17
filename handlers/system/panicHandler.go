@@ -5,7 +5,7 @@ import (
 	"net/http"
 	"runtime/debug"
 
-	"github.com/mgenware/go-triton/app"
+	"go-triton-app/app"
 )
 
 func PanicMiddleware(next http.Handler) http.Handler {

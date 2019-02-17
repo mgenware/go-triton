@@ -4,7 +4,7 @@ import (
 	"errors"
 	"net/http"
 
-	"github.com/mgenware/go-triton/app"
+	"go-triton-app/app"
 )
 
 // FakeErrorGET is the GET handler for "/fakeError"

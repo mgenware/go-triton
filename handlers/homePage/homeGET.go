@@ -4,7 +4,7 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/mgenware/go-triton/app"
+	"go-triton-app/app"
 )
 
 var indexView = app.TemplateManager.MustParseLocalizedView("home.html")

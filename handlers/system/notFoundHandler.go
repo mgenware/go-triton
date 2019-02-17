@@ -4,8 +4,8 @@ import (
 	"log"
 	"net/http"
 
-	"github.com/mgenware/go-triton/app"
-	"github.com/mgenware/go-triton/app/template"
+	"go-triton-app/app"
+	"go-triton-app/app/template"
 )
 
 // NotFoundHandler is a application wide handler for 404 errors.

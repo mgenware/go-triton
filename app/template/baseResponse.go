@@ -3,7 +3,7 @@ package template
 import (
 	"context"
 
-	"github.com/mgenware/go-triton/app/defs"
+	"go-triton-app/app/defs"
 )
 
 // BaseResponse provides basic properties shared by both HTMLResponse and JSONResponse.

@@ -8,8 +8,8 @@ import (
 
 	"github.com/mgenware/go-packagex/httpx"
 	"github.com/mgenware/go-packagex/templatex"
-	"github.com/mgenware/go-triton/app/defs"
-	"github.com/mgenware/go-triton/app/template/localization"
+	"go-triton-app/app/defs"
+	"go-triton-app/app/template/localization"
 )
 
 // Manager provides common functions to generate HTML strings.

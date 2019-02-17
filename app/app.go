@@ -7,8 +7,8 @@ import (
 	"net/http"
 	"os"
 
-	"github.com/mgenware/go-triton/app/config"
-	"github.com/mgenware/go-triton/app/template"
+	"go-triton-app/app/config"
+	"go-triton-app/app/template"
 )
 
 // Config is the application configuration loaded.

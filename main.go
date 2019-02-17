@@ -1,7 +1,7 @@
 package main
 
 import (
-	"github.com/mgenware/go-triton/handlers"
+	"go-triton-app/handlers"
 )
 
 func main() {

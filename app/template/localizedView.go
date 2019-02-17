@@ -3,7 +3,7 @@ package template
 import (
 	"io"
 
-	"github.com/mgenware/go-triton/app/template/localization"
+	"go-triton-app/app/template/localization"
 
 	"github.com/mgenware/go-packagex/templatex"
 )

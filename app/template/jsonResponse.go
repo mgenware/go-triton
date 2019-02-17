@@ -8,7 +8,7 @@ import (
 	"net/http"
 
 	"github.com/mgenware/go-packagex/httpx"
-	"github.com/mgenware/go-triton/app/defs"
+	"go-triton-app/app/defs"
 )
 
 // JSONResponse helps you create a HTTP response in JSON.

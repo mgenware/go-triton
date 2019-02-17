@@ -6,10 +6,10 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/mgenware/go-triton/app"
-	"github.com/mgenware/go-triton/handlers/errorPage"
-	"github.com/mgenware/go-triton/handlers/homePage"
-	"github.com/mgenware/go-triton/handlers/system"
+	"go-triton-app/app"
+	"go-triton-app/handlers/errorPage"
+	"go-triton-app/handlers/homePage"
+	"go-triton-app/handlers/system"
 
 	"github.com/go-chi/chi"
 )

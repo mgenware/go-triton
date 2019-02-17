@@ -5,7 +5,7 @@ import (
 	"errors"
 	"path/filepath"
 
-	"github.com/mgenware/go-triton/app/config/internals"
+	"go-triton-app/app/config/internals"
 )
 
 // Config is the root configuration type for your application.

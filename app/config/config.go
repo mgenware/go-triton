@@ -17,7 +17,7 @@ type Config struct {
 	HTTP *internals.HTTPConfig `json:"http"`
 
 	Templates    internals.TemplatesConfig    `json:"templates"`
-	Localization internals.LocalizationConfig `json:localization`
+	Localization internals.LocalizationConfig `json:"localization"`
 }
 
 // ReadConfig loads an ConfigType from an array of bytes.

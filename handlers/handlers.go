@@ -6,6 +6,8 @@ import (
 	"strconv"
 	"strings"
 
+	"github.com/mgenware/go-packagex/iox"
+
 	"go-triton-app/app"
 	"go-triton-app/handlers/errorPage"
 	"go-triton-app/handlers/homePage"
@@ -32,8 +34,13 @@ func Start() {
 	// Mount static file server
 	httpStaticConfig := httpConfig.Static
 	if httpStaticConfig != nil {
-		log.Printf("✅ Serving Assets(%v) at \"%v\"", httpStaticConfig.Pattern, httpStaticConfig.Dir)
-		fileServer(r, httpStaticConfig.Pattern, http.Dir(httpStaticConfig.Dir))
+		pattern := httpStaticConfig.Pattern
+		dir := httpStaticConfig.Dir
+		log.Printf("✅ Serving Assets(%v) at \"%v\"", pattern, dir)
+		fileServer(r, pattern, http.Dir(dir))
+		if !iox.IsDirectory(dir) {
+			log.Printf("☢️ Assets directory \"%v\" doesn't exist", dir)
+		}
 	}
 
 	// Mount other middlewares, for example:

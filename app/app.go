@@ -83,5 +83,5 @@ func mustSetupTemplates(c *config.Config) {
 	templatesConfig := c.Templates
 	localizationConfig := c.Localization
 
-	TemplateManager = template.MustCreateManager(templatesConfig.RootDir, c.DevMode, localizationConfig.RootDir, localizationConfig.DefaultLang)
+	TemplateManager = template.MustCreateManager(templatesConfig.Dir, c.DevMode, localizationConfig.Dir, localizationConfig.DefaultLang)
 }

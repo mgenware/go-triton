@@ -63,11 +63,11 @@ func (config *Config) validateAndCoerce() error {
 
 	// Templates
 	templatesConfig := config.Templates
-	mustCoercePath(&templatesConfig.RootDir)
+	mustCoercePath(&templatesConfig.Dir)
 
 	// Localization
 	localizationConfig := config.Localization
-	mustCoercePath(&localizationConfig.RootDir)
+	mustCoercePath(&localizationConfig.Dir)
 	if localizationConfig.DefaultLang == "" {
 		return errors.New("localization.defaultLang is required")
 	}

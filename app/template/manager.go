@@ -6,16 +6,17 @@ import (
 	"net/http"
 	"path/filepath"
 
-	"github.com/mgenware/go-packagex/httpx"
-	"github.com/mgenware/go-packagex/templatex"
 	"go-triton-app/app/defs"
 	"go-triton-app/app/template/localization"
+
+	"github.com/mgenware/go-packagex/httpx"
+	"github.com/mgenware/go-packagex/templatex"
 )
 
 // Manager provides common functions to generate HTML strings.
 type Manager struct {
 	devMode bool
-	rootDir string
+	dir     string
 
 	masterView          *LocalizedView
 	errorView           *LocalizedView
@@ -24,7 +25,7 @@ type Manager struct {
 
 // MustCreateManager creates an instance of TemplateManager with specified arguments. Note that this function panics when main template loading fails.
 func MustCreateManager(
-	rootDir string,
+	dir string,
 	devMode bool,
 	i18nDir string,
 	defaultLang string,
@@ -40,7 +41,7 @@ func MustCreateManager(
 	}
 
 	t := &Manager{
-		rootDir:             rootDir,
+		dir:                 dir,
 		LocalizationManager: localizationManager,
 		devMode:             devMode,
 	}
@@ -98,14 +99,14 @@ func (m *Manager) NewLocalizedTitle(lang, key string) string {
 
 // MustParseLocalizedView creates a new LocalizedView with the given relative path.
 func (m *Manager) MustParseLocalizedView(relativePath string) *LocalizedView {
-	file := filepath.Join(m.rootDir, relativePath)
+	file := filepath.Join(m.dir, relativePath)
 	view := templatex.MustParseView(file, m.devMode)
 	return &LocalizedView{view: view, localizationManager: m.LocalizationManager}
 }
 
 // MustParseView creates a new View with the given relative path.
 func (m *Manager) MustParseView(relativePath string) *templatex.View {
-	file := filepath.Join(m.rootDir, relativePath)
+	file := filepath.Join(m.dir, relativePath)
 	return templatex.MustParseView(file, m.devMode)
 }
 

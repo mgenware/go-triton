@@ -5,7 +5,7 @@
 A boilerplate template for Go web applications. Uses Go 1.11 modules.
 
 * Configuration file support.
-* Development/production mode (via `config.IsProduction`).
+* Development/production mode (via `config.DevMode`).
 * Implemented common HTTP handlers:
   * Not found(404) handler.
   * Panic recovery handler as 500 Internal Server Error.

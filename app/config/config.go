@@ -49,11 +49,11 @@ func (config *Config) validateAndCoerce() error {
 
 	httpStaticConfig := httpConfig.Static
 	if httpStaticConfig != nil {
-		if httpStaticConfig.Pattern == "" {
-			return errors.New("http.static has been defined, but http.static.pattern remains empty")
+		if httpStaticConfig.URL == "" {
+			return errors.New("http.static has been defined, but http.static.url is empty")
 		}
 		if httpStaticConfig.Dir == "" {
-			return errors.New("http.static has been defined, but http.static.dir remains empty")
+			return errors.New("http.static has been defined, but http.static.dir is empty")
 		}
 	}
 

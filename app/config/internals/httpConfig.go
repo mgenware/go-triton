@@ -8,8 +8,8 @@ type HTTPConfig struct {
 }
 
 type HTTPStaticConfig struct {
-	// Pattern is the pattern string used for registering request handler.
-	Pattern string `json:"pattern"`
+	// URL is the URL pattern used for registering request handler.
+	URL string `json:"url"`
 	// Dir is the physical directory path you want to be served.
 	Dir string `json:"dir"`
 }

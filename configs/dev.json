@@ -3,7 +3,7 @@
   "http": {
     "port": 12001,
     "static": {
-      "pattern": "/static",
+      "url": "/static",
       "dir": "./staticdsds"
     }
   },

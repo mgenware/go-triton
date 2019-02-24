@@ -4,7 +4,7 @@
     "port": 12001,
     "static": {
       "url": "/static",
-      "dir": "./staticdsds"
+      "dir": "./static"
     }
   },
   "templates": {

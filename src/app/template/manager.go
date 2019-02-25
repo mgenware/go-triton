@@ -2,6 +2,7 @@ package template
 
 import (
 	"fmt"
+	"go-triton-app/app/logx"
 	"log"
 	"net/http"
 	"path/filepath"
@@ -16,6 +17,7 @@ import (
 type Manager struct {
 	devMode bool
 	dir     string
+	logger  *logx.Logger
 
 	masterView          *LocalizedView
 	errorView           *LocalizedView
@@ -28,6 +30,7 @@ func MustCreateManager(
 	devMode bool,
 	i18nDir string,
 	defaultLang string,
+	logger *logx.Logger,
 ) *Manager {
 	if devMode {
 		log.Print("⚠️ View dev mode is on")
@@ -43,6 +46,7 @@ func MustCreateManager(
 		dir:                 dir,
 		LocalizationManager: localizationManager,
 		devMode:             devMode,
+		logger:              logger,
 	}
 
 	// Load the master template
@@ -79,6 +83,15 @@ func (m *Manager) MustError(lang string, d *ErrorPageData, w http.ResponseWriter
 		} else {
 			panic(d.Message)
 		}
+	}
+
+	// Log unexpected errors
+	if !d.Expected {
+		msg := d.Message
+		if d.Error != nil {
+			msg += "(" + d.Error.Error() + ")"
+		}
+		m.logger.LogError("app.unexpected-error", logx.D{"msg": msg})
 	}
 	errorHTML := m.errorView.MustExecuteToString(lang, d)
 	htmlData := NewMasterPageData("Error", errorHTML)

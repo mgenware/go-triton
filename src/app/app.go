@@ -9,11 +9,15 @@ import (
 	"os"
 
 	"go-triton-app/app/config"
+	"go-triton-app/app/logx"
 	"go-triton-app/app/template"
 )
 
 // Config is the application configuration loaded.
 var Config *config.Config
+
+// Logger is the main logger for this app.
+var Logger *logx.Logger
 
 // TemplateManager is a app-wide instance of template.Manager.
 var TemplateManager *template.Manager
@@ -43,6 +47,7 @@ func MasterPageData(title, contentHTML string) *template.MasterPageData {
 
 func init() {
 	mustSetupConfig()
+	mustSetupLogger()
 	mustSetupTemplates(Config)
 }
 
@@ -80,9 +85,20 @@ func mustSetupConfig() {
 	Config = config
 }
 
+func mustSetupLogger() {
+	if Config == nil {
+		panic("Config must be set before mustSetupLogger")
+	}
+	logger, err := logx.NewLogger(Config.Log.Dir, Config.DevMode)
+	if err != nil {
+		panic(err)
+	}
+	Logger = logger
+}
+
 func mustSetupTemplates(c *config.Config) {
 	templatesConfig := c.Templates
 	localizationConfig := c.Localization
 
-	TemplateManager = template.MustCreateManager(templatesConfig.Dir, c.DevMode, localizationConfig.Dir, localizationConfig.DefaultLang)
+	TemplateManager = template.MustCreateManager(templatesConfig.Dir, c.DevMode, localizationConfig.Dir, localizationConfig.DefaultLang, Logger)
 }

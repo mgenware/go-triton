@@ -1,7 +1,6 @@
 package handlers
 
 import (
-	"log"
 	"net/http"
 	"strconv"
 	"strings"
@@ -9,6 +8,7 @@ import (
 	"github.com/mgenware/go-packagex/iox"
 
 	"go-triton-app/app"
+	"go-triton-app/app/logx"
 	"go-triton-app/handlers/errorPage"
 	"go-triton-app/handlers/homePage"
 	"go-triton-app/handlers/system"
@@ -36,10 +36,13 @@ func Start() {
 	if httpStaticConfig != nil {
 		url := httpStaticConfig.URL
 		dir := httpStaticConfig.Dir
-		log.Printf("✅ Serving Assets(%v) at \"%v\"", url, dir)
+		app.Logger.LogInfo("Serving Assets", logx.D{
+			"url": url,
+			"dir": dir,
+		})
 		fileServer(r, url, http.Dir(dir))
 		if !iox.IsDirectory(dir) {
-			log.Printf("☢️ Assets directory \"%v\" doesn't exist", dir)
+			app.Logger.LogWarning("Assets directory doesn't exist", logx.D{"dir": dir})
 		}
 	}
 
@@ -56,9 +59,10 @@ func Start() {
 	r.With(lm.EnableContextLanguage).Get("/", homePage.HomeGET)
 	r.With(lm.EnableContextLanguage).Get("/fakeError", errorPage.FakeErrorGET)
 
-	log.Printf("🚙 Server running at %v", httpConfig.Port)
+	app.Logger.LogInfo("Server starting", logx.D{"port": httpConfig.Port})
 	err := http.ListenAndServe(":"+strconv.Itoa(httpConfig.Port), r)
 	if err != nil {
+		app.Logger.LogError("Server failed to start", logx.D{"err": err.Error()})
 		panic(err)
 	}
 }

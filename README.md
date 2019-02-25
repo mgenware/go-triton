@@ -13,10 +13,11 @@ A boilerplate template for Go web applications. Uses Go 1.11 modules.
 * Auto serves static files in development mode.
 * i18n support.
 
-## Dependencies
+## Main Dependencies
 * `github.com/go-chi/chi`: HTTP routing. 
 * `github.com/mgenware/go-packagex`: for common helpers like template wrapper, MIME type definitions, etc.
 * `golang.org/x/text/language`: HTTP `Accept-Language` header parsing and matching.
+* `github.com/sirupsen/logrus`: Logging.
 
 ## Usage
 Start in development mode:
@@ -39,4 +40,20 @@ go run main.go myName
 Or use the `--config` argument to specify a file:
 ```sh
 go run main.go --config /etc/my_server/dev.json
+```
+
+## Directory Structure
+```
+├── appdata             Application generated files, e.g. logs, git ignored
+│   └── log
+├── assets              Static assets, HTML/JavaScript/CSS/Image files
+├── localization        Localization resources
+│   └── langs               Localized strings used by your app
+├── src                 Go source directory
+│   ├── app                 Core app modules, such as template manager, logger, etc.
+│   ├── config              Config files
+│   │   ├── dev.json
+│   │   └── prod.json
+│   ├── handlers        Web handlers
+└── templates           Go HTML template files 
 ```

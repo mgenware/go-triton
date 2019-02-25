@@ -1,6 +1,6 @@
 # go-triton
 
-<img src="./static/img/triton.jpg" width="300" height="300"/>
+<img src="./assets/img/triton.jpg" width="300" height="300"/>
 
 A boilerplate template for Go web applications. Uses Go 1.11 modules.
 

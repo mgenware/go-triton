@@ -4,14 +4,17 @@
     "port": 12000,
     "static": {
       "url": "/static",
-      "dir": "./static"
+      "dir": "../assets"
     }
   },
   "templates": {
-    "dir": "./assets/templates"
+    "dir": "../templates"
   },
   "localization": {
-    "dir": "./assets/localization",
+    "dir": "../localization/langs",
     "defaultLang": "en"
+  },
+  "log": {
+    "dir": "../appdata/log/prod"
   }
 }

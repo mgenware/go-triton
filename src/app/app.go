@@ -2,6 +2,7 @@ package app
 
 import (
 	"flag"
+	"fmt"
 	"io/ioutil"
 	"log"
 	"net/http"
@@ -52,10 +53,10 @@ func mustSetupConfig() {
 	flag.Parse()
 
 	if configPath == "" {
-		// If --config is not specified, check if user runs "go run main.go dev" which will read ./configs/dev.json as config file
+		// If --config is not specified, check if user has an extra argument like "go run main.go dev", which we consider it as --config "./config/dev.json"
 		userArgs := os.Args[1:]
-		if len(userArgs) == 1 && userArgs[0] == "dev" {
-			configPath = "./configs/dev.json"
+		if len(userArgs) >= 1 {
+			configPath = fmt.Sprintf("./config/%v.json", userArgs[0])
 		} else {
 			flag.PrintDefaults()
 			os.Exit(1)

@@ -21,10 +21,22 @@ A boilerplate template for Go web applications. Uses Go 1.11 modules.
 ## Usage
 Start in development mode:
 ```sh
+# Start with ./config/dev.json
 go run main.go dev
 ```
 
-Start with a config file:
+Start in production mode:
 ```sh
-go run main.go --config ./configs/prod.json
+# Start with ./config/prod.json
+go run main.go prod
+```
+
+The two commands simply load a configuration file by the given name, you can also create your own config file like `./config/myName.json` and start the app with it:
+```sh
+go run main.go myName
+```
+
+Or use the `--config` argument to specify a file:
+```sh
+go run main.go --config /etc/my_server/dev.json
 ```

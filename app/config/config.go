@@ -14,11 +14,13 @@ import (
 type Config struct {
 	// DevMode determines if this app is currently running in dev mode.
 	DevMode bool `json:"devMode"`
-
-	// HTTP holds HTTP-related configuration data.
+	// Log config data.
+	Log *internals.LogConfig `json:"log" validate:"required"`
+	// HTTP config data.
 	HTTP *internals.HTTPConfig `json:"http" validate:"required"`
-
-	Templates    *internals.TemplatesConfig    `json:"templates" validate:"required"`
+	// Templates config data.
+	Templates *internals.TemplatesConfig `json:"templates" validate:"required"`
+	// Localization config data.
 	Localization *internals.LocalizationConfig `json:"localization" validate:"required"`
 }
 

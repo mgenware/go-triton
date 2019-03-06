@@ -2,7 +2,6 @@ package template
 
 import (
 	"context"
-
 	"go-triton-app/app/defs"
 )
 

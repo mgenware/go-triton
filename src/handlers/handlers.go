@@ -9,6 +9,8 @@ import (
 
 	"go-triton-app/app"
 	"go-triton-app/app/logx"
+	"go-triton-app/app/middleware"
+	"go-triton-app/handlers/api"
 	"go-triton-app/handlers/errorPage"
 	"go-triton-app/handlers/homePage"
 	"go-triton-app/handlers/system"
@@ -58,6 +60,9 @@ func Start() {
 	// index handler
 	r.With(lm.EnableContextLanguage).Get("/", homePage.HomeGET)
 	r.With(lm.EnableContextLanguage).Get("/fakeError", errorPage.FakeErrorGET)
+
+	// API handler
+	r.With(middleware.ParseJSONRequest).Mount("/api", api.Router)
 
 	app.Logger.LogInfo("Server starting", logx.D{"port": httpConfig.Port})
 	err := http.ListenAndServe(":"+strconv.Itoa(httpConfig.Port), r)

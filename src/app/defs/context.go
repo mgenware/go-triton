@@ -6,13 +6,22 @@ import (
 
 // LanguageContext returns the localization language ID associated with the specified context.
 func LanguageContext(ctx context.Context) string {
-	return stringFromContext(ctx, LanguageContextKey)
-}
-
-func stringFromContext(ctx context.Context, key ContextKey) string {
-	val := ctx.Value(key)
+	val := ctx.Value(LanguageContextKey)
 	if val == nil {
 		return ""
 	}
 	return val.(string)
+}
+
+// BodyContext returns the localization language ID associated with the specified context.
+func BodyContext(ctx context.Context) map[string]interface{} {
+	val := ctx.Value(BodyContextKey)
+	if val == nil {
+		return nil
+	}
+	result, ok := val.(map[string]interface{})
+	if ok {
+		return result
+	}
+	return nil
 }

@@ -10,7 +10,11 @@ func LanguageContext(ctx context.Context) string {
 	if val == nil {
 		return ""
 	}
-	return val.(string)
+	result, ok := val.(string)
+	if ok {
+		return result
+	}
+	return ""
 }
 
 // BodyContext returns the localization language ID associated with the specified context.

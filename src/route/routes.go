@@ -1,4 +1,4 @@
-package handlers
+package route
 
 import (
 	"net/http"
@@ -10,10 +10,10 @@ import (
 	"go-triton-app/app"
 	"go-triton-app/app/logx"
 	"go-triton-app/app/middleware"
-	"go-triton-app/handlers/api"
-	"go-triton-app/handlers/errorPage"
-	"go-triton-app/handlers/homePage"
-	"go-triton-app/handlers/system"
+	"go-triton-app/route/api"
+	"go-triton-app/route/errorp"
+	"go-triton-app/route/homep"
+	"go-triton-app/route/sysh"
 
 	"github.com/go-chi/chi"
 )
@@ -30,7 +30,7 @@ func Start() {
 		// *** Production only ***
 
 		// Mount PanicMiddleware only in production, let panic crash in development
-		r.Use(system.PanicMiddleware)
+		r.Use(sysh.PanicMiddleware)
 	}
 
 	// Mount static file server
@@ -55,11 +55,11 @@ func Start() {
 	lm := app.TemplateManager.LocalizationManager
 
 	// Not found handler
-	r.With(lm.EnableContextLanguage).NotFound(system.NotFoundHandler)
+	r.With(lm.EnableContextLanguage).NotFound(sysh.NotFoundHandler)
 
 	// index handler
-	r.With(lm.EnableContextLanguage).Get("/", homePage.HomeGET)
-	r.With(lm.EnableContextLanguage).Get("/fakeError", errorPage.FakeErrorGET)
+	r.With(lm.EnableContextLanguage).Get("/", homep.HomeGET)
+	r.With(lm.EnableContextLanguage).Get("/fakeError", errorp.FakeErrorGET)
 
 	// API handler
 	r.With(middleware.ParseJSONRequest).Mount("/api", api.Router)

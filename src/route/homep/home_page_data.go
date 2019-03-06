@@ -1,4 +1,4 @@
-package homePage
+package homep
 
 import "go-triton-app/app/template"
 

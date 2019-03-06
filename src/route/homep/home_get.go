@@ -1,4 +1,4 @@
-package homePage
+package homep
 
 import (
 	"net/http"

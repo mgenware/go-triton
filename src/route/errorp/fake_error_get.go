@@ -1,4 +1,4 @@
-package errorPage
+package errorp
 
 import (
 	"errors"

@@ -1,9 +1,9 @@
 package main
 
 import (
-	"go-triton-app/handlers"
+	"go-triton-app/route"
 )
 
 func main() {
-	handlers.Start()
+	route.Start()
 }

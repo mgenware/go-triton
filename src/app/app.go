@@ -35,8 +35,7 @@ func HTMLResponse(w http.ResponseWriter, r *http.Request) *template.HTMLResponse
 func JSONResponse(w http.ResponseWriter, r *http.Request) *template.JSONResponse {
 	ctx := r.Context()
 	tm := TemplateManager
-	resp := template.NewJSONResponse(ctx, tm, w, Config.DevMode)
-
+	resp := template.NewJSONResponse(ctx, tm, w, Config.Debug)
 	return resp
 }
 
@@ -79,7 +78,7 @@ func mustSetupConfig() {
 	}
 
 	log.Printf("✅ Loaded config at \"%v\"", configPath)
-	if config.DevMode {
+	if config.DevMode() {
 		log.Printf("⚠️ Application running in dev mode")
 	}
 	Config = config
@@ -89,16 +88,16 @@ func mustSetupLogger() {
 	if Config == nil {
 		panic("Config must be set before mustSetupLogger")
 	}
-	logger, err := logx.NewLogger(Config.Log.Dir, Config.DevMode)
+	logger, err := logx.NewLogger(Config.Log.Dir, Config.DevMode())
 	if err != nil {
 		panic(err)
 	}
 	Logger = logger
 }
 
-func mustSetupTemplates(c *config.Config) {
-	templatesConfig := c.Templates
-	localizationConfig := c.Localization
+func mustSetupTemplates(config *config.Config) {
+	templatesConfig := config.Templates
+	localizationConfig := config.Localization
 
-	TemplateManager = template.MustCreateManager(templatesConfig.Dir, c.DevMode, localizationConfig.Dir, localizationConfig.DefaultLang, Logger)
+	TemplateManager = template.MustCreateManager(templatesConfig.Dir, localizationConfig.Dir, localizationConfig.DefaultLang, Logger, config.Debug)
 }

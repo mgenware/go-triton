@@ -1,5 +1,4 @@
 {
-  "devMode": true,
   "http": {
     "port": 12001,
     "static": {
@@ -16,5 +15,9 @@
   },
   "log": {
     "dir": "../appdata/log/dev"
+  },
+  "debug": {
+    "reload_views_on_refresh": true,
+    "panic_on_unexpected_html_errors": true
   }
 }

@@ -3,6 +3,7 @@ package template
 import (
 	"context"
 	"fmt"
+	"go-triton-app/app/config/internals"
 	"go-triton-app/app/logx"
 	"log"
 	"net/http"
@@ -17,9 +18,9 @@ import (
 
 // Manager provides common functions to generate HTML strings.
 type Manager struct {
-	devMode bool
-	dir     string
-	logger  *logx.Logger
+	dir         string
+	logger      *logx.Logger
+	debugConfig *internals.DebugConfig
 
 	masterView          *LocalizedView
 	errorView           *LocalizedView
@@ -29,12 +30,12 @@ type Manager struct {
 // MustCreateManager creates an instance of TemplateManager with specified arguments. Note that this function panics when main template loading fails.
 func MustCreateManager(
 	dir string,
-	devMode bool,
 	i18nDir string,
 	defaultLang string,
 	logger *logx.Logger,
+	debugConfig *internals.DebugConfig,
 ) *Manager {
-	if devMode {
+	if debugConfig != nil && debugConfig.ReloadViewsOnRefresh {
 		log.Print("⚠️ View dev mode is on")
 	}
 
@@ -47,7 +48,7 @@ func MustCreateManager(
 	t := &Manager{
 		dir:                 dir,
 		LocalizationManager: localizationManager,
-		devMode:             devMode,
+		debugConfig:         debugConfig,
 		logger:              logger,
 	}
 
@@ -78,7 +79,7 @@ func (m *Manager) MustComplete(ctx context.Context, lang string, d *MasterPageDa
 
 // MustError executes the main view template with the specified data and panics if error occurs.
 func (m *Manager) MustError(ctx context.Context, lang string, d *ErrorPageData, w http.ResponseWriter) {
-	if m.devMode && !d.Expected {
+	if !d.Expected && m.debugConfig != nil && m.debugConfig.PanicOnUnexpectedHTMLErrors {
 		fmt.Println("🙉 This message only appears in dev mode.")
 		if d.Error != nil {
 			panic(d.Error)
@@ -114,14 +115,14 @@ func (m *Manager) LocalizedPageTitle(lang, key string) string {
 // MustParseLocalizedView creates a new LocalizedView with the given relative path.
 func (m *Manager) MustParseLocalizedView(relativePath string) *LocalizedView {
 	file := filepath.Join(m.dir, relativePath)
-	view := templatex.MustParseView(file, m.devMode)
+	view := templatex.MustParseView(file, m.debugConfig != nil)
 	return &LocalizedView{view: view, localizationManager: m.LocalizationManager}
 }
 
 // MustParseView creates a new View with the given relative path.
 func (m *Manager) MustParseView(relativePath string) *templatex.View {
 	file := filepath.Join(m.dir, relativePath)
-	return templatex.MustParseView(file, m.devMode)
+	return templatex.MustParseView(file, m.debugConfig != nil)
 }
 
 // LocalizedString is a convenience function of LocalizationManager.ValueForKey.

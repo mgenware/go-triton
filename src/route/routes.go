@@ -26,7 +26,7 @@ func Start() {
 
 	// ----------------- Middlewares -----------------
 	// THE PanicMiddleware MUST BE AT THE VERY BEGINNING, OTHERWISE IT WILL NOT WORK!
-	if !config.DevMode {
+	if !config.DevMode() {
 		// *** Production only ***
 
 		// Mount PanicMiddleware only in production, let panic crash in development
@@ -59,7 +59,7 @@ func Start() {
 
 	// index handler
 	r.With(lm.EnableContextLanguage).Get("/", homep.HomeGET)
-	r.With(lm.EnableContextLanguage).Get("/fakeError", errorp.FakeErrorGET)
+	r.With(lm.EnableContextLanguage).Get("/fake_error", errorp.FakeErrorGET)
 
 	// API handler
 	r.With(middleware.ParseJSONRequest).Mount("/api", api.Router)

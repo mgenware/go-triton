@@ -1,5 +1,6 @@
 package internals
 
+// HTTPConfig ...
 type HTTPConfig struct {
 	// Port is the listening port of web server.
 	Port int `json:"port" validate:"gt=0"`
@@ -7,6 +8,7 @@ type HTTPConfig struct {
 	Static *HTTPStaticConfig `json:"static" validate:"required"`
 }
 
+// HTTPStaticConfig ...
 type HTTPStaticConfig struct {
 	// URL is the URL pattern used for registering request handler.
 	URL string `json:"url" validate:"required"`

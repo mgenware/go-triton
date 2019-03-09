@@ -54,9 +54,12 @@ go run main.go --config /etc/my_server/dev.json
 │   ├── config              Config files
 │   │   ├── dev.json
 │   │   └── prod.json
-│   ├── handlers        Web handlers
+│   ├── r               Routes
 └── templates           Go HTML template files 
 ```
+
+### The `r` Directory
+This `r` directory contains all routes of your application, and because it will be so commonly used so we shorten in to `r`. In order to follow best practices for package naming ([details](https://blog.golang.org/package-names)), child directories of `r` usually consist of a short name plus a letter indicating the type of the route, e.g. `sysh` for system handlers, `homep` for home page stuff, etc.
 
 ## Projects built from go-trion
 * [qing](https://github.com/mgenware/qing)

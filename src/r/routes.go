@@ -1,4 +1,4 @@
-package route
+package r
 
 import (
 	"net/http"
@@ -10,10 +10,10 @@ import (
 	"go-triton-app/app"
 	"go-triton-app/app/logx"
 	"go-triton-app/app/middleware"
-	"go-triton-app/route/api"
-	"go-triton-app/route/errorp"
-	"go-triton-app/route/homep"
-	"go-triton-app/route/sysh"
+	"go-triton-app/r/api"
+	"go-triton-app/r/errorp"
+	"go-triton-app/r/homep"
+	"go-triton-app/r/sysh"
 
 	"github.com/go-chi/chi"
 )

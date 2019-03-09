@@ -1,9 +1,9 @@
 package main
 
 import (
-	"go-triton-app/route"
+	"go-triton-app/r"
 )
 
 func main() {
-	route.Start()
+	r.Start()
 }

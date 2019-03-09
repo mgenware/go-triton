@@ -57,3 +57,6 @@ go run main.go --config /etc/my_server/dev.json
 │   ├── handlers        Web handlers
 └── templates           Go HTML template files 
 ```
+
+## Projects built from go-trion
+* [qing](https://github.com/mgenware/qing)

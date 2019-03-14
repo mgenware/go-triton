@@ -4,5 +4,6 @@
   "language": "English",
   "errorOccurred": "An error occurred",
   "pPageNotFound": "The URL you requested \"{0}\" does not exist",
+  "resourceNotFound": "The resource you request does not exist",
   "helloWorld": "Hello world!"
 }

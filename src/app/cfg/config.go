@@ -1,11 +1,11 @@
-package config
+package cfg
 
 import (
 	"encoding/json"
 	"fmt"
 	"path/filepath"
 
-	"go-triton-app/app/config/internals"
+	"go-triton-app/app/cfg/internals"
 
 	"gopkg.in/go-playground/validator.v9"
 )

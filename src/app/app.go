@@ -8,13 +8,13 @@ import (
 	"net/http"
 	"os"
 
-	"go-triton-app/app/config"
+	"go-triton-app/app/cfg"
 	"go-triton-app/app/logx"
 	"go-triton-app/app/template"
 )
 
 // Config is the application configuration loaded.
-var Config *config.Config
+var Config *cfg.Config
 
 // Logger is the main logger for this app.
 var Logger *logx.Logger
@@ -24,18 +24,16 @@ var TemplateManager *template.Manager
 
 // HTMLResponse returns common objects used to compose an HTML response.
 func HTMLResponse(w http.ResponseWriter, r *http.Request) *template.HTMLResponse {
-	ctx := r.Context()
 	tm := TemplateManager
-	resp := template.NewHTMLResponse(ctx, tm, w)
+	resp := template.NewHTMLResponse(r, tm, w)
 
 	return resp
 }
 
 // JSONResponse returns common objects used to compose an HTML response.
 func JSONResponse(w http.ResponseWriter, r *http.Request) *template.JSONResponse {
-	ctx := r.Context()
 	tm := TemplateManager
-	resp := template.NewJSONResponse(ctx, tm, w, Config.Debug)
+	resp := template.NewJSONResponse(r, tm, w, Config.Debug)
 	return resp
 }
 
@@ -72,7 +70,7 @@ func mustSetupConfig() {
 	if err != nil {
 		panic(err)
 	}
-	config, err := config.ReadConfig(configBytes)
+	config, err := cfg.ReadConfig(configBytes)
 	if err != nil {
 		panic(err)
 	}
@@ -95,9 +93,9 @@ func mustSetupLogger() {
 	Logger = logger
 }
 
-func mustSetupTemplates(config *config.Config) {
+func mustSetupTemplates(config *cfg.Config) {
 	templatesConfig := config.Templates
 	localizationConfig := config.Localization
 
-	TemplateManager = template.MustCreateManager(templatesConfig.Dir, localizationConfig.Dir, localizationConfig.DefaultLang, Logger, config.Debug)
+	TemplateManager = template.MustCreateManager(templatesConfig.Dir, localizationConfig.Dir, localizationConfig.DefaultLang, Logger, config)
 }

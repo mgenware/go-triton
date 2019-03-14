@@ -8,7 +8,6 @@ import (
 	"github.com/mgenware/go-packagex/iox"
 
 	"go-triton-app/app"
-	"go-triton-app/app/logx"
 	"go-triton-app/app/middleware"
 	"go-triton-app/r/api"
 	"go-triton-app/r/errorp"
@@ -38,13 +37,13 @@ func Start() {
 	if httpStaticConfig != nil {
 		url := httpStaticConfig.URL
 		dir := httpStaticConfig.Dir
-		app.Logger.LogInfo("Serving Assets", logx.D{
-			"url": url,
-			"dir": dir,
-		})
+		app.Logger.Info("serving-assets",
+			"url", url,
+			"dir", dir,
+		)
 		fileServer(r, url, http.Dir(dir))
 		if !iox.IsDirectory(dir) {
-			app.Logger.LogWarning("Assets directory doesn't exist", logx.D{"dir": dir})
+			app.Logger.Warn("serving-assets.not-found", "dir", dir)
 		}
 	}
 
@@ -64,10 +63,10 @@ func Start() {
 	// API handler
 	r.With(middleware.ParseJSONRequest).Mount("/api", api.Router)
 
-	app.Logger.LogInfo("Server starting", logx.D{"port": httpConfig.Port})
+	app.Logger.Info("server-starting", "port", httpConfig.Port)
 	err := http.ListenAndServe(":"+strconv.Itoa(httpConfig.Port), r)
 	if err != nil {
-		app.Logger.LogError("Server failed to start", logx.D{"err": err.Error()})
+		app.Logger.Error("server-starting.failed", "err", err.Error())
 		panic(err)
 	}
 }

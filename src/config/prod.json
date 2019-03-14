@@ -5,7 +5,8 @@
     "static": {
       "url": "/static",
       "dir": "../assets"
-    }
+    },
+    "log_404_error": true
   },
   "templates": {
     "dir": "../templates"

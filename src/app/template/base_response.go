@@ -57,8 +57,3 @@ func (b *BaseResponse) PageTitle(s string) string {
 func (b *BaseResponse) LocalizedPageTitle(key string) string {
 	return b.mgr.LocalizedPageTitle(b.lang, key)
 }
-
-// SetStatus sets the underlying HTTP status code.
-func (b *BaseResponse) SetStatus(key string) string {
-	return b.mgr.LocalizedPageTitle(b.lang, key)
-}

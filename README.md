@@ -17,7 +17,7 @@ A boilerplate template for Go web applications. Uses Go 1.11 modules.
 * `github.com/go-chi/chi`: HTTP routing. 
 * `github.com/mgenware/go-packagex`: for common helpers like template wrapper, MIME type definitions, etc.
 * `golang.org/x/text/language`: HTTP `Accept-Language` header parsing and matching.
-* `github.com/sirupsen/logrus`: Logging.
+* `github.com/uber-go/zap`: Logging.
 
 ## Usage
 Start in development mode:

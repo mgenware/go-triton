@@ -33,8 +33,15 @@ func HTMLResponse(w http.ResponseWriter, r *http.Request) *template.HTMLResponse
 // JSONResponse returns common objects used to compose an HTML response.
 func JSONResponse(w http.ResponseWriter, r *http.Request) *template.JSONResponse {
 	tm := TemplateManager
-	resp := template.NewJSONResponse(r, tm, w, Config.Debug)
+	resp := template.NewJSONResponse(r, tm, w)
 	return resp
+}
+
+// PanicIfErr panics if the given `err` is not nil.
+func PanicIfErr(err error) {
+	if err != nil {
+		panic(err)
+	}
 }
 
 // MasterPageData wraps a call to MasterPageData.

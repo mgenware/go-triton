@@ -61,16 +61,16 @@ go run main.go --config /etc/my_server/dev.json
 ### The `r` Directory
 The `r`(`routes`) directory contains all routes of your application, and because it is commonly used so we shortens in to `r`, and in order to follow the best practices for package naming ([details](https://blog.golang.org/package-names)), child directories of `r` usually consist of a short name plus a letter indicating the type of the route, e.g. `sysh` for system handlers, `homep` for home page stuff, etc.
 
-## Error handling in HTTP handler
+## Error handling in HTTP handlers
 Two styles of error handling are supported, "panic" style and "return" style.
 
-* Panic style, throws errors by panicing.
-	* Pros: no "double writing" issue when you forgot to `return` after writing the content.
-	* Cons: may look a bit weird to some devs as `panic` is supposed to crash the process.
+* Panic style, handles errors by panicking.
+  * Pros: no "double writing" issue when you forgot to `return` after writing content to response.
+  * Cons: may look a bit weird to some devs as `panic` is supposed to crash the process.
 
-* Return style
-  * Pros: no `panic` in handler.
-	* Cons: handler is screwed when you forgot to `return` after writing the content.
+* Return style, handles error and result in a similar way.
+  * Pros: no `panic` in handler code.
+  * Cons: handler is screwed when you forgot to `return` after writing content to response.
 
 ```go
 // "panic" style
@@ -172,10 +172,10 @@ You can now reference localized strings in template by accessing the `LS` field:
 
 ```html
 <div>
-	<!-- Accessing localized fields -->
+  <!-- Accessing localized fields -->
   <h1>{{html .LS.home}}</h1>
   <p>{{html .LS.helloWorld}}</p>
-	<!-- Accessing non-localized fields -->
+  <!-- Accessing non-localized fields -->
   <p>{{html .MyTemplateField1}}</p>
   <p>{{html .MyTemplateField2}}</p>
 </div>

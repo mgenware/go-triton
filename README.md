@@ -49,20 +49,28 @@ go run main.go --config /etc/my_server/dev.json
 ├── assets              Static assets, HTML/JavaScript/CSS/Image files
 ├── localization        Localization resources
 │   └── langs               Localized strings used by your app
+└── templates           Go HTML template files 
 ├── src                 Go source directory
 │   ├── app                 Core app modules, such as template manager, logger, etc.
 │   ├── config              Config files
 │   │   ├── dev.json
 │   │   └── prod.json
 │   ├── r               Routes
-└── templates           Go HTML template files 
 ```
 
 ### The `r` Directory
-This `r` directory contains all routes of your application, and because it will be so commonly used so we shorten in to `r`. In order to follow best practices for package naming ([details](https://blog.golang.org/package-names)), child directories of `r` usually consist of a short name plus a letter indicating the type of the route, e.g. `sysh` for system handlers, `homep` for home page stuff, etc.
+The `r`(`routes`) directory contains all routes of your application, and because it is commonly used so we shortens in to `r`, and in order to follow the best practices for package naming ([details](https://blog.golang.org/package-names)), child directories of `r` usually consist of a short name plus a letter indicating the type of the route, e.g. `sysh` for system handlers, `homep` for home page stuff, etc.
 
 ## Error handling in HTTP handler
 Two styles of error handling are supported, "panic" style and "return" style.
+
+* Panic style, throws errors by panicing.
+	* Pros: no "double writing" issue when you forgot to `return` after writing the content.
+	* Cons: may look a bit weird to some devs as `panic` is supposed to crash the process.
+
+* Return style
+  * Pros: no `panic` in handler.
+	* Cons: handler is screwed when you forgot to `return` after writing the content.
 
 ```go
 // "panic" style
@@ -76,7 +84,9 @@ func formAPI1(w http.ResponseWriter, r *http.Request) {
 	result, err := systemCall()
 	if err != nil {
 		// `panic` with an error to indicate an unexpected error (or app error)
-		// Unexpected errors are considered fatal and are usually because something went wrong in your application or system, so they are logged and served with 500 (Internal Server Error) code.
+		// Unexpected errors are considered fatal and happened when something
+		//  went wrong in your code or system. They are logged and served
+		//  with 500 (Internal Server Error) HTTP code.
 		panic(err)
 	}
 	resp := app.JSONResponse(w, r)
@@ -96,13 +106,82 @@ func formAPI2(w http.ResponseWriter, r *http.Request) {
 	}
 	result, err := systemCall()
 	if err != nil {
-		// For unexpected error (or app error), call `MustFail`.
+		// For unexpected errors (or app errors), call `MustFail`.
 		resp.MustFail(err)
 		// DON'T FORGET THE `return`
+		return
 	}
 	resp.MustComplete(result)
 }
 ```
+
+## Localization
+### How is user language determined
+* If user explicitly specify the language ID in query string like (`/?lang=en`), then we take user's input as desired language ID (this also sets the language ID to user cookies).
+* If not, try using saved language ID in user cookies.
+* If not, determine desired language from HTTP headers.
+
+### Enabling Localization on a specific route
+As shown above, the process of determining the desired language ID can definitely brings some cost, so localization is disabled by default. To support localization in a specific HTTP route, we need to mount the `EnableContextLanguage` middleware.
+
+```go
+r := chi.NewRouter()
+// lm is app localization manager
+lm := app.TemplateManager.LocalizationManager
+// Enable localization on home page handler
+r.With(lm.EnableContextLanguage).Get("/", homep.HomeGET)
+```
+
+### Using localized strings in templates
+One localization is enabled, we can access them in HTML templates. Localized strings are stored as JSON files in `/localization/langs` with file name indicating the language ID. Go-triton comes with two example localized strings files, `en.json` for English, and `cs.json` for `Chinese Simplified`.
+
+To reference a locaized string, you need to first make your template data type derive from `template.LocalizedTemplateData`. e.g. the `home_page_data.go` in project:
+
+```go
+import "go-triton-app/app/template"
+
+// HomePageData contains the information needed for generating the home page.
+type HomePageData struct {
+	template.LocalizedTemplateData
+
+	MyTemplateField1 string
+	MyTemplateField2 string
+}
+```
+
+Let's say our localized strings files are defined like this:
+
+`en.json`:
+
+```json
+{
+  "home": "Home",
+  "helloWorld": "Hello world!"
+}
+```
+
+`cs.json`:
+```json
+{
+  "home": "主页",
+  "helloWorld": "你好，世界！"
+}
+```
+
+You can now reference localized strings in template by accessing the `LS` field:
+
+```html
+<div>
+	<!-- Accessing localized fields -->
+  <h1>{{html .LS.home}}</h1>
+  <p>{{html .LS.helloWorld}}</p>
+	<!-- Accessing non-localized fields -->
+  <p>{{html .MyTemplateField1}}</p>
+  <p>{{html .MyTemplateField2}}</p>
+</div>
+```
+
+If you got `.LS` not defined then it's probably because you didn't have you template class derive from `template.LocalizedTemplateData`.
 
 ## Projects built from go-trion
 * [qing](https://github.com/mgenware/qing)

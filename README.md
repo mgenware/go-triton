@@ -4,17 +4,8 @@
 
 A boilerplate template for Go web applications. Uses Go 1.11 modules.
 
-* Configuration file support.
-* Development/production mode (via `config.DevMode`).
-* Implemented common HTTP handlers:
-  * Not found(404) handler.
-  * Panic recovery handler as 500 Internal Server Error.
-* Template support (auto reloads template in development mode).
-* Auto serves static files in development mode.
-* i18n support.
-* Builtin logging to different files based on settings or sources.
-
-### Table of Contents
+## Table of Contents
+* [Features](#features)
 * [Main Dependencies](#main-dependencies)
 * [Usage](#usage)
 * [Directory Structure](#directory-structure)
@@ -26,6 +17,17 @@ A boilerplate template for Go web applications. Uses Go 1.11 modules.
 	+ [Using localized strings in templates](#using-localized-strings-in-templates)
 * [Logging](#logging)
 * [Projects built from go-trion](#projects-built-from-go-trion)
+
+## Features
+* Configuration file support.
+* Development/production mode (via `config.DevMode`).
+* Implemented common HTTP handlers:
+  * Not found(404) handler.
+  * Panic recovery handler as 500 Internal Server Error.
+* Template support (auto reloads template in development mode).
+* Auto serves static files in development mode.
+* i18n support.
+* Builtin logging to different files based on settings or sources.
 
 ## Main Dependencies
 * `github.com/go-chi/chi`: HTTP routing. 

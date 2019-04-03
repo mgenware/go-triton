@@ -12,6 +12,20 @@ A boilerplate template for Go web applications. Uses Go 1.11 modules.
 * Template support (auto reloads template in development mode).
 * Auto serves static files in development mode.
 * i18n support.
+* Builtin logging to different files based on settings or sources.
+
+### Table of Contents
+* [Main Dependencies](#main-dependencies)
+* [Usage](#usage)
+* [Directory Structure](#directory-structure)
+	+ [The `r` Directory](#the--r--directory)
+* [Error handling in HTTP handlers](#error-handling-in-http-handlers)
+* [Localization](#localization)
+	+ [How is user language determined](#how-is-user-language-determined)
+	+ [Enabling Localization on a specific route](#enabling-localization-on-a-specific-route)
+	+ [Using localized strings in templates](#using-localized-strings-in-templates)
+* [Logging](#logging)
+* [Projects built from go-trion](#projects-built-from-go-trion)
 
 ## Main Dependencies
 * `github.com/go-chi/chi`: HTTP routing. 
@@ -182,6 +196,19 @@ You can now reference localized strings in template by accessing the `LS` field:
 ```
 
 If you got `.LS` not defined then it's probably because you didn't have you template class derive from `template.LocalizedTemplateData`.
+
+## Logging
+By default, go-triton logs to the following files:
+* `error.log` errors (by calling `panic` with an `Error` or `app.Logger.Error`)
+* `warning.log` warnings (by `app.Logger.Warn`)
+* `info` info (by `app.Logger.Info`)
+* `not_found` logs all 404 requests.
+
+This files are also saved in different directories based on configuration:
+* `appdata/log/dev` development logs
+* `appdata/log/prod` production logs
+
+All above settings are configurable.
 
 ## Projects built from go-trion
 * [qing](https://github.com/mgenware/qing)

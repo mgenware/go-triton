@@ -10,7 +10,7 @@ require (
 	github.com/leodido/go-urn v1.1.0 // indirect
 	github.com/mattn/go-colorable v0.1.1 // indirect
 	github.com/mattn/go-isatty v0.0.7 // indirect
-	github.com/mgenware/go-packagex v4.0.0+incompatible
+	github.com/mgenware/go-packagex/v5 v5.0.0
 	github.com/mgenware/go-string-format v1.0.0
 	github.com/pkg/errors v0.8.1 // indirect
 	github.com/pmezard/go-difflib v1.0.0 // indirect

@@ -5,7 +5,7 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/mgenware/go-packagex/iox"
+	"github.com/mgenware/go-packagex/v5/iox"
 
 	"go-triton-app/app"
 	"go-triton-app/app/middleware"

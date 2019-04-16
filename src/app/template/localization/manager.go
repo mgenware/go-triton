@@ -11,8 +11,9 @@ import (
 
 	"golang.org/x/text/language"
 
-	"github.com/mgenware/go-packagex/filepathx"
 	"go-triton-app/app/defs"
+
+	"github.com/mgenware/go-packagex/v5/filepathx"
 )
 
 var (

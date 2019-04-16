@@ -9,7 +9,7 @@ import (
 	"runtime"
 	"strings"
 
-	"github.com/mgenware/go-packagex/iox"
+	"github.com/mgenware/go-packagex/v5/iox"
 
 	"go-triton-app/app/cfg/internals"
 

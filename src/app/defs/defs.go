@@ -1,5 +1,6 @@
 package defs
 
+// ContextKey is the key type used to fetch values from a context.
 type ContextKey string
 
 const (
@@ -12,5 +13,5 @@ const (
 )
 
 const (
-	APIGenericError uint = 1
+	APIGenericError = 1
 )

@@ -10,7 +10,7 @@ func LanguageContext(ctx context.Context) string {
 	return result
 }
 
-// BodyContext returns the localization language ID associated with the specified context.
+// BodyContext returns the request payload (e.g. parsed JSON contents) associated with the specified context.
 func BodyContext(ctx context.Context) map[string]interface{} {
 	result, _ := ctx.Value(BodyContextKey).(map[string]interface{})
 	return result

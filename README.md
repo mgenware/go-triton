@@ -75,7 +75,7 @@ go run main.go --config /etc/my_server/dev.json
 ```
 
 ### The `r` Directory
-The `r`(`routes`) directory contains all routes of your application, and because it is commonly used so we shortens in to `r`, and in order to follow the best practices for package naming ([details](https://blog.golang.org/package-names)), child directories of `r` usually consist of a short name plus a letter indicating the type of the route, e.g. `sysh` for system handlers, `homep` for home page stuff, etc.
+The `r`(`routes`) directory contains all routes of your application, and in order to follow the best practices for package naming ([details](https://blog.golang.org/package-names)), child directories of `r` usually consist of a short name plus a letter indicating the type of the route, e.g. `sysh` for system handlers, `homep` for home page stuff, etc.
 
 ## Error handling in HTTP handlers
 Two styles of error handling are supported, "panic" style and "return" style.

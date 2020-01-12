@@ -57,9 +57,9 @@ func MustCreateManager(
 		log404Error:          config.HTTP.Log404Error,
 	}
 
-	// Load the master template
+	// Load the master template.
 	t.masterView = t.MustParseLocalizedView("master.html")
-	// Load the error template
+	// Load the error template.
 	t.errorView = t.MustParseLocalizedView("error.html")
 
 	return t
@@ -85,12 +85,12 @@ func (m *Manager) MustComplete(r *http.Request, lang string, d *MasterPageData, 
 // MustError executes the main view template with the specified data and panics if error occurs.
 func (m *Manager) MustError(r *http.Request, lang string, err error, expected bool, w http.ResponseWriter) {
 	d := &ErrorPageData{Message: err.Error()}
-	// Handle unexpected errors
+	// Handle unexpected errors.
 	if !expected {
 		if err == sql.ErrNoRows {
-			// Consider `sql.ErrNoRows` as 404 not found error
+			// Consider `sql.ErrNoRows` as 404 not found error.
 			w.WriteHeader(http.StatusNotFound)
-			// Set `expected` to `true`
+			// Set `expected` to `true`.
 			expected = true
 
 			d.Message = m.LocalizedString(lang, "resourceNotFound")
@@ -98,7 +98,7 @@ func (m *Manager) MustError(r *http.Request, lang string, err error, expected bo
 				m.logger.NotFound("sql", r.URL.String())
 			}
 		} else {
-			// At this point, this should be a 500 server internal error
+			// At this point, this should be a 500 server internal error.
 			w.WriteHeader(http.StatusInternalServerError)
 			m.logger.Error("fatal-error", "msg", d.Message)
 		}

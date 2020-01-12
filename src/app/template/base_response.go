@@ -47,13 +47,3 @@ func (b *BaseResponse) LocalizedString(key string) string {
 func (b *BaseResponse) FormatLocalizedString(key string, a ...interface{}) string {
 	return b.mgr.FormatLocalizedString(b.lang, key, a...)
 }
-
-// PageTitle calls TemplateManager.PageTitle.
-func (b *BaseResponse) PageTitle(s string) string {
-	return b.mgr.PageTitle(b.lang, s)
-}
-
-// LocalizedPageTitle calls TemplateManager.LocalizedPageTitle.
-func (b *BaseResponse) LocalizedPageTitle(key string) string {
-	return b.mgr.LocalizedPageTitle(b.lang, key)
-}

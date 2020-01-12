@@ -79,6 +79,9 @@ func (m *Manager) MustComplete(r *http.Request, lang string, d *MasterPageData, 
 	// data.Header += "<link href=\"/static/main.min.css\" rel=\"stylesheet\"/>"
 	// data.Scripts += "<script src=\"/static/main.min.js\"></script>"
 
+	// Add site title.
+	d.Title = m.PageTitle(lang, d.Title)
+
 	m.masterView.MustExecute(lang, w, d)
 }
 
@@ -104,19 +107,13 @@ func (m *Manager) MustError(r *http.Request, lang string, err error, expected bo
 		}
 	}
 	errorHTML := m.errorView.MustExecuteToString(lang, d)
-	htmlData := NewMasterPageData(m.LocalizedPageTitle(lang, "error"), errorHTML)
+	htmlData := NewMasterPageData(m.LocalizedString(lang, "errorOccurred"), errorHTML)
 	m.MustComplete(r, lang, htmlData, w)
 }
 
 // PageTitle returns the given string followed by the localized site name.
 func (m *Manager) PageTitle(lang, s string) string {
 	return s + " - " + m.LocalizationManager.ValueForKey(lang, "_siteName")
-}
-
-// LocalizedPageTitle calls PageTitle with a localized string associated with the specified key.
-func (m *Manager) LocalizedPageTitle(lang, key string) string {
-	ls := m.LocalizationManager.ValueForKey(lang, key)
-	return m.PageTitle(lang, ls)
 }
 
 // MustParseLocalizedView creates a new LocalizedView with the given relative path.

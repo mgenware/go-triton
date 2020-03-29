@@ -1,3 +1,4 @@
 *.log
 /appdata/*
 !/appdata/README.md
+/src/.windows-bin

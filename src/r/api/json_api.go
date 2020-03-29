@@ -2,13 +2,13 @@ package api
 
 import (
 	"go-triton-app/app/defs"
+	"go-triton-app/app/template"
 	"net/http"
 
 	"go-triton-app/app"
 )
 
-func jsonAPI(w http.ResponseWriter, r *http.Request) {
-	resp := app.JSONResponse(w, r)
+func jsonAPI(w http.ResponseWriter, r *http.Request) *template.JSONResponse {
 	dict := defs.BodyContext(r.Context())
-	resp.MustComplete(dict)
+	return app.JSONResponse(w, r).MustComplete(dict)
 }

@@ -56,7 +56,7 @@ func Start() {
 	r.With(lm.EnableContextLanguage).Get("/fake_error", errorp.FakeErrorGET)
 
 	// API handler
-	r.With(middleware.ParseJSONRequest).Mount("/api", api.Router)
+	r.With(middleware.ParseJSONRequest).Mount("/api", api.Router.Core)
 
 	app.Logger.Info("server-starting", "port", httpConfig.Port)
 	err := http.ListenAndServe(":"+strconv.Itoa(httpConfig.Port), r)

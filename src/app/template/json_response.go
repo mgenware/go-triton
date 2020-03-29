@@ -49,9 +49,10 @@ func (j *JSONResponse) MustFailWithCode(code int) {
 }
 
 // MustComplete finishes the response with the given data, and panics if unexpected error happens.
-func (j *JSONResponse) MustComplete(data interface{}) {
+func (j *JSONResponse) MustComplete(data interface{}) *JSONResponse {
 	d := &APIResult{Data: data}
 	j.mustWriteData(d)
+	return j
 }
 
 func (j *JSONResponse) mustWriteData(d *APIResult) {

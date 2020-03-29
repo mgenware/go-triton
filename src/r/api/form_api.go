@@ -4,9 +4,10 @@ import (
 	"net/http"
 
 	"go-triton-app/app"
+	"go-triton-app/app/template"
 )
 
-func formAPI(w http.ResponseWriter, r *http.Request) {
+func formAPI(w http.ResponseWriter, r *http.Request) *template.JSONResponse {
 	err := r.ParseForm()
 	if err != nil {
 		// Note that we are throwing `err.Error()` not the `err` itself, it's because we think
@@ -14,6 +15,5 @@ func formAPI(w http.ResponseWriter, r *http.Request) {
 		// a string instead of an error makes it an user error, which doesn't need to be logged.
 		panic(err.Error())
 	}
-	resp := app.JSONResponse(w, r)
-	resp.MustComplete(r.Form)
+	return app.JSONResponse(w, r).MustComplete(r.Form)
 }

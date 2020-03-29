@@ -1,8 +1,8 @@
 package api
 
-import "github.com/go-chi/chi"
+import "go-triton-app/app/router"
 
-var Router = chi.NewRouter()
+var Router = router.NewJSONRouter()
 
 func init() {
 	Router.Post("/form_api", formAPI)

@@ -1,9 +1,9 @@
-package template
+package handler
 
 import (
 	"io"
 
-	"go-triton-app/app/template/localization"
+	"go-triton-app/app/handler/localization"
 
 	"github.com/mgenware/go-packagex/v5/templatex"
 )

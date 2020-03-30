@@ -4,10 +4,10 @@ import (
 	"net/http"
 
 	"go-triton-app/app"
-	"go-triton-app/app/template"
+	"go-triton-app/app/handler"
 )
 
-func formAPI(w http.ResponseWriter, r *http.Request) *template.JSONResponse {
+func formAPI(w http.ResponseWriter, r *http.Request) *handler.JSONResponse {
 	err := r.ParseForm()
 	if err != nil {
 		// Note that we are throwing `err.Error()` not the `err` itself, it's because we think

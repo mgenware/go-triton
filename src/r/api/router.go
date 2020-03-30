@@ -1,8 +1,8 @@
 package api
 
-import "go-triton-app/app/router"
+import "go-triton-app/app/handler"
 
-var Router = router.NewJSONRouter()
+var Router = handler.NewJSONRouter()
 
 func init() {
 	Router.Post("/form_api", formAPI)

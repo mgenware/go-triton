@@ -8,8 +8,8 @@ import (
 	"os"
 
 	"go-triton-app/app/cfg"
+	"go-triton-app/app/handler"
 	"go-triton-app/app/logx"
-	"go-triton-app/app/template"
 )
 
 // Config is the application configuration loaded.
@@ -18,21 +18,21 @@ var Config *cfg.Config
 // Logger is the main logger for this app.
 var Logger *logx.Logger
 
-// TemplateManager is a app-wide instance of template.Manager.
-var TemplateManager *template.Manager
+// TemplateManager is a app-wide instance of handler.Manager.
+var TemplateManager *handler.Manager
 
 // HTMLResponse returns common objects used to compose an HTML response.
-func HTMLResponse(w http.ResponseWriter, r *http.Request) *template.HTMLResponse {
+func HTMLResponse(w http.ResponseWriter, r *http.Request) *handler.HTMLResponse {
 	tm := TemplateManager
-	resp := template.NewHTMLResponse(r, tm, w)
+	resp := handler.NewHTMLResponse(r, tm, w)
 
 	return resp
 }
 
 // JSONResponse returns common objects used to compose an HTML response.
-func JSONResponse(w http.ResponseWriter, r *http.Request) *template.JSONResponse {
+func JSONResponse(w http.ResponseWriter, r *http.Request) *handler.JSONResponse {
 	tm := TemplateManager
-	resp := template.NewJSONResponse(r, tm, w)
+	resp := handler.NewJSONResponse(r, tm, w)
 	return resp
 }
 
@@ -44,8 +44,8 @@ func PanicIfErr(err error) {
 }
 
 // MasterPageData wraps a call to MasterPageData.
-func MasterPageData(title, contentHTML string) *template.MasterPageData {
-	return template.NewMasterPageData(title, contentHTML)
+func MasterPageData(title, contentHTML string) *handler.MasterPageData {
+	return handler.NewMasterPageData(title, contentHTML)
 }
 
 func init() {
@@ -99,5 +99,5 @@ func mustSetupTemplates(config *cfg.Config) {
 	templatesConfig := config.Templates
 	localizationConfig := config.Localization
 
-	TemplateManager = template.MustCreateManager(templatesConfig.Dir, localizationConfig.Dir, localizationConfig.DefaultLang, Logger, config)
+	TemplateManager = handler.MustCreateManager(templatesConfig.Dir, localizationConfig.Dir, localizationConfig.DefaultLang, Logger, config)
 }

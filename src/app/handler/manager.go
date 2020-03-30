@@ -1,4 +1,4 @@
-package template
+package handler
 
 import (
 	"database/sql"
@@ -8,7 +8,7 @@ import (
 	"net/http"
 	"path/filepath"
 
-	"go-triton-app/app/template/localization"
+	"go-triton-app/app/handler/localization"
 
 	"github.com/mgenware/go-packagex/v5/httpx"
 	"github.com/mgenware/go-packagex/v5/templatex"

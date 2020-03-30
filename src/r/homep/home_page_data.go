@@ -1,10 +1,10 @@
 package homep
 
-import "go-triton-app/app/template"
+import "go-triton-app/app/handler"
 
 // HomePageData contains the information needed for generating the home page.
 type HomePageData struct {
-	template.LocalizedTemplateData
+	handler.LocalizedTemplateData
 
 	Time string
 }

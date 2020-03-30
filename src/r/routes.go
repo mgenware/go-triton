@@ -8,6 +8,7 @@ import (
 	"github.com/mgenware/go-packagex/v5/iox"
 
 	"go-triton-app/app"
+	"go-triton-app/app/handler"
 	"go-triton-app/app/middleware"
 	"go-triton-app/r/api"
 	"go-triton-app/r/errorp"
@@ -52,8 +53,8 @@ func Start() {
 	r.With(lm.EnableContextLanguage).NotFound(sysh.NotFoundHandler)
 
 	// index handler
-	r.With(lm.EnableContextLanguage).Get("/", homep.HomeGET)
-	r.With(lm.EnableContextLanguage).Get("/fake_error", errorp.FakeErrorGET)
+	r.With(lm.EnableContextLanguage).Get("/", handler.HTMLHandlerToHTTPHandler(homep.HomeGET))
+	r.With(lm.EnableContextLanguage).Get("/internal_error", errorp.InternalErrorGET)
 
 	// API handler
 	r.With(middleware.ParseJSONRequest).Mount("/api", api.Router.Core)

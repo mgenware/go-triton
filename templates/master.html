@@ -1,11 +1,11 @@
-<!doctype html>
+<!DOCTYPE html>
 
 <html>
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{{html .Title}}</title>
-    <link rel="stylesheet" href="/static/style/main.css"/>
+    <link rel="stylesheet" href="/static/style/main.css" />
     {{.Header}}
   </head>
 
@@ -13,7 +13,12 @@
     <nav class="m-header">
       <p>
         <span>Go-Triton - {{.LS.language}}</span>
-        <img class="m-brand-img" src="/static/img/triton.jpg" width="100" height="100"/>
+        <img
+          class="m-brand-img"
+          src="/static/img/triton.jpg"
+          width="100"
+          height="100"
+        />
       </p>
     </nav>
     <main class="container">
@@ -21,10 +26,13 @@
         <a href="/">Home(Auto-detect language)</a> |
         <a href="/?lang=en">Home(English)</a> |
         <a href="/?lang=cs">Home(Simplified Chinese)</a> |
-        <a href="/fake_error">Server error (crashes in dev | shows error page in production)</a> |
+        <a href="/internal_error"
+          >Server error (crashes in dev | shows error page in production)</a
+        >
+        |
         <a href="/__not_found__">404 Page</a>
       </p>
-      <hr/>
+      <hr />
       {{.ContentHTML}}
     </main>
 

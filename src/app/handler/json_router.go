@@ -7,7 +7,7 @@ import (
 )
 
 // JSONHandlerFunc is an http.HandlerFunc with a return value representing the result of the handler.
-type JSONHandlerFunc func(http.ResponseWriter, *http.Request) *JSONResponse
+type JSONHandlerFunc func(http.ResponseWriter, *http.Request) JSON
 
 // JSONRouter wraps a chi.Router and provides methods for create JSON-related router.
 type JSONRouter struct {

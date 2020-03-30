@@ -8,7 +8,7 @@ import (
 	"go-triton-app/app"
 )
 
-func jsonAPI(w http.ResponseWriter, r *http.Request) *handler.JSONResponse {
+func jsonAPI(w http.ResponseWriter, r *http.Request) handler.JSON {
 	dict := defs.BodyContext(r.Context())
 	return app.JSONResponse(w, r).MustComplete(dict)
 }

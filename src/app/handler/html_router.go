@@ -7,7 +7,7 @@ import (
 )
 
 // HTMLHandlerFunc is an http.HandlerFunc with a return value representing the result of the handler.
-type HTMLHandlerFunc func(http.ResponseWriter, *http.Request) *HTMLResponse
+type HTMLHandlerFunc func(http.ResponseWriter, *http.Request) HTML
 
 // HTMLRouter wraps a chi.Router and provides methods for create JSON-related router.
 type HTMLRouter struct {

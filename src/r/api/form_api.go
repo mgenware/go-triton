@@ -7,7 +7,7 @@ import (
 	"go-triton-app/app/handler"
 )
 
-func formAPI(w http.ResponseWriter, r *http.Request) *handler.JSONResponse {
+func formAPI(w http.ResponseWriter, r *http.Request) handler.JSON {
 	err := r.ParseForm()
 	if err != nil {
 		// Note that we are throwing `err.Error()` not the `err` itself, it's because we think

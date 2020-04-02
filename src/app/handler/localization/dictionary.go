@@ -5,10 +5,12 @@ import (
 	"io/ioutil"
 )
 
+// Dictionary contains localized strings.
 type Dictionary struct {
 	Map map[string]string
 }
 
+// NewDictionaryFromFile loads a dictionary from the specified file, which should be a JSON.
 func NewDictionaryFromFile(file string) (*Dictionary, error) {
 	m, err := readJSONFileToMap(file)
 	if err != nil {

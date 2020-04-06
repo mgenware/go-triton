@@ -25,7 +25,6 @@ var TemplateManager *handler.Manager
 func HTMLResponse(w http.ResponseWriter, r *http.Request) *handler.HTMLResponse {
 	tm := TemplateManager
 	resp := handler.NewHTMLResponse(r, tm, w)
-
 	return resp
 }
 

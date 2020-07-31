@@ -212,5 +212,5 @@ This files are also saved in different directories based on configuration:
 
 All above settings are configurable.
 
-## Projects built from go-trion
+## Projects built from go-triton
 * [qing](https://github.com/mgenware/qing)

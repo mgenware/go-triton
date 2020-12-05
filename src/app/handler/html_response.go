@@ -59,6 +59,12 @@ func (h *HTMLResponse) MustFailWithError(err error, expected bool) HTML {
 	return HTML(0)
 }
 
+// Redirect calls http.Redirect.
+func (h *HTMLResponse) Redirect(url string, code int) HTML {
+	http.Redirect(h.writer, h.req, url, code)
+	return HTML(0)
+}
+
 func (h *HTMLResponse) checkCompletion() {
 	if h.isCompleted {
 		panic(errors.New("Result has completed"))

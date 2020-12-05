@@ -21,5 +21,5 @@ func NotFoundHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// Note that pass `true` as the `expected` param so that template manager won't treat it as a 500 error.
-	app.TemplateManager.MustError(r, resp.Lang(), errors.New(msg), true, w)
+	app.MasterPageManager.MustError(r, resp.Lang(), errors.New(msg), true, w)
 }

@@ -9,18 +9,20 @@ import (
 type HTMLResponse struct {
 	BaseResponse
 
-	writer      http.ResponseWriter
-	isCompleted bool
+	writer        http.ResponseWriter
+	masterPageMgr *MasterPageManager
+	isCompleted   bool
 }
 
 // HTML is a dummy type returned by HTTPResponse to make sure response is completed.
 type HTML = int
 
 // NewHTMLResponse creates a new HTMLResponse.
-func NewHTMLResponse(r *http.Request, mgr *Manager, wr http.ResponseWriter) *HTMLResponse {
+func NewHTMLResponse(r *http.Request, masterPageMgr *MasterPageManager, wr http.ResponseWriter) *HTMLResponse {
 	return &HTMLResponse{
-		BaseResponse: newBaseResponse(r, mgr),
-		writer:       wr,
+		BaseResponse:  newBaseResponse(r),
+		masterPageMgr: masterPageMgr,
+		writer:        wr,
 	}
 }
 

@@ -11,17 +11,15 @@ import (
 type BaseResponse struct {
 	req  *http.Request
 	ctx  context.Context
-	mgr  *Manager
 	lang string
 }
 
-func newBaseResponse(r *http.Request, mgr *Manager) BaseResponse {
+func newBaseResponse(r *http.Request) BaseResponse {
 	ctx := r.Context()
 	c := BaseResponse{
 		req:  r,
 		ctx:  ctx,
 		lang: defs.LanguageContext(ctx),
-		mgr:  mgr,
 	}
 
 	return c

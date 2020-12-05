@@ -14,8 +14,8 @@ import (
 	"github.com/mgenware/go-packagex/v5/templatex"
 )
 
-// Manager provides common functions to generate HTML strings.
-type Manager struct {
+// MasterPageManager provides common functions to generate HTML strings.
+type MasterPageManager struct {
 	dir    string
 	logger *logx.Logger
 	config *cfg.Config
@@ -28,8 +28,8 @@ type Manager struct {
 	LocalizationManager *localization.Manager
 }
 
-// MustCreateManager creates an instance of TemplateManager with specified arguments. Note that this function panics when main template loading fails.
-func MustCreateManager(
+// MustCreateMasterPageManager creates an instance of MasterPageManager with the specified arguments. Note that this function panics when master template fails to load.
+func MustCreateMasterPageManager(
 	dir string,
 	i18nDir string,
 	defaultLang string,

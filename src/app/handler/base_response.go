@@ -3,7 +3,6 @@ package handler
 import (
 	"context"
 	"go-triton-app/app/defs"
-	"go-triton-app/app/handler/localization"
 	"net/http"
 )
 
@@ -38,9 +37,4 @@ func (b *BaseResponse) Context() context.Context {
 // Lang returns current language ID.
 func (b *BaseResponse) Lang() string {
 	return b.lang
-}
-
-// Dictionary returns the dictionary associated with current language ID.
-func (b *BaseResponse) Dictionary() *localization.Dictionary {
-	return b.mgr.Dictionary(b.Lang())
 }

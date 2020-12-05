@@ -4,7 +4,6 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
-	"go-triton-app/app"
 	"go-triton-app/app/defs"
 	"go-triton-app/app/handler"
 	"net/http"
@@ -22,7 +21,7 @@ func ParseJSONRequest(next http.Handler) http.Handler {
 			jsonMap := make(map[string]interface{})
 			err := decoder.Decode(&jsonMap)
 			if err != nil {
-				resp := handler.NewJSONResponse(r, app.MasterPageManager, w)
+				resp := handler.NewJSONResponse(r, w)
 				// JSON parsing errors are considered user errors, so we pass `true` as `expected` and don't log them.
 				resp.MustFailWithError(defs.APIGenericError, fmt.Errorf("Error parsing body JSON, \"%v\"", err.Error()), true)
 				return

@@ -30,8 +30,7 @@ func HTMLResponse(w http.ResponseWriter, r *http.Request) *handler.HTMLResponse 
 
 // JSONResponse returns common objects used to compose an HTML response.
 func JSONResponse(w http.ResponseWriter, r *http.Request) *handler.JSONResponse {
-	tm := MasterPageManager
-	resp := handler.NewJSONResponse(r, tm, w)
+	resp := handler.NewJSONResponse(r, w)
 	return resp
 }
 
@@ -98,5 +97,5 @@ func mustSetupTemplates(config *cfg.Config) {
 	templatesConfig := config.Templates
 	localizationConfig := config.Localization
 
-	MasterPageManager = handler.MustCreateManager(templatesConfig.Dir, localizationConfig.Dir, localizationConfig.DefaultLang, Logger, config)
+	MasterPageManager = handler.MustCreateMasterPageManager(templatesConfig.Dir, localizationConfig.Dir, localizationConfig.DefaultLang, Logger, config)
 }

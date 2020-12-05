@@ -14,7 +14,7 @@ func NotFoundHandler(w http.ResponseWriter, r *http.Request) {
 	// Set 404 status code
 	w.WriteHeader(http.StatusNotFound)
 	resp := app.HTMLResponse(w, r)
-	msg := strf.Format(resp.Dictionary().PPageNotFound, r.URL.String())
+	msg := strf.Format(resp.LocalizedDictionary().PPageNotFound, r.URL.String())
 
 	if app.Config.HTTP.Log404Error {
 		app.Logger.NotFound("http", r.URL.String())

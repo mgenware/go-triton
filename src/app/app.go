@@ -18,12 +18,12 @@ var Config *cfg.Config
 // Logger is the main logger for this app.
 var Logger *logx.Logger
 
-// MasterPageManager is a app-wide instance of handler.MasterPageManager.
-var MasterPageManager *handler.MasterPageManager
+// MainPageManager is a app-wide instance of handler.MainPageManager.
+var MainPageManager *handler.MainPageManager
 
 // HTMLResponse returns common objects used to compose an HTML response.
 func HTMLResponse(w http.ResponseWriter, r *http.Request) *handler.HTMLResponse {
-	tm := MasterPageManager
+	tm := MainPageManager
 	resp := handler.NewHTMLResponse(r, tm, w)
 	return resp
 }
@@ -41,9 +41,9 @@ func PanicIfErr(err error) {
 	}
 }
 
-// MasterPageData wraps a call to MasterPageData.
-func MasterPageData(title, contentHTML string) *handler.MasterPageData {
-	return handler.NewMasterPageData(title, contentHTML)
+// MainPageData wraps a call to MainPageData.
+func MainPageData(title, contentHTML string) *handler.MainPageData {
+	return handler.NewMainPageData(title, contentHTML)
 }
 
 func init() {
@@ -97,5 +97,5 @@ func mustSetupTemplates(config *cfg.Config) {
 	templatesConfig := config.Templates
 	localizationConfig := config.Localization
 
-	MasterPageManager = handler.MustCreateMasterPageManager(templatesConfig.Dir, localizationConfig.Dir, localizationConfig.DefaultLang, Logger, config)
+	MainPageManager = handler.MustCreateMainPageManager(templatesConfig.Dir, localizationConfig.Dir, localizationConfig.DefaultLang, Logger, config)
 }

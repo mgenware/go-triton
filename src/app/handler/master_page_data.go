@@ -1,7 +1,7 @@
 package handler
 
-// MasterPageData holds the data needed in main page template.
-type MasterPageData struct {
+// MainPageData holds the data needed in main page template.
+type MainPageData struct {
 	LocalizedTemplateData
 
 	Title       string
@@ -10,7 +10,7 @@ type MasterPageData struct {
 	Scripts     string
 }
 
-// NewMasterPageData creates a new MasterPageData.
-func NewMasterPageData(title, contentHTML string) *MasterPageData {
-	return &MasterPageData{Title: title, ContentHTML: contentHTML}
+// NewMainPageData creates a new MainPageData.
+func NewMainPageData(title, contentHTML string) *MainPageData {
+	return &MainPageData{Title: title, ContentHTML: contentHTML}
 }

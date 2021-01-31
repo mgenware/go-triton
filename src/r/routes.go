@@ -47,7 +47,7 @@ func Start() {
 	// r.Use(sessionMiddleware)
 
 	// ----------------- HTTP Routes -----------------
-	lm := app.MasterPageManager.LocalizationManager
+	lm := app.MainPageManager.LocalizationManager
 
 	// Not found handler
 	r.With(lm.EnableContextLanguage).NotFound(sysh.NotFoundHandler)

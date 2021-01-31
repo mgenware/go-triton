@@ -8,7 +8,7 @@ import (
 	"go-triton-app/app/handler"
 )
 
-var indexView = app.MasterPageManager.MustParseLocalizedView("home.html")
+var indexView = app.MainPageManager.MustParseLocalizedView("home.html")
 
 // HomeGET is the HTTP handler for root URL.
 func HomeGET(w http.ResponseWriter, r *http.Request) handler.HTML {
@@ -16,6 +16,6 @@ func HomeGET(w http.ResponseWriter, r *http.Request) handler.HTML {
 	pageData := &HomePageData{Time: time.Now().String()}
 	pageHTML := indexView.MustExecuteToString(resp.Lang(), pageData)
 
-	d := app.MasterPageData(resp.LocalizedDictionary().Home, pageHTML)
+	d := app.MainPageData(resp.LocalizedDictionary().Home, pageHTML)
 	return resp.MustComplete(d)
 }

@@ -8,7 +8,7 @@ import (
 	"go-triton-app/app/handler"
 	"net/http"
 
-	"github.com/mgenware/go-packagex/v5/httpx"
+	"github.com/mgenware/goutil/httpx"
 )
 
 // ParseJSONRequest is a middleware to parse request body as JSON and store the result to the context.

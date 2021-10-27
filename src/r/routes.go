@@ -5,8 +5,6 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/mgenware/go-packagex/v5/iox"
-
 	"go-triton-app/app"
 	"go-triton-app/app/handler"
 	"go-triton-app/app/middleware"
@@ -16,6 +14,7 @@ import (
 	"go-triton-app/r/sysh"
 
 	"github.com/go-chi/chi"
+	"github.com/mgenware/goutil/iox"
 )
 
 // Start starts the web router.

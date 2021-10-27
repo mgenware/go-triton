@@ -5,7 +5,7 @@ import (
 
 	"go-triton-app/app/handler/localization"
 
-	"github.com/mgenware/go-packagex/v5/templatex"
+	"github.com/mgenware/goutil/templatex"
 )
 
 // LocalizedView wraps a templatex.View, providing localization support.

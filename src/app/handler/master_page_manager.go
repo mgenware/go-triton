@@ -10,8 +10,8 @@ import (
 
 	"go-triton-app/app/handler/localization"
 
-	"github.com/mgenware/go-packagex/v5/httpx"
-	"github.com/mgenware/go-packagex/v5/templatex"
+	"github.com/mgenware/goutil/httpx"
+	"github.com/mgenware/goutil/templatex"
 )
 
 // MainPageManager provides common functions to generate HTML strings.

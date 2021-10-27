@@ -34,7 +34,7 @@ A boilerplate template for Go web applications. Uses Go 1.11 modules.
 ## Main Dependencies
 
 - `github.com/go-chi/chi`: HTTP routing.
-- `github.com/mgenware/go-packagex`: for common helpers like template wrapper, MIME type definitions, etc.
+- `github.com/mgenware/goutil`: utility functions and types such as template wrapper, MIME type definitions, etc.
 - `golang.org/x/text/language`: HTTP `Accept-Language` header parsing and matching.
 - `github.com/uber-go/zap`: Logging.
 

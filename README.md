@@ -165,7 +165,7 @@ r.With(lm.EnableContextLanguage).Get("/", homep.HomeGET)
 
 ### Using localized strings in templates
 
-One localization is enabled, we can access them in HTML templates. Localized strings are stored as JSON files in `/localization/langs` with file name indicating the language ID. Go-triton comes with two example localized strings files, `en.json` for English, and `cs.json` for `Chinese Simplified`.
+Once localization is enabled, we can access them in HTML templates. Localized strings are stored as JSON files in `/localization/langs` with file name indicating the language ID. Go-triton comes with two example localized strings files, `en.json` for English, and `cs.json` for `Chinese Simplified`.
 
 To reference a locaized string, you need to first make your template data type derive from `template.LocalizedTemplateData`. e.g. the `home_page_data.go` in project:
 

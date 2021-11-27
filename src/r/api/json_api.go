@@ -8,7 +8,12 @@ import (
 	"go-triton-app/app"
 )
 
+// Handler for a JSON-based POST API.
 func jsonAPI(w http.ResponseWriter, r *http.Request) handler.JSON {
+	// Create a JSON response.
+	resp := app.JSONResponse(w, r)
+	// Fetch some data from the request.
 	dict := defs.BodyContext(r.Context())
-	return app.JSONResponse(w, r).MustComplete(dict)
+	// Complete the response.
+	return resp.MustComplete(dict)
 }

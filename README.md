@@ -7,29 +7,32 @@ A boilerplate template for Go web applications. Uses Go 1.11 modules.
 ## Table of Contents
 
 - [Features](#features)
-- [Main Dependencies](#main-dependencies)
+- [Main dependencies](#main-dependencies)
 - [Usage](#usage)
-- [Directory Structure](#directory-structure)
-  - [The `r` Directory](#the--r--directory)
-- [Error handling in HTTP handlers](#error-handling-in-http-handlers)
+- [Directory structure](#directory-structure)
+  - [The `r` directory](#the--r--directory)
+- [HTTP handlers](#http-handlers)
+  - [Define handlers](#define-handlers)
+  - [Error handling in handlers](#error-handling-in-handlers)
 - [Localization](#localization)
   - [How is user language determined](#how-is-user-language-determined)
-  - [Enabling Localization on a specific route](#enabling-localization-on-a-specific-route)
-  - [Using localized strings in templates](#using-localized-strings-in-templates)
+  - [Enable Localization on a specific route](#enable-localization-on-a-specific-route)
+  - [Use localized strings in templates](#use-localized-strings-in-templates)
 - [Logging](#logging)
 - [Projects built from go-trion](#projects-built-from-go-trion)
 
 ## Features
 
-- Configuration file support.
-- Development/production mode (via `config.DevMode`).
+- Config files support.
+- Development and production modes (via `config.DevMode`).
+- Builtin support for HTML handlers and JSON-based API handlers.
 - Implemented common HTTP handlers:
   - Not found(404) handler.
   - Panic recovery handler as 500 Internal Server Error.
 - Template support (auto reloads template in development mode).
 - Auto serves static files in development mode.
 - i18n support.
-- Builtin logging to different files based on settings or sources.
+- Builtin logs to different files (also configurable).
 
 ## Main Dependencies
 
@@ -40,21 +43,21 @@ A boilerplate template for Go web applications. Uses Go 1.11 modules.
 
 ## Usage
 
-Start in development mode:
+Start server in development mode:
 
 ```sh
 # Start with ./config/dev.json
 go run main.go dev
 ```
 
-Start in production mode:
+Start server in production mode:
 
 ```sh
 # Start with ./config/prod.json
 go run main.go prod
 ```
 
-The two commands simply load a configuration file by the given name, you can also create your own config file like `./config/myName.json` and start the app with it:
+The two commands above simply load a configuration file by the given name, you can also create your own config files like `./config/myName.json` and start server with it:
 
 ```sh
 go run main.go myName
@@ -66,7 +69,7 @@ Or use the `--config` argument to specify a file:
 go run main.go --config /etc/my_server/dev.json
 ```
 
-## Directory Structure
+## Directory structure
 
 ```
 ├── appdata             Application generated files, e.g. logs, git ignored
@@ -83,63 +86,71 @@ go run main.go --config /etc/my_server/dev.json
 │   ├── r               Routes
 ```
 
-### The `r` Directory
+### The `r` directory
 
-The `r`(`routes`) directory contains all routes of your application, and in order to follow the best practices for package naming ([details](https://blog.golang.org/package-names)), child directories of `r` usually consist of a short name plus a letter indicating the type of the route, e.g. `sysh` for system handlers, `homep` for home page stuff, etc.
+The `r`(`routes`) directory contains all routes of your application. In order to follow the best practices for package naming ([details](https://blog.golang.org/package-names)), child directories of `r` usually consist of a short name plus a letter indicating the type of the route, e.g. `sysh` for system handlers, `homep` for home page, etc.
 
-## Error handling in HTTP handlers
+## HTTP handlers
 
-Two styles of error handling are supported, "panic" style and "return" style.
+### Define handlers
 
-- Panic style, handles errors by panicking.
-
-  - Pros: no "double writing" issue when you forgot to `return` after writing content to response.
-  - Cons: may look a bit weird to some devs as `panic` is supposed to crash the process.
-
-- Return style, handles error and result in a similar way.
-  - Pros: no `panic` in handler code.
-  - Cons: handler is screwed when you forgot to `return` after writing content to response.
+An HTML GET handler example:
 
 ```go
-// "panic" style
-func formAPI1(w http.ResponseWriter, r *http.Request) {
-	id := r.FormValue("id")
-	if id == "" {
-		// `panic` with a string to indicate an expected error (or user error)
-		// Expected errors are not logged and served with normal 200 HTTP code.
-		panic("The argument \"id\" cannot be empty")
-	}
-	result, err := systemCall()
-	if err != nil {
-		// `panic` with an error to indicate an unexpected error (or app error)
-		// Unexpected errors are considered fatal and happened when something
-		//  went wrong in your code or system. They are logged and served
-		//  with 500 (Internal Server Error) HTTP code.
-		panic(err)
-	}
-	resp := app.JSONResponse(w, r)
-	resp.MustComplete(result)
-}
+// Home page template.
+var homeView = app.MainPageManager.MustParseLocalizedView("home.html")
 
-// "return" style
-func formAPI2(w http.ResponseWriter, r *http.Request) {
-	id := r.FormValue("id")
+// Home page GET handler.
+func HomeGET(w http.ResponseWriter, r *http.Request) handler.HTML {
+	// Create an HTML response.
+	resp := app.HTMLResponse(w, r)
+	// Prepare home page data.
+	pageData := &HomePageData{Time: time.Now().String()}
+	// Generate page HTML.
+	pageHTML := homeView.MustExecuteToString(resp.Lang(), pageData)
+	// Create main page data, which is a core template shared by all your website pages.
+	d := app.MainPageData(resp.LocalizedDictionary().Home, pageHTML)
+	// Complete the response.
+	return resp.MustComplete(d)
+}
+```
+
+A JSON API POST handler example:
+
+```go
+// Handler for a JSON-based POST API.
+func jsonAPI(w http.ResponseWriter, r *http.Request) handler.JSON {
+	// Create a JSON response.
 	resp := app.JSONResponse(w, r)
-	if id == "" {
-		// `panic` with a string to indicate an expected error (or user error)
-		// Expected errors are not logged and served with normal 200 HTTP code.
-		resp.MustFailWithUserError("The argument \"id\" cannot be empty")
-		// DON'T FORGET THE `return`
-		return
+	// Fetch some data from the request.
+	dict := defs.BodyContext(r.Context())
+	// Complete the response.
+	return resp.MustComplete(dict)
+}
+```
+
+### Error handling in handlers
+
+You can simply panic in handler code, it will be handled accordingly based on handler type. See [panic_handlers.go](https://github.com/mgenware/go-triton/blob/main/src/r/sysh/panic_handlers.go).
+
+- For HTML handlers, `panic` results in the error page to be rendered, which corresponds to `error.html` template.
+- For API handlers, `panic` results in a generic error response.
+
+Alternatively, if you don't like `panic`, both `HTMLResponse` and `JSONResponse` have functions to complete the response by an error. For example:
+
+```go
+// Handler for a JSON-based POST API.
+func jsonAPI(w http.ResponseWriter, r *http.Request) handler.JSON {
+	// Create a JSON response.
+	resp := app.JSONResponse(w, r)
+	// Fetch some data from the request.
+	dict := defs.BodyContext(r.Context())
+	if (len(dict) == 0) {
+		// Return an error response.
+		return resp.MustFail(fmt.Errorf("Error: invalid input."))
 	}
-	result, err := systemCall()
-	if err != nil {
-		// For unexpected errors (or app errors), call `MustFail`.
-		resp.MustFail(err)
-		// DON'T FORGET THE `return`
-		return
-	}
-	resp.MustComplete(result)
+	// Complete the response.
+	return resp.MustComplete(dict)
 }
 ```
 
@@ -147,13 +158,13 @@ func formAPI2(w http.ResponseWriter, r *http.Request) {
 
 ### How is user language determined
 
-- If user explicitly specify the language ID in query string like (`/?lang=en`), then we take user's input as desired language ID (this also sets the language ID to user cookies).
+- If the user explicitly specified the language ID in query string like (`/?lang=en`), we take user's input as desired language ID (this also sets the language ID in cookies).
 - If not, try using saved language ID in user cookies.
 - If not, determine desired language from HTTP headers.
 
-### Enabling Localization on a specific route
+### Enable localization on a specific route
 
-As shown above, the process of determining the desired language ID can definitely brings some cost, so localization is disabled by default. To support localization in a specific HTTP route, we need to mount the `EnableContextLanguage` middleware.
+The process of determining the desired language ID can brings some costs, so localization is disabled by default. To enable localization in a specific HTTP route, mount the `EnableContextLanguage` middleware.
 
 ```go
 r := chi.NewRouter()
@@ -163,11 +174,11 @@ lm := app.TemplateManager.LocalizationManager
 r.With(lm.EnableContextLanguage).Get("/", homep.HomeGET)
 ```
 
-### Using localized strings in templates
+### Use localized strings in templates
 
-One localization is enabled, we can access them in HTML templates. Localized strings are stored as JSON files in `/localization/langs` with file name indicating the language ID. Go-triton comes with two example localized strings files, `en.json` for English, and `cs.json` for `Chinese Simplified`.
+Once localization is enabled, you can access them in HTML templates. Localized strings are stored as JSON files in `/localization/langs` with file name indicating the language ID. Go-triton comes with two example localized strings files, `en.json` for English, and `cs.json` for `Chinese Simplified`.
 
-To reference a locaized string, you need to first make your template data type derive from `template.LocalizedTemplateData`. e.g. the `home_page_data.go` in project:
+To reference a localized string, you need to first make your template data type derive from `template.LocalizedTemplateData`.
 
 ```go
 import "go-triton-app/app/template"
@@ -181,7 +192,7 @@ type HomePageData struct {
 }
 ```
 
-Let's say our localized strings files are defined like this:
+Let's say our localized strings files are defined as follows:
 
 `en.json`:
 
@@ -201,7 +212,7 @@ Let's say our localized strings files are defined like this:
 }
 ```
 
-You can now reference localized strings in template by accessing the `LS` field:
+You can now reference localized strings in templates by through the `LS` field:
 
 ```html
 <div>
@@ -214,7 +225,7 @@ You can now reference localized strings in template by accessing the `LS` field:
 </div>
 ```
 
-If you got `.LS` not defined then it's probably because you didn't have you template class derive from `template.LocalizedTemplateData`.
+If you got `.LS` not defined error, it's probably because you didn't have your template class derive from `template.LocalizedTemplateData`.
 
 ## Logging
 
@@ -223,14 +234,14 @@ By default, go-triton logs to the following files:
 - `error.log` errors (by calling `panic` with an `Error` or `app.Logger.Error`)
 - `warning.log` warnings (by `app.Logger.Warn`)
 - `info` info (by `app.Logger.Info`)
-- `not_found` logs all 404 requests.
+- `not_found` logs all 404 requests
 
-This files are also saved in different directories based on configuration:
+These files are also saved in different directories based on configuration:
 
 - `appdata/log/dev` development logs
 - `appdata/log/prod` production logs
 
-All above settings are configurable.
+All settings above are configurable.
 
 ## Projects built from go-triton
 

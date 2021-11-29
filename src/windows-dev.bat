@@ -1,1 +1,0 @@
-go build -o .\.windows-bin\triton.exe && .\.windows-bin\triton.exe dev

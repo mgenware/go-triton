@@ -57,10 +57,10 @@ Start server in production mode:
 go run main.go prod
 ```
 
-The two commands above simply load a configuration file by the given name, you can also create your own config files like `./config/myName.json` and start server with it:
+The two commands above simply load a configuration file by the given name. You can create your own config files like `./config/myConfig.json` and start server with it:
 
 ```sh
-go run main.go myName
+go run main.go myConfig
 ```
 
 Or use the `--config` argument to specify a file:
@@ -176,7 +176,7 @@ r.With(lm.EnableContextLanguage).Get("/", homep.HomeGET)
 
 ### Use localized strings in templates
 
-Once localization is enabled, you can access them in HTML templates. Localized strings are stored as JSON files in `/localization/langs` with file name indicating the language ID. Go-triton comes with two example localized strings files, `en.json` for English, and `cs.json` for `Chinese Simplified`.
+Once localization is enabled, you can access localized strings in HTML templates. Localized strings are stored as JSON files in `/localization/langs` with file name indicating the language ID. Go-triton comes with two example localized strings files, `en.json` for English, and `zh-Hans.json` for `Chinese Simplified`.
 
 To reference a localized string, you need to first make your template data type derive from `template.LocalizedTemplateData`.
 
@@ -192,7 +192,7 @@ type HomePageData struct {
 }
 ```
 
-Let's say our localized strings files are defined as follows:
+Let's say our localized string files are defined as follows:
 
 `en.json`:
 
@@ -203,7 +203,7 @@ Let's say our localized strings files are defined as follows:
 }
 ```
 
-`cs.json`:
+`zh-Hans.json`:
 
 ```json
 {
@@ -212,7 +212,7 @@ Let's say our localized strings files are defined as follows:
 }
 ```
 
-You can now reference localized strings in templates by through the `LS` field:
+You can now reference localized strings in templates via `LS` field:
 
 ```html
 <div>
@@ -225,7 +225,7 @@ You can now reference localized strings in templates by through the `LS` field:
 </div>
 ```
 
-If you got `.LS` not defined error, it's probably because you didn't have your template class derive from `template.LocalizedTemplateData`.
+If you get "`.LS` not defined" error, make sure your template class extends from `template.LocalizedTemplateData`.
 
 ## Logging
 

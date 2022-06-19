@@ -133,10 +133,10 @@ func jsonAPI(w http.ResponseWriter, r *http.Request) handler.JSON {
 
 You can simply panic in handler code, it will be handled accordingly based on handler type. See [panic_handlers.go](https://github.com/mgenware/go-triton/blob/main/src/r/sysh/panic_handlers.go).
 
-- For HTML handlers, `panic` results in the error page to be rendered, which corresponds to `error.html` template.
-- For API handlers, `panic` results in a generic error response.
+- For HTML handlers, `panic` results in an error page, which is defined in `error.html`.
+- For API handlers, `panic` results in an error response with a generic error code.
 
-Alternatively, if you don't like `panic`, both `HTMLResponse` and `JSONResponse` have functions to complete the response by an error. For example:
+Alternatively, if you don't like `panic`, both `HTMLResponse` and `JSONResponse` have functions to complete a response by an error. For example:
 
 ```go
 // Handler for a JSON-based POST API.
@@ -153,6 +153,12 @@ func jsonAPI(w http.ResponseWriter, r *http.Request) handler.JSON {
 	return resp.MustComplete(dict)
 }
 ```
+
+## `expected` parameter for HTML errors
+
+There's an extra `expected` parameter for HTML errors. When `true`, it says this error is an user error. Error page will be a normal HTTP OK(200) response.
+
+When `expected` is `false`, it indicates it's an unexpected error, thus a server error. The resulting error page will use an HTTP 500(Internal Server Error) code instead.
 
 ## Localization
 

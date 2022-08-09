@@ -2,7 +2,7 @@ package handler
 
 import "go-triton-app/app/handler/localization"
 
-// ILocalizedTemplateData is the base type for localized models when applied to template.
+// ILocalizedTemplateData is the base type for all localized page data types.
 type ILocalizedTemplateData interface {
 	SetLS(value *localization.Dictionary)
 }

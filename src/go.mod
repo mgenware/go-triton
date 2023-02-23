@@ -9,7 +9,7 @@ require (
 	github.com/mgenware/go-string-format v1.0.1
 	github.com/mgenware/goutil v1.1.1
 	go.uber.org/zap v1.21.0
-	golang.org/x/text v0.3.7
+	golang.org/x/text v0.3.8
 	gopkg.in/go-playground/validator.v9 v9.31.0
 )
 
